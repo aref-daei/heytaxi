@@ -51,13 +51,17 @@ public class SystemManagement {
 				"Red", "Blue", "Green", "Yellow", "Orange",
 				"Purple", "Brown", "Black", "White", "Gray"};
 		
-		String[] carLP = {
-				"RN6ZJR", "73V53I", "4COTB5", "3BQS60", "BE381G",
-				"P5DSZZ", "YTHFGB", "U6YP1G", "Z8JP7E", "LDL7F8"};
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		
 		List<Driver> drivers = new ArrayList<>();
 		
 		for (int i = 0; i < (int)(Math.random()*(15-5+1)+5); i++) {
+			StringBuilder carLP = new StringBuilder();
+            for (int c = 0; c < 6; c++) {
+                int index = (int) (Math.random() * characters.length());
+                carLP.append(characters.charAt(index));
+            }
+            
 			Driver driver = new Driver(
 					String.format("%s %s",
 							firstNames[(int)(Math.random()*firstNames.length)],
@@ -65,7 +69,7 @@ public class SystemManagement {
 					Math.random()*(5-4)+4,
 					new Car(carModels[(int)(Math.random()*carModels.length)],
 							carColors[(int)(Math.random()*carColors.length)],
-							carLP[(int)(Math.random()*carLP.length)]));
+							carLP.toString()));
 			
 			driver.setX((int)(Math.random()*3) * (int)Math.pow(-1,(int)(Math.random()*2)));
 			driver.setY((int)(Math.random()*3) * (int)Math.pow(-1,(int)(Math.random()*2)));
