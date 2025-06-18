@@ -67,8 +67,8 @@ public class SystemManagement {
 							carColors[(int)(Math.random()*carColors.length)],
 							carLP[(int)(Math.random()*carLP.length)]));
 			
-			driver.setX((int)(Math.random()*30) * (int)Math.pow(-1,(int)(Math.random()*2)));
-			driver.setY((int)(Math.random()*30) * (int)Math.pow(-1,(int)(Math.random()*2)));
+			driver.setX((int)(Math.random()*3) * (int)Math.pow(-1,(int)(Math.random()*2)));
+			driver.setY((int)(Math.random()*3) * (int)Math.pow(-1,(int)(Math.random()*2)));
 			
 			drivers.add(driver);
 		}

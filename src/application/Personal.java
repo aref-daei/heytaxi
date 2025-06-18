@@ -2,7 +2,7 @@ package application;
 
 public class Personal {
 	private String name;
-	private int x = 0, y = 0; // 100M meghias
+	private int x = 0, y = 0; // 1km scale
 	private double score;
 	
 	public Personal(String name, double score) {

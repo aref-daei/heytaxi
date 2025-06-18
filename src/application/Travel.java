@@ -4,7 +4,7 @@ public class Travel {
 	private Driver driver;
 	private Traveler traveler;
 	private int[] destination;
-	private double distance; // 100M
+	private double distance; // 1km scale
 	private int time; // Min
 	private int cost; // Toman
 	
@@ -14,8 +14,8 @@ public class Travel {
 		this.destination = destination;
 		
 		this.distance = calculateDistance();
-		this.time = (int) Math.round(distance * 25);
-		this.cost = (int) Math.round(distance * 1000);
+		this.time = (int) Math.round(distance * 2.5);
+		this.cost = (int) Math.round(distance * 10_000);
 	}
 	
 	public Driver getDriver() {
@@ -26,8 +26,8 @@ public class Travel {
 		this.driver = driver;
 		
 		this.distance = calculateDistance();
-		this.time = (int) Math.round(distance * 25);
-		this.cost = (int) Math.round(distance * 1000);
+		this.time = (int) Math.round(distance * 2.5);
+		this.cost = (int) Math.round(distance * 10_000);
 	}
 
 	public Traveler getTraveler() {
@@ -38,8 +38,8 @@ public class Travel {
 		this.traveler = traveler;
 		
 		this.distance = calculateDistance();
-		this.time = (int) Math.round(distance * 25);
-		this.cost = (int) Math.round(distance * 1000);
+		this.time = (int) Math.round(distance * 2.5);
+		this.cost = (int) Math.round(distance * 10_000);
 	}
 
 	public int[] getDestination() {
