@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SystemManagement {
-	private static List<Driver> drivers = randomDriverGenerator();
+	private static List<Driver> drivers = generateRandomDrivers();
+	private static List<Travel> travels = new ArrayList<>();
 	private static Traveler session = new Traveler("Unknown");
 
 	public static void main(String[] args) {
@@ -30,7 +31,7 @@ public class SystemManagement {
 				boolean loop = true;
 				while (loop) {
 					System.out.println("Please enter your full name.");
-					session.setName(input.nextLine());;
+					session.setName(input.nextLine());
 					System.out.println("Are you really yourself? y/n");
 					String isYourself = input.nextLine();
 					
@@ -55,18 +56,17 @@ public class SystemManagement {
 				int yDestination = input.nextInt();
 				
 				
-				Travel travel = new Travel(drivers.get(2), session, new int[]{xDestination, yDestination});
-				System.out.printf(
-						"Traveler: %s%nDriver: %s%nTravel Date: %s%nDistance: %.2fKM%nTime: %dmin%nCost: %d%n",
-						travel.getTraveler().getName(), travel.getDriver(),
-						"Jun 18", travel.getDistance(), travel.getTime(), travel.getCost());
+				Travel travel = new Travel(drivers.get((int)(Math.random()*(drivers.size()-1))), session, new int[]{xDestination, yDestination});
+				System.out.printf("%n%s%n", travel);
+				
+				travels.add(travel);
 				
 				break;
 			}
 			case '2': {
-//				for (Travel travel : travels) {
-//					System.out.println(travel);
-//				}
+				for (Travel travel : travels) {
+					System.out.printf("%n%s%n", travel);
+				}
 				
 				break;
 			}
@@ -78,6 +78,7 @@ public class SystemManagement {
 			
 			System.out.println("Agian? true/false");
 			menu = input.nextBoolean();
+			input.nextLine();
 		}
 		
 		input.close();
@@ -85,7 +86,7 @@ public class SystemManagement {
 //		int porpus = (int)(Math.random()*(500-5+1)+5) * (int)Math.pow(-1,(int)(Math.random()*2));
 	}
 	
-	public static List<Driver> randomDriverGenerator() {
+	public static List<Driver> generateRandomDrivers() {
 		String[] firstNames = {
 				"Ali", "Reza", "Amir", "Hossein", "Mehdi",
 				"Sajjad", "Mohammad", "Ramin", "Kasra", "Parsa",

@@ -81,4 +81,11 @@ public class Travel {
 		}
 		return distance;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s%n%s%nDate: %s%nDistance: %.2fKM%nTime: %dmin%nCost: %d",
+				getTraveler(), getDriver(),
+				"Jun 18", getDistance(), getTime(), getCost());
+	}
 }
