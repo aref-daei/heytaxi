@@ -16,6 +16,8 @@ public class SystemManagement {
 		boolean menu = true;
 		while (menu) {
 			System.out.println("Welcome to HeyTaxi!");
+			System.out.println("Reach your destination with one click!");
+			System.out.println("©2025");
 			
 			System.out.println();
 			System.out.println("1. Sign in");
@@ -23,11 +25,12 @@ public class SystemManagement {
 			System.out.println("3. Quit");
 			System.out.println();
 			
-			System.out.print("Choice option: ");
+			System.out.print("Choose an option: ");
 			String opt = input.nextLine();
 			
 			switch (opt.charAt(0)) {
 			case '1': {
+				// ** Sign in User **
 				boolean loop = true;
 				while (loop) {
 					System.out.println("Please enter your full name.");
@@ -57,28 +60,34 @@ public class SystemManagement {
 				
 				
 				Travel travel = new Travel(drivers.get((int)(Math.random()*(drivers.size()-1))), session, new int[]{xDestination, yDestination});
-				System.out.printf("%n%s%n", travel);
+				
+				System.out.println("\n..:: Your Travel Information ::..");
+				System.out.printf("%s%n%n", travel);
 				
 				travels.add(travel);
 				
 				break;
 			}
 			case '2': {
+				// ** Travel History **
+				System.out.println("\n..:: History of Your Travels ::..");
 				for (Travel travel : travels) {
-					System.out.printf("%n%s%n", travel);
+					System.out.printf("%s%n%n", travel);
 				}
 				
 				break;
 			}
 			case '3':
+				// ** Quit **
 				return;
 			default:
-				throw new IllegalArgumentException("Unexpected value: " + opt.charAt(0));
+				throw new IllegalArgumentException("Unexpected value: " + opt);
 			}
 			
-			System.out.println("Agian? true/false");
+			System.out.println("You want to go back to the menu. true or false ?");
 			menu = input.nextBoolean();
 			input.nextLine();
+			System.out.println();
 		}
 		
 		input.close();
