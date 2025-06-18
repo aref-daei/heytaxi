@@ -93,8 +93,6 @@ public class SystemManagement {
 		}
 		
 		input.close();
-		
-//		int porpus = (int)(Math.random()*(500-5+1)+5) * (int)Math.pow(-1,(int)(Math.random()*2));
 	}
 	
 	public static List<Driver> generateRandomDrivers() {
