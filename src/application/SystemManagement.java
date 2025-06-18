@@ -1,3 +1,6 @@
+// Tick. Tock. Tick. Tock. A flawless execution.
+// Copyright (c) Aref Daei
+
 package application;
 
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ public class SystemManagement {
 		while (menu) {
 			System.out.println("Welcome to HeyTaxi!");
 			System.out.println("Reach your destination with one click!");
-			System.out.println("©2025");
+			System.out.println("©2025 Aref Daei");
 			
 			System.out.println();
 			System.out.println("1. Sign in");
@@ -58,8 +61,7 @@ public class SystemManagement {
 				int xDestination = input.nextInt();
 				int yDestination = input.nextInt();
 				
-				
-				Travel travel = new Travel(drivers.get((int)(Math.random()*(drivers.size()-1))), session, new int[]{xDestination, yDestination});
+				Travel travel = new Travel(findingNearestDriver(), session, new int[]{xDestination, yDestination});
 				
 				System.out.println("\n..:: Your Travel Information ::..");
 				System.out.printf("%s%n%n", travel);
@@ -134,13 +136,27 @@ public class SystemManagement {
 							carColors[(int)(Math.random()*carColors.length)],
 							carLP.toString()));
 			
-			driver.setX((int)(Math.random()*3) * (int)Math.pow(-1,(int)(Math.random()*2)));
-			driver.setY((int)(Math.random()*3) * (int)Math.pow(-1,(int)(Math.random()*2)));
+			driver.setX((int)(Math.random()*30) * (int)Math.pow(-1,(int)(Math.random()*2)));
+			driver.setY((int)(Math.random()*30) * (int)Math.pow(-1,(int)(Math.random()*2)));
 			
 			drivers.add(driver);
 		}
 		
 		return drivers;
+	}
+	
+	public static Driver findingNearestDriver() {
+		Driver nDriver = drivers.get(0);
+		double distance = 100; // Max = 100
+		for (Driver driver : drivers) {
+			double temp = Math.pow(
+					Math.pow(driver.getX()-session.getX(), 2) + Math.pow(driver.getY()-session.getY(), 2), 0.5);
+			if (distance > temp) {
+				distance = temp;
+				nDriver  = driver;
+			}
+		}
+		return nDriver;
 	}
 
 }
