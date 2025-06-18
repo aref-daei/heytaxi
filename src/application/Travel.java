@@ -1,8 +1,12 @@
 package application;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Travel {
 	private Driver driver;
 	private Traveler traveler;
+	private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 	private int[] destination;
 	private double distance; // 1km scale
 	private int time; // Min
@@ -86,6 +90,6 @@ public class Travel {
 	public String toString() {
 		return String.format("%s%n%s%nDate: %s%nDistance: %.2fKM%nTime: %dmin%nCost: %d",
 				getTraveler(), getDriver(),
-				"Jun 18", getDistance(), getTime(), getCost());
+				date, getDistance(), getTime(), getCost());
 	}
 }
