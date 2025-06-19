@@ -30,8 +30,8 @@ public class Travel {
 		this.driver = driver;
 		
 		this.distance = calculateDistance();
-		this.time = (int) Math.round(distance * 2.5);
-		this.cost = (int) Math.round(distance * 10_000);
+		this.time = (int) Math.round(distance * 1.5);
+		this.cost = (int) (Math.round(distance * 4) * 1000) + 10_000; // 10_000 Toman for Entrance fee
 	}
 
 	public Traveler getTraveler() {
@@ -42,8 +42,8 @@ public class Travel {
 		this.traveler = traveler;
 		
 		this.distance = calculateDistance();
-		this.time = (int) Math.round(distance * 2.5);
-		this.cost = (int) Math.round(distance * 10_000);
+		this.time = (int) Math.round(distance * 1.5);
+		this.cost = (int) (Math.round(distance * 4) * 1000) + 10_000; // 10_000 Toman for Entrance fee
 	}
 
 	public int[] getDestination() {
@@ -88,7 +88,7 @@ public class Travel {
 	
 	@Override
 	public String toString() {
-		return String.format("%s%n%s%nDate: %s%nDistance: %.2f Km%nTime: %d Min%nCost: %d Toman",
+		return String.format("%s%n%s%nDate: %s%nDist: %.2f Km%nTime: %d Min%nCost: %,d Toman",
 				getTraveler(), getDriver(),
 				date, getDistance(), getTime(), getCost());
 	}
