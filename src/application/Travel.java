@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Travel {
 	private Driver driver;
 	private Traveler traveler;
-	private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+	private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd - HH:mm"));
 	private int[] destination;
 	private double distance; // 1km scale
 	private int time; // Min
@@ -19,7 +19,7 @@ public class Travel {
 		
 		this.distance = calculateDistance();
 		this.time = (int) Math.round(distance * 2.5);
-		this.cost = (int) Math.round(distance * 10_000);
+		this.cost = (int) (Math.round(distance * 10) * 1000);
 	}
 	
 	public Driver getDriver() {
@@ -88,7 +88,7 @@ public class Travel {
 	
 	@Override
 	public String toString() {
-		return String.format("%s%n%s%nDate: %s%nDistance: %.2fKM%nTime: %dmin%nCost: %d",
+		return String.format("%s%n%s%nDate: %s%nDistance: %.2f Km%nTime: %d Min%nCost: %d Toman",
 				getTraveler(), getDriver(),
 				date, getDistance(), getTime(), getCost());
 	}
