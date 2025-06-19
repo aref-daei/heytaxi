@@ -156,15 +156,21 @@ public class SystemManagement {
 				"Red", "Blue", "Green", "Yellow", "Orange",
 				"Purple", "Brown", "Black", "White", "Gray"};
 		
-		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		String numbers = "123456789";
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		
 		List<Driver> drivers = new ArrayList<>();
 		
 		for (int i = 0; i < (int)(Math.random()*(15-5+1)+5); i++) {
 			StringBuilder carLP = new StringBuilder();
             for (int c = 0; c < 6; c++) {
-                int index = (int) (Math.random() * characters.length());
-                carLP.append(characters.charAt(index));
+                int index = (int) (Math.random() * numbers.length());
+                if (c == 2) {
+                	index = (int) (Math.random() * characters.length());
+                	carLP.append(characters.charAt(index));
+                } else {                	
+                	carLP.append(numbers.charAt(index));
+                }
             }
             
 			Driver driver = new Driver(

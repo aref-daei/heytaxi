@@ -37,6 +37,6 @@ public class Car {
 	
 	@Override
 	public String toString() {
-		return String.format("%s %s, %s LP", getModel(), getColor(), getLicencePlate());
+		return String.format("%s %s, %s IR", getModel(), getColor(), getLicencePlate());
 	}
 }
