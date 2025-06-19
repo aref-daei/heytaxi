@@ -19,7 +19,7 @@ public class Travel {
 		
 		this.distance = calculateDistance();
 		this.time = (int) Math.round(distance * 2.5);
-		this.cost = (int) (Math.round(distance * 10) * 1000);
+		this.cost = (int) (Math.round(distance * 4) * 1000) + 10_000; // 10_000 Toman for Entrance fee
 	}
 	
 	public Driver getDriver() {
