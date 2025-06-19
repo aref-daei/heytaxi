@@ -89,6 +89,7 @@ public class SystemManagement {
 				
 				travels.add(travel);
 				
+				input.nextLine();
 				break;
 			}
 			case '2': {
@@ -123,6 +124,7 @@ public class SystemManagement {
 					break;
 				} else if (goToMenu.charAt(0) == 'n') {
 					menu = false;
+					System.err.println("You exited");
 					break;
 				} else {
 					System.err.println("An unexpected value received. Answer the question again.");
