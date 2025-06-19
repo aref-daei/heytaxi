@@ -8,7 +8,7 @@ public class Travel {
 	private Traveler traveler;
 	private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd - HH:mm"));
 	private int[] destination;
-	private double distance; // 1km scale
+	private double distance; // 1Km scale
 	private int time; // Min
 	private int cost; // Toman
 	
@@ -18,7 +18,7 @@ public class Travel {
 		this.destination = destination;
 		
 		this.distance = calculateDistance();
-		this.time = (int) Math.round(distance * 2.5);
+		this.time = (int) Math.round(distance * 1.5);
 		this.cost = (int) (Math.round(distance * 4) * 1000) + 10_000; // 10_000 Toman for Entrance fee
 	}
 	
