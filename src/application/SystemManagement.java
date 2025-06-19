@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SystemManagement {
-	private static List<Driver> drivers = generateRandomDrivers();
 	private static List<Travel> travels = new ArrayList<>();
-	private static Traveler session = new Traveler("Unknown");
+	private static Traveler session;
+	private static List<Driver> drivers;
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
@@ -34,6 +34,9 @@ public class SystemManagement {
 			switch (opt.charAt(0)) {
 			case '1': {
 				// ** Sign in User **
+				drivers = generateRandomDrivers();
+				session = new Traveler("Unknown");
+				
 				while (true) {
 					System.out.println("Please enter your full name.");
 					session.setName(input.nextLine());
