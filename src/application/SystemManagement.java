@@ -34,17 +34,18 @@ public class SystemManagement {
 			switch (opt.charAt(0)) {
 			case '1': {
 				// ** Sign in User **
-				boolean loop = true;
-				while (loop) {
+				while (true) {
 					System.out.println("Please enter your full name.");
 					session.setName(input.nextLine());
 					System.out.println("Are you really yourself? y/n");
 					String isYourself = input.nextLine();
-					
-					if (isYourself.charAt(0) != 'y') {
+
+					if (isYourself.charAt(0) == 'y') {
+						break;
+					} else if (isYourself.charAt(0) == 'n') {
 						System.out.printf("You are not %s. Please try again.%n", session.getName());
 					} else {
-						loop = false;
+						System.err.println("An unexpected value received. Answer the question again.");
 					}
 				}
 				
@@ -53,15 +54,35 @@ public class SystemManagement {
 				
 				if (hasLocation.charAt(0) == 'y') {
 					System.out.println("Please enter your location as sample. ex: 5 13");
-					session.setX(input.nextInt());
-					session.setY(input.nextInt());
-				}		
+					try {
+						session.setX(input.nextInt());
+						session.setY(input.nextInt());
+					} catch (Exception e) {
+						System.err.println("An unexpected value received. Your location (0, 0) was saved.");
+					}
+				} else if ((hasLocation.charAt(0) == 'n')) {
+				} else {
+					System.err.println("An unexpected value received. Your location (0, 0) was saved.");
+				}
+				
+				int[] destination = new int[2];
 				
 				System.out.println("Please enter your location destination as sample. ex: 6 -2");
-				int xDestination = input.nextInt();
-				int yDestination = input.nextInt();
+				try {
+					destination[0] = input.nextInt();
+					destination[1] = input.nextInt();
+				} catch (Exception e) {
+					System.err.println("An unexpected value received. Your location destination (0, 0) was saved.");
+					destination[0] = 0;
+					destination[1] = 0;
+				}
 				
-				Travel travel = new Travel(findingNearestDriver(), session, new int[]{xDestination, yDestination});
+				if (destination[0] == session.getX() && destination[1] == session.getY()) {
+					System.err.println("The origin is the same as the destination.\nPlease go through the steps and correct them.");
+					break;
+				}
+				
+				Travel travel = new Travel(findingNearestDriver(), session, destination);
 				
 				System.out.println("\n..:: Your Travel Information ::..");
 				System.out.printf("%s%n%n", travel);
@@ -72,6 +93,11 @@ public class SystemManagement {
 			}
 			case '2': {
 				// ** Travel History **
+				if (travels.isEmpty()) {
+					System.out.println("You did not have a travel.");
+					break;
+				}
+				
 				System.out.println("\n..:: History of Your Travels ::..");
 				for (Travel travel : travels) {
 					System.out.printf("%s%n%n", travel);
@@ -81,14 +107,28 @@ public class SystemManagement {
 			}
 			case '3':
 				// ** Quit **
+				System.err.println("You exited");
 				return;
 			default:
-				throw new IllegalArgumentException("Unexpected value: " + opt);
+				System.err.println("An unexpected value received.");
+				break;
 			}
 			
-			System.out.println("You want to go back to the menu. true or false ?");
-			menu = input.nextBoolean();
-			input.nextLine();
+			while (true) {
+				System.out.println("Do you want to go back to the menu? y/n");
+				String goToMenu = input.nextLine();
+				
+				if (goToMenu.charAt(0) == 'y') {
+					menu = true;
+					break;
+				} else if (goToMenu.charAt(0) == 'n') {
+					menu = false;
+					break;
+				} else {
+					System.err.println("An unexpected value received. Answer the question again.");
+				}
+			}
+			
 			System.out.println();
 		}
 		
