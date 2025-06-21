@@ -222,7 +222,7 @@ public class SystemManagement {
 		return nDriver;
 	}
 	
-	public static boolean backupManagment(Traveler user, char regex) {
+	public static boolean backupManagement(Traveler user, char regex) {
 		String filePath = "sessions.bak";
 		
 		switch (regex) {
