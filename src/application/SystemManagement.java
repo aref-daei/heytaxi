@@ -19,6 +19,8 @@ public class SystemManagement {
 	private static List<Travel> travels = new ArrayList<>();
 	private static Traveler session;
 	private static List<Driver> drivers;
+	
+	private static final int MAX_ACTIVITY_RADIUS = 20;
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
@@ -265,8 +267,8 @@ public class SystemManagement {
 							carColors[(int)(Math.random()*carColors.length)],
 							carLP.toString()));
 			
-			driver.setX((int)(Math.random()*30) * (int)Math.pow(-1,(int)(Math.random()*2)));
-			driver.setY((int)(Math.random()*30) * (int)Math.pow(-1,(int)(Math.random()*2)));
+			driver.setX((int)(Math.random()*MAX_ACTIVITY_RADIUS) * (int)Math.pow(-1,(int)(Math.random()*2)));
+			driver.setY((int)(Math.random()*MAX_ACTIVITY_RADIUS) * (int)Math.pow(-1,(int)(Math.random()*2)));
 			
 			drivers.add(driver);
 		}
@@ -276,7 +278,7 @@ public class SystemManagement {
 	
 	public static Driver findingNearestDriver() {
 		Driver nearestDriver = drivers.get(0);
-		double distance = 100; // Max = 100
+		double distance = MAX_ACTIVITY_RADIUS + 1;
 		for (Driver driver : drivers) {
 			double temp = Math.pow(
 					Math.pow(driver.getX()-session.getX(), 2) + Math.pow(driver.getY()-session.getY(), 2), 0.5);
@@ -308,14 +310,6 @@ public class SystemManagement {
 			try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
 				writer.write(user.getPhone() + ", " + pass);
 				writer.newLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			break;
-			
-		case 'c':
-			try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
-				writer.write("");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
