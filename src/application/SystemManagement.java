@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import module.Telephone;
+
 public class SystemManagement {
 	private static List<Travel> travels = new ArrayList<>();
 	private static Traveler session;
@@ -57,10 +59,15 @@ public class SystemManagement {
 				String name, phone, password;
 				
 				while (true) {
+					try {
+						System.out.println("Please enter your phone.");
+						phone = Telephone.corrector(input.nextLine());
+					} catch (IllegalArgumentException e) {
+						System.err.println(e.getMessage());
+						continue;
+					}
 					System.out.println("Please enter your full name.");
 					name = input.nextLine();
-					System.out.println("Please enter your phone.");
-					phone = input.nextLine();
 					System.out.println("Please enter your password.");
 					password = input.nextLine();
 					
