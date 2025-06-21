@@ -134,7 +134,7 @@ public class SystemManagement {
 				try {
 					TimeUnit.SECONDS.sleep(7);
 					System.out.println("The driver accepted your travel!");
-					TimeUnit.SECONDS.sleep(2);
+					TimeUnit.SECONDS.sleep(1);
 				} catch (InterruptedException e) {
 					System.out.println(e.getMessage());
 				}
