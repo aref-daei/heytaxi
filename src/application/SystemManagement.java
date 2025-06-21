@@ -80,8 +80,9 @@ public class SystemManagement {
 					}
 				}
 
-				session = new Traveler(name);
-				backupManagement(session, 'w');
+				session = new Traveler(name, phone);
+				
+				backupManagement(session, password, 'w');
 				
 				break;
 
@@ -162,7 +163,8 @@ public class SystemManagement {
 				break;
 			}
 			
-			while (opt.charAt(0) != 's') {
+			// opt.charAt(0) != 's'
+			while (true) {
 				System.out.println("Do you want to go back to the menu? Y/n");
 				String goToMenu = input.nextLine().toLowerCase();
 				
@@ -260,7 +262,7 @@ public class SystemManagement {
 		return nearestDriver;
 	}
 	
-	public static boolean backupManagement(Traveler user, char regex) {
+	public static boolean backupManagement(Traveler user, String pass, char regex) {
 		String filePath = "sessions.bak";
 		
 		switch (regex) {
@@ -268,7 +270,7 @@ public class SystemManagement {
 			try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 				String line;
 				while ((line = reader.readLine()) != null) {
-					if (line.contains(user.toString())) 
+					if (line.contains(user.getPhone()))
 						return true;
 				}
 			} catch (IOException e) {
@@ -278,7 +280,7 @@ public class SystemManagement {
 		
 		case 'w':
 			try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-				writer.write(user.getName());
+				writer.write(user.getPhone() + ", " + pass);
 				writer.newLine();
 				System.out.println("Saved " + user.getName());
 			} catch (IOException e) {
