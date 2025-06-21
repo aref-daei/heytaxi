@@ -21,18 +21,26 @@ public class SystemManagement {
 			System.out.println("Welcome to HeyTaxi!");
 			System.out.println("Reach your destination with one click!");
 			System.out.println("©2025 Aref Daei");
-			
 			System.out.println();
-			System.out.println("1. Sign in");
-			System.out.println("2. History");
-			System.out.println("3. Quit");
+			
+			if (session == null) {
+				System.out.println("S) Sign in");
+			} else {
+
+				System.out.printf("%s%n%s%n", "T) Travel Request", "H) History");
+			}
+			System.out.println("Q) Quit");
 			System.out.println();
 			
 			System.out.print("Choose an option: ");
 			String opt = input.nextLine();
 			
-			switch (opt.charAt(0)) {
-			case '1': {
+			if (opt.isEmpty()) {
+				opt = " ";
+			}
+			
+			switch (opt.toLowerCase().charAt(0)) {
+			case 's': {
 				// ** Sign in User **
 				drivers = generateRandomDrivers();
 				session = new Traveler("Unknown");
@@ -51,7 +59,8 @@ public class SystemManagement {
 						System.err.println("An unexpected value received. Answer the question again.");
 					}
 				}
-				
+			}
+			case 't': {
 				System.out.println("Do you know your location? y/n\nIf \"no\", your location (0, 0) will be saved.");
 				String hasLocation = input.nextLine();
 				
@@ -95,7 +104,7 @@ public class SystemManagement {
 				input.nextLine();
 				break;
 			}
-			case '2': {
+			case 'h': {
 				// ** Travel History **
 				if (travels.isEmpty()) {
 					System.out.println("You did not have a travel.");
@@ -109,7 +118,7 @@ public class SystemManagement {
 				
 				break;
 			}
-			case '3':
+			case 'q':
 				// ** Quit **
 				System.err.println("You exited");
 				return;
