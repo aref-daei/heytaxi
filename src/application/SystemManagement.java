@@ -143,7 +143,14 @@ public class SystemManagement {
 				System.out.println("..:: Your Travel Information ::..");
 				System.out.printf("%s%n%n", travel);
 				
-				travels.add(travel);
+				System.out.println("Do you want to cancel your travel? y/N");
+				String cancel = input.nextLine().toLowerCase();
+				if (cancel.isEmpty() || cancel.charAt(0) == 'n') {
+					travels.add(travel);
+					System.out.printf("Your travel will end in %d minutes. Good luck!%n", travel.getTime());
+				} else {
+					System.out.println("Your travel has been canceled successfully.");
+				}
 				
 				driver.setX(destination[0]);
 				driver.setY(destination[1]);
