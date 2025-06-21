@@ -3,6 +3,11 @@
 
 package application;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -215,6 +220,43 @@ public class SystemManagement {
 			}
 		}
 		return nDriver;
+	}
+	
+	public static boolean backupManagment(Traveler user, char regex) {
+		String filePath = "sessions.bak";
+		
+		switch (regex) {
+		case 'r':
+			try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+				String line;
+				while ((line = reader.readLine()) != null) {
+					if (line.contains(user.toString())) 
+						return true;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+		
+		case 'w':
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+				writer.write(user.getName());
+				System.out.println("Saved " + user.getName());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+			
+		case 'c':
+			try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
+				writer.write("");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			break;
+		}
+		
+		return false;
 	}
 
 }
