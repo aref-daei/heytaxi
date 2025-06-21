@@ -20,9 +20,11 @@ public class SystemManagement {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		
-		// ** Menu **
 		boolean menu = true;
 		while (menu) {
+			// ** Menu **
+			clearScreen();
+			
 			System.out.println("Welcome to HeyTaxi!");
 			System.out.println("Reach your destination with one click!");
 			System.out.println("©2025 Aref Daei");
@@ -32,40 +34,51 @@ public class SystemManagement {
 				System.out.println("S) Sign in");
 			} else {
 
-				System.out.printf("%s%n%s%n", "T) Travel Request", "H) History");
+				System.out.printf("%s%n%s%n%s%n", "T) Travel Request", "H) History", "L) Log out");
 			}
 			System.out.println("Q) Quit");
 			System.out.println();
 			
 			System.out.print("Choose an option: ");
-			String opt = input.nextLine();
+			String opt = input.nextLine().toLowerCase();
 			
-			if (opt.isEmpty()) {
+			if (opt.isEmpty() || (opt.charAt(0) == 's' && session != null) ||
+					((opt.charAt(0) == 't' || opt.charAt(0) == 'h' || opt.charAt(0) == 'l') && session == null)) {
 				opt = " ";
 			}
 			
-			switch (opt.toLowerCase().charAt(0)) {
-			case 's': {
+			switch (opt.charAt(0)) {
+			case 's':
 				// ** Sign in User **
+				clearScreen();
+				
 				drivers = generateRandomDrivers();
-				session = new Traveler("Unknown");
+				
+				String name, phone, password;
 				
 				while (true) {
 					System.out.println("Please enter your full name.");
-					session.setName(input.nextLine());
-					System.out.println("Are you really yourself? y/n");
-					String isYourself = input.nextLine();
-
-					if (isYourself.charAt(0) == 'y') {
+					name = input.nextLine();
+					System.out.println("Please enter your phone.");
+					phone = input.nextLine();
+					System.out.println("Please enter your password.");
+					password = input.nextLine();
+					
+					System.out.println("Do you confirm that the information entered is correct? Y/n");
+					String confirm = input.nextLine().toLowerCase();
+					if (confirm.isEmpty() || confirm.charAt(0) == 'y') {
 						break;
-					} else if (isYourself.charAt(0) == 'n') {
-						System.out.printf("You are not %s. Please try again.%n", session.getName());
 					} else {
-						System.err.println("An unexpected value received. Answer the question again.");
+						System.err.println("So, re-enter the information.");
 					}
 				}
-			}
-			case 't': {
+
+				session = new Traveler(name);
+				backupManagement(session, 'w');
+				
+				break;
+
+			case 't':
 				System.out.println("Do you know your location? y/n\nIf \"no\", your location (0, 0) will be saved.");
 				String hasLocation = input.nextLine();
 				
@@ -108,51 +121,69 @@ public class SystemManagement {
 				
 				input.nextLine();
 				break;
-			}
-			case 'h': {
+
+			case 'h':
 				// ** Travel History **
+				clearScreen();
+				
 				if (travels.isEmpty()) {
 					System.out.println("You did not have a travel.");
 					break;
 				}
 				
 				System.out.println("\n..:: History of Your Travels ::..");
-				for (Travel travel : travels) {
-					System.out.printf("%s%n%n", travel);
+				for (Travel t : travels) {
+					System.out.printf("%s%n%n", t);
 				}
 				
 				break;
-			}
+			
+			case 'l':
+				// ** Log out **
+				clearScreen();
+				
+				session = null;
+				break;
+
 			case 'q':
 				// ** Quit **
 				System.err.println("You exited");
 				return;
+				
 			default:
 				System.err.println("An unexpected value received.");
 				break;
 			}
 			
-			while (true) {
-				System.out.println("Do you want to go back to the menu? y/n");
-				String goToMenu = input.nextLine();
+			while (opt.charAt(0) != 's') {
+				System.out.println("Do you want to go back to the menu? Y/n");
+				String goToMenu = input.nextLine().toLowerCase();
 				
-				if (goToMenu.charAt(0) == 'y') {
-					menu = true;
-					break;
-				} else if (goToMenu.charAt(0) == 'n') {
-					menu = false;
-					System.err.println("You exited");
+				if (goToMenu.isEmpty() || goToMenu.charAt(0) == 'y') {
 					break;
 				} else {
-					System.err.println("An unexpected value received. Answer the question again.");
+					System.err.println("So, you exited.");
+					menu = false;
+					break;
 				}
 			}
-			
-			System.out.println();
 		}
 		
 		input.close();
 	}
+	
+	public static void clearScreen() {
+        try {
+            String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	public static List<Driver> generateRandomDrivers() {
 		String[] firstNames = {
@@ -209,17 +240,17 @@ public class SystemManagement {
 	}
 	
 	public static Driver findingNearestDriver() {
-		Driver nDriver = drivers.get(0);
+		Driver nearestDriver = drivers.get(0);
 		double distance = 100; // Max = 100
 		for (Driver driver : drivers) {
 			double temp = Math.pow(
 					Math.pow(driver.getX()-session.getX(), 2) + Math.pow(driver.getY()-session.getY(), 2), 0.5);
 			if (distance > temp) {
 				distance = temp;
-				nDriver  = driver;
+				nearestDriver  = driver;
 			}
 		}
-		return nDriver;
+		return nearestDriver;
 	}
 	
 	public static boolean backupManagement(Traveler user, char regex) {
@@ -241,6 +272,7 @@ public class SystemManagement {
 		case 'w':
 			try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
 				writer.write(user.getName());
+				writer.newLine();
 				System.out.println("Saved " + user.getName());
 			} catch (IOException e) {
 				e.printStackTrace();
