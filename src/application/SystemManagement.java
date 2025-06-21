@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import module.Telephone;
 
@@ -87,47 +88,66 @@ public class SystemManagement {
 				break;
 
 			case 't':
-				System.out.println("Do you know your location? y/n\nIf \"no\", your location (0, 0) will be saved.");
-				String hasLocation = input.nextLine();
-				
-				if (hasLocation.charAt(0) == 'y') {
-					System.out.println("Please enter your location as sample. ex: 5 13");
-					try {
-						session.setX(input.nextInt());
-						session.setY(input.nextInt());
-					} catch (Exception e) {
-						System.err.println("An unexpected value received. Your location (0, 0) was saved.");
+				System.out.println("Do you know your location? Y/n\nDefault location: (0, 0)");
+				String hasLocation = input.nextLine().toLowerCase();
+				if (hasLocation.isEmpty() || hasLocation.charAt(0) == 'y') {
+					while (true) {
+						System.out.println("Please enter your location. ex: 5 13");
+						try {
+							session.setX(input.nextInt());
+							session.setY(input.nextInt());
+							input.nextLine();
+							break;
+						} catch (Exception e) {
+							System.err.println("An unexpected value received.");
+						}
 					}
-				} else if ((hasLocation.charAt(0) == 'n')) {
 				} else {
-					System.err.println("An unexpected value received. Your location (0, 0) was saved.");
+					System.err.println("So, the default location saved.");
 				}
 				
 				int[] destination = new int[2];
 				
-				System.out.println("Please enter your location destination as sample. ex: 6 -2");
+				while (true) {
+					System.out.println("Please enter your location destination. ex: 6 -2");
+					try {
+						destination[0] = input.nextInt();
+						destination[1] = input.nextInt();
+						input.nextLine();
+						
+						if (destination[0] == session.getX() && destination[1] == session.getY()) {
+							System.err.println("The origin is the same as the destination.\nPlease go through the steps and correct them.");
+						} else {
+							break;
+						}
+					} catch (Exception e) {
+						System.err.println("An unexpected value received.");
+					}
+				}
+				
+				// Finding The Nearest Driver
+				clearScreen();
+				System.out.println("Finding the nearest driver ...");
+				Driver driver = findingNearestDriver();
 				try {
-					destination[0] = input.nextInt();
-					destination[1] = input.nextInt();
-				} catch (Exception e) {
-					System.err.println("An unexpected value received. Your location destination (0, 0) was saved.");
-					destination[0] = 0;
-					destination[1] = 0;
+					TimeUnit.SECONDS.sleep(7);
+					System.out.println("The driver accepted your travel!");
+					TimeUnit.SECONDS.sleep(2);
+				} catch (InterruptedException e) {
+					System.out.println(e.getMessage());
 				}
 				
-				if (destination[0] == session.getX() && destination[1] == session.getY()) {
-					System.err.println("The origin is the same as the destination.\nPlease go through the steps and correct them.");
-					break;
-				}
+				Travel travel = new Travel(driver, session, destination);
 				
-				Travel travel = new Travel(findingNearestDriver(), session, destination);
-				
-				System.out.println("\n..:: Your Travel Information ::..");
+				clearScreen();
+				System.out.println("..:: Your Travel Information ::..");
 				System.out.printf("%s%n%n", travel);
 				
 				travels.add(travel);
 				
-				input.nextLine();
+				driver.setX(destination[0]);
+				driver.setY(destination[1]);
+				
 				break;
 
 			case 'h':
@@ -139,7 +159,7 @@ public class SystemManagement {
 					break;
 				}
 				
-				System.out.println("\n..:: History of Your Travels ::..");
+				System.out.println("..:: History of Your Travels ::..");
 				for (Travel t : travels) {
 					System.out.printf("%s%n%n", t);
 				}
@@ -162,9 +182,8 @@ public class SystemManagement {
 				System.err.println("An unexpected value received.");
 				break;
 			}
-			
-			// opt.charAt(0) != 's'
-			while (true) {
+
+			while (opt.charAt(0) != 's') {
 				System.out.println("Do you want to go back to the menu? Y/n");
 				String goToMenu = input.nextLine().toLowerCase();
 				
@@ -282,7 +301,6 @@ public class SystemManagement {
 			try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
 				writer.write(user.getPhone() + ", " + pass);
 				writer.newLine();
-				System.out.println("Saved " + user.getName());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
