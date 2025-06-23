@@ -16,25 +16,26 @@ import java.util.concurrent.TimeUnit;
 import module.Telephone;
 
 public class SystemManagement {
+
 	private static List<Travel> travels = new ArrayList<>();
 	private static Traveler session;
 	private static List<Driver> drivers;
-	
+
 	private static final int MAX_ACTIVITY_RADIUS = 20;
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
-		
+
 		boolean menu = true;
 		while (menu) {
 			// ** Menu **
 			clearScreen();
-			
+
 			System.out.println("Welcome to HeyTaxi!");
 			System.out.println("Reach your destination with one click!");
 			System.out.println("©2025 Aref Daei");
 			System.out.println();
-			
+
 			if (session == null) {
 				System.out.println("S) Sign in");
 			} else {
@@ -180,6 +181,8 @@ public class SystemManagement {
 				clearScreen();
 				
 				session = null;
+				
+				opt = "s for log out";
 				break;
 
 			case 'q':
