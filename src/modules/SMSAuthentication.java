@@ -38,7 +38,7 @@ public class SMSAuthentication {
         Map<String, String> data = new LinkedHashMap<>();
         data.put("phone", phone);
         data.put("code", generateCode());
-        data.put("exp", LocalDateTime.now().plusSeconds(10)
+        data.put("exp", LocalDateTime.now().plusSeconds(60)
         		.format(DateTimeFormatter.ofPattern("yyyy/MM/dd-HH:mm:ss")));
         
         try (CSVWriter writer = new CSVWriter(new FileWriter(path))) {
