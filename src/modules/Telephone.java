@@ -1,4 +1,4 @@
-package module;
+package modules;
 
 public class Telephone {
 	public static String corrector(String phone) {
