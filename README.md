@@ -1,5 +1,7 @@
 # HeyTaxi
 
+Language: [Persian](README-Persian.md)
+
 **HeyTaxi** is a simple command-line-based *online taxi simulation* written in Java. It randomly generates drivers and allows passengers to request a travel. The system automatically selects the closest available driver based on the passenger's location, and simulates a full travel experience in the terminal.
 
 ## Features
