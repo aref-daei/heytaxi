@@ -16,9 +16,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class SMSAuthentication {
+	
+	private String path;
+	
+	public SMSAuthentication(String path) {
+		this.path = path;
+	}
 
-
-    public static String generateCode() {
+    private String generateCode() {
         SecureRandom random = new SecureRandom();
         StringBuilder code = new StringBuilder();
         
@@ -29,8 +34,7 @@ public class SMSAuthentication {
         return code.toString();
     }
 
-
-    public static String sendAuthenticationSMS(String phone, String path){
+    public String sendAuthenticationSMS(String phone){
         Map<String, String> data = new LinkedHashMap<>();
         data.put("phone", phone);
         data.put("code", generateCode());
@@ -64,7 +68,7 @@ public class SMSAuthentication {
         return json;
     }
 
-    public static List<String[]> loadData(String path){
+    public List<String[]> loadData(){
         List<String[]> records = new ArrayList<>();
         
         try (CSVReader csvReader = new CSVReader(new FileReader(path))) {
@@ -78,9 +82,8 @@ public class SMSAuthentication {
         return records;
     }
 
-
-    public static boolean verifyCode(String code, String phone, String path) {
-        List<String[]> allData = loadData(path);
+    public boolean verifyCode(String code, String phone) {
+        List<String[]> allData = loadData();
     	
     	for (String[] data : allData) {
     		
@@ -104,12 +107,5 @@ public class SMSAuthentication {
         return false;
     }
 
-    public static void main(String[] args) {
-        System.out.println(sendAuthenticationSMS("09381358888", "test.csv"));
-        Scanner sc = new Scanner(System.in);
-        String code = sc.next();
-        System.out.println(verifyCode(code,"09381358888","test.csv"));
-        sc.close();
-    }
 }
 
