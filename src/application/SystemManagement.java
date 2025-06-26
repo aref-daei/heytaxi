@@ -80,7 +80,7 @@ public class SystemManagement {
 						continue;
 					}
 					
-					System.out.println("Please enter your full name.");
+					System.out.println("Code confirmed!\nPlease enter your full name.");
 					name = input.nextLine();
 					
 					System.out.println("Do you confirm that the information entered is correct? Y/n");
