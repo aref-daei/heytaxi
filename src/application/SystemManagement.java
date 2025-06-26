@@ -25,6 +25,7 @@ public class SystemManagement {
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
+		SMSAuthentication auth = new SMSAuthentication("logs.csv");
 
 		boolean menu = true;
 		while (menu) {
@@ -60,20 +61,27 @@ public class SystemManagement {
 				
 				drivers = generateRandomDrivers();
 				
-				String name, phone, password;
+				String name, phone;
 				
 				while (true) {
 					try {
-						System.out.println("Please enter your phone.");
+						System.out.println("Please enter your phone number.");
 						phone = Telephone.corrector(input.nextLine());
 					} catch (IllegalArgumentException e) {
 						System.err.println(e.getMessage());
 						continue;
 					}
+					
+					System.out.printf("Please enter the code sent to your mobile phone.%n%s%n",
+							auth.sendAuthenticationSMS(phone));
+					String code = input.nextLine();
+					if (!auth.verifyCode(code, phone)) {
+						System.err.println("Invalid code! Please re-enter your phone number to get a new one.");
+						continue;
+					}
+					
 					System.out.println("Please enter your full name.");
 					name = input.nextLine();
-					System.out.println("Please enter your password.");
-					password = input.nextLine();
 					
 					System.out.println("Do you confirm that the information entered is correct? Y/n");
 					String confirm = input.nextLine().toLowerCase();
@@ -86,7 +94,7 @@ public class SystemManagement {
 
 				session = new Traveler(name, phone);
 				
-				backupManagement(session, password, 'w');
+				// backupManagement(session, password, 'w');
 				
 				break;
 
