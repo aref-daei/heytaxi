@@ -44,4 +44,4 @@ java -cp target/classes SystemManagement
 
 ## مجوز
 
-این پروژه تحت مجوز MIT منتشر شده است. برای اطلاعات بیشتر، فایل [LICENSE](LICENSE) را مشاهده کنید.
+این پروژه تحت مجوز MIT منتشر شده است. برای اطلاعات بیشتر، فایل [LICENSE](LICENSE.txt) را مشاهده کنید.
