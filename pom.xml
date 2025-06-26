@@ -4,7 +4,7 @@
     <artifactId>heytaxi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>HeyTaxi</name>
-    <description>HeyTaxi, an internet taxi project is currently terminal-based.</description>
+    <description>A command-line Java app that simulates an online taxi service.</description>
     <build>
         <sourceDirectory>src</sourceDirectory>
         <plugins>
