@@ -14,13 +14,14 @@
 
 ## UML Structure
 
+The diagrams below illustrate the structural design and class relationships defined in the project:
+
 ```mermaid
 classDiagram
     class Car {
         - model: String
         - color: String
         - licencePlate: String
-        + getter and setter
         + toString() : String
     }
 
@@ -29,18 +30,15 @@ classDiagram
         - name: String
         - x, y: int, int
         - score: double
-        + getter and setter
     }
 
     class Driver {
         - car: Car
-        + getter and setter
         + toString() : String
     }
 
     class Traveler {
         - phone: String
-        + getter and setter
         + toString() : String
     }
 
@@ -65,7 +63,6 @@ classDiagram
         - time: Time
         - cost: int
         - status: String
-        + getter and setter
         + calculateDistance() : double
         + toString() : String
     }
