@@ -79,7 +79,7 @@ classDiagram
 ## Getting Started
 
 ### Prerequisites
-- Java 17 or higher
+- Java 21 or higher
 - Maven
 
 ### Run the Project
@@ -95,7 +95,7 @@ mvn clean compile
 Then run the program manually:
 
 ```bash
-java -cp target/classes SystemManagement
+java -cp target/classes application.SystemManagement
 ```
 
 **Warning:** If you encounter an error while running the program, try using the following alternative command to execute it:

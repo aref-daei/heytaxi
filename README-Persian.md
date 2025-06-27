@@ -15,7 +15,7 @@
 ## شروع کار
 
 ### پیش‌نیازها:
-- جاوا 17 یا بالاتر
+- جاوا 21 یا بالاتر
 - ابزار Maven
 
 ### اجرای پروژه:
@@ -31,7 +31,7 @@ mvn clean compile
 سپس با دستور زیر پروژه را اجرا کنید:
 
 ```bash
-java -cp target/classes SystemManagement
+java -cp target/classes application.SystemManagement
 ```
 
 **هشدار:** اگر در اجرای برنامه با خطا مواجه شدید، برای اجرای آن از دستور جایگزین زیر استفاده کنید:
