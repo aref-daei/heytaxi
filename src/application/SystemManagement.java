@@ -17,9 +17,9 @@ import modules.*;
 
 public class SystemManagement {
 
+	private static List<Driver> drivers = generateRandomDrivers();
 	private static List<Travel> travels = new ArrayList<>();
 	private static Traveler session;
-	private static List<Driver> drivers;
 
 	private static final int MAX_ACTIVITY_RADIUS = 20;
 
@@ -59,8 +59,6 @@ public class SystemManagement {
 			case 's':
 				// ** Sign in User **
 				clearScreen();
-				
-				drivers = generateRandomDrivers();
 				
 				String name, phone;
 				
@@ -308,7 +306,7 @@ public class SystemManagement {
 		
 		List<Driver> drivers = new ArrayList<>();
 		
-		for (int i = 0; i < (int)(Math.random()*(15-5+1)+5); i++) {
+		for (int i = 0; i < (int)(Math.random()*(20-10+1)+10); i++) {
 			StringBuilder carLP = new StringBuilder();
             for (int c = 0; c < 6; c++) {
                 int index = (int) (Math.random() * numbers.length());
