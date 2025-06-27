@@ -11,6 +11,7 @@ public class Travel {
 	private double distance; // 1Km scale
 	private int time; // Min
 	private int cost; // Toman
+	private String status;
 	
 	public Travel(Driver driver, Traveler traveler, int[] destination) {
 		this.driver = driver;
@@ -20,6 +21,8 @@ public class Travel {
 		this.distance = calculateDistance();
 		this.time = (int) Math.round(distance * 1.5);
 		this.cost = (int) (Math.round(distance * 4) * 1000) + 10_000; // 10_000 Toman for Entrance fee
+		
+		this.status = "start";
 	}
 	
 	public Driver getDriver() {
@@ -78,6 +81,22 @@ public class Travel {
 		this.cost = cost;
 	}
 	
+	public String getStatus() {
+		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime destinationTime =
+				LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy/MM/dd - HH:mm")).plusMinutes(time);
+
+		if (destinationTime.isBefore(now)) {
+			status = "end";
+		}
+		
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 	public double calculateDistance() {
 		distance = Math.pow(Math.pow(destination[0]-traveler.getX(), 2) + Math.pow(destination[1]-traveler.getY(), 2), 0.5);
 		if (distance == 0.0) {
@@ -88,8 +107,8 @@ public class Travel {
 	
 	@Override
 	public String toString() {
-		return String.format("%s%n%s%nDate: %s%nDist: %.2f Km%nTime: %d Min%nCost: %,d Toman",
+		return String.format("%s%n%s%nDate: %s%nDist: %.2f Km%nTime: %d Min%nCost: %,d Toman%nStatus: %sed",
 				getTraveler(), getDriver(),
-				date, getDistance(), getTime(), getCost());
+				date, getDistance(), getTime(), getCost(), getStatus());
 	}
 }
