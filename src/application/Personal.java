@@ -43,6 +43,10 @@ public class Personal {
 	}
 
 	public void setScore(double score) {
+		if (score < 0.0 || score > 5.0) {
+			throw new IllegalArgumentException("Score must be >= 0.0 and <= 5.0");
+		}
+		
 		this.score = score;
 	}
 }
