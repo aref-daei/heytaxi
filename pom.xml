@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ir.ardastudio</groupId>
     <artifactId>heytaxi</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>HeyTaxi</name>
     <description>A command-line Java app that simulates an online taxi service.</description>
     <build>
