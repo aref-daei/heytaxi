@@ -3,6 +3,7 @@
 
 package application;
 
+// Imports
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -17,20 +18,22 @@ import modules.*;
 
 public class SystemManagement {
 
-	private static List<Driver> drivers = generateRandomDrivers();
-	private static List<Travel> travels = new ArrayList<>();
-	private static Traveler session;
+	// Instance variable
+	private static List<Driver> drivers = generateRandomDrivers(); // Auto generation of drivers
+	private static List<Travel> travels = new ArrayList<>(); // Travel history
+	private static Traveler session; // Traveler (user) session
 
-	private static final int MAX_ACTIVITY_RADIUS = 20;
+	private static final int MAX_ACTIVITY_RADIUS = 20; // Max radius of app service activity
 
+	// Application execution method
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		SMSAuthentication auth = new SMSAuthentication("logs.csv");
 
 		boolean menu = true;
 		while (menu) {
-			// ** Menu **
-			clearScreen();
+			// *** Menu ***
+			clearScreen(); // Clear terminal screen
 
 			System.out.println("      *** Welcome to HeyTaxi ***      ");
 			System.out.println("Reach your destination with one click!");
@@ -46,22 +49,22 @@ public class SystemManagement {
 			}
 			System.out.println("Q) Quit");
 			System.out.println();
-			
+
 			System.out.print("Choose an option: ");
 			String opt = input.nextLine().toLowerCase();
-			
+
 			if (opt.isEmpty() || (opt.charAt(0) == 's' && session != null) ||
 					((opt.charAt(0) == 't' || opt.charAt(0) == 'h' || opt.charAt(0) == 'l') && session == null)) {
 				opt = " ";
 			}
-			
+
 			switch (opt.charAt(0)) {
 			case 's':
-				// ** Sign in User **
+				// *** Sign in User ***
 				clearScreen();
-				
+
+				// Get traveler (user) information
 				String name, phone;
-				
 				while (true) {
 					try {
 						System.out.println("Please enter your phone number.");
@@ -74,7 +77,7 @@ public class SystemManagement {
 						System.err.println(e.getMessage());
 						continue;
 					}
-					
+
 					System.out.printf("Please enter the code sent to your mobile phone.%n%s%n",
 							auth.sendAuthenticationSMS(phone));
 					String code = input.nextLine();
@@ -82,10 +85,10 @@ public class SystemManagement {
 						System.err.println("Invalid code! Please re-enter your phone number to get a new one.");
 						continue;
 					}
-					
+
 					System.out.println("Code confirmed.\nPlease enter your full name.");
 					name = input.nextLine();
-					
+
 					System.out.println("Do you confirm that the information entered is correct? Y/n");
 					String confirm = input.nextLine().toLowerCase();
 					if (confirm.isEmpty() || confirm.charAt(0) == 'y') {
@@ -95,15 +98,18 @@ public class SystemManagement {
 					}
 				}
 
+				// Create a Traveler object and store its reference in the session
 				session = new Traveler(name, phone);
-				
-				// backupManagement(session, password, 'w');
-				
+
 				break;
 
 			case 't':
-				if (travels.isEmpty() || !travels.getLast().getStatus().equals("start")) {
+				// *** Travel Request/Status ***
+				clearScreen();
 
+				// If not traveling and otherwise
+				if (travels.isEmpty() || !travels.getLast().getStatus().equals("start")) {
+					// Get travel information
 					System.out.println("Do you know your location? Y/n\nDefault location: (0, 0)");
 					String hasLocation = input.nextLine().toLowerCase();
 					if (hasLocation.isEmpty() || hasLocation.charAt(0) == 'y') {
@@ -122,16 +128,15 @@ public class SystemManagement {
 					} else {
 						System.err.println("So, the default location saved.");
 					}
-					
+
 					int[] destination = new int[2];
-					
 					while (true) {
 						System.out.println("Please enter your location destination. ex: 6 -2");
 						try {
 							destination[0] = input.nextInt();
 							destination[1] = input.nextInt();
 							input.nextLine();
-							
+
 							if (destination[0] == session.getX() && destination[1] == session.getY()) {
 								System.err.println("The origin is the same as the destination.\n"
 										+ "Please go through the steps and correct them.");
@@ -144,8 +149,9 @@ public class SystemManagement {
 						}
 					}
 					
-					// Finding The Nearest Driver
+					// Finding nearest driver
 					clearScreen();
+
 					System.out.println("Finding the nearest driver ...");
 					try {
 						TimeUnit.SECONDS.sleep(7);
@@ -154,32 +160,32 @@ public class SystemManagement {
 					} catch (InterruptedException e) {
 						System.out.println(e.getMessage());
 					}
-
 					Driver driver = findingNearestDriver();
-					
+
+					// Create a travel
 					Travel travel = new Travel(driver, session, destination);
-					
+
+					// Show travel information and add to history
 					clearScreen();
+
 					System.out.println("..:: Your Travel Information ::..");
 					System.out.printf("%s%n%n", travel);
-
 					travels.add(travel);
 					System.out.printf("Your travel will end in %d minutes. Good luck!%n", travel.getTime());
-					
+
+					// Setting driver to destination coordinates
 					driver.setX(destination[0]);
 					driver.setY(destination[1]);
-
 				} else {
-					
-					clearScreen();
+					// Show current travel information and options
 					System.out.println("..:: Your Current Travel Information ::..");
 					System.out.printf("%s%n%n", travels.getLast());
-					
+
 					System.out.printf("%s%n%s%n%s%n%n",
 							"Options:",
 							"Opt 1: Rating the driver",
 							"Opt 2: Cancel the travel");
-					
+
 					System.out.print("Choose from above options by number or skip [1/2/s] (s): ");
 					String cancel = input.nextLine().toLowerCase();
 					if (!cancel.isEmpty()) {
@@ -214,39 +220,40 @@ public class SystemManagement {
 					}
 					
 				}
-				
+
 				break;
 
 			case 'h':
-				// ** Travel History **
+				// *** Travel History ***
 				clearScreen();
-				
+
 				if (travels.isEmpty()) {
 					System.out.println("You did not have a travel.");
 					break;
 				}
-				
+
 				System.out.println("..:: History of Your Travels ::..");
 				for (Travel t : travels) {
 					System.out.printf("%s%n%n", t);
 				}
-				
+
 				break;
-			
+
 			case 'l':
-				// ** Log out **
+				// *** Log out ***
 				clearScreen();
-				
+
 				session = null;
-				
+
 				opt = "s for log out";
+
 				break;
 
 			case 'q':
-				// ** Quit **
+				// *** Quit ***
 				System.err.println("You exited");
 				return;
-				
+
 			default:
 				System.err.println("An unexpected value received.");
 				break;
@@ -255,7 +262,6 @@ public class SystemManagement {
 			while (opt.charAt(0) != 's') {
 				System.out.println("Do you want to go back to the menu? Y/n");
 				String goToMenu = input.nextLine().toLowerCase();
-				
 				if (goToMenu.isEmpty() || goToMenu.charAt(0) == 'y') {
 					break;
 				} else {
@@ -265,10 +271,11 @@ public class SystemManagement {
 				}
 			}
 		}
-		
+
 		input.close();
 	}
-	
+
+	// This method for clear terminal screen
 	public static void clearScreen() {
         try {
             String os = System.getProperty("os.name");
@@ -281,32 +288,35 @@ public class SystemManagement {
             e.printStackTrace();
         }
     }
-	
+
+	// This method for automatic random generation of drivers
 	public static List<Driver> generateRandomDrivers() {
 		String[] firstNames = {
 				"Ali", "Reza", "Amir", "Hossein", "Mehdi",
 				"Sajjad", "Mohammad", "Ramin", "Kasra", "Parsa",
 				"Fatemeh", "Zahra", "Maryam", "Sara", "Nazanin",
 				"Parisa", "Mahsa", "Hanieh", "Sepideh", "Roya"};
-		
+
 		String[] lastNames = {
 				"Ahmadi", "Kazemi", "Karimi", "Rezaei", "Hosseini",
 				"Abbasi", "Mohammadi", "Alavi", "Sadr", "Mirzaei"};
-		
+
 		String[] carModels = {
 				"Tondar 90", "Samand", "Pride", "Peugeot 206", "Pars",
 				"Dena", "Soren", "Runna", "Khyber", "Arisan"};
-		
+
 		String[] carColors = {
 				"Red", "Blue", "Green", "Yellow", "Orange",
 				"Purple", "Brown", "Black", "White", "Gray"};
-		
+
 		String numbers = "123456789";
 		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		
+
 		List<Driver> drivers = new ArrayList<>();
-		
+
+		// Random generation of drivers
 		for (int i = 0; i < (int)(Math.random()*(20-10+1)+10); i++) {
+			// Random generation of car license plate
 			StringBuilder carLP = new StringBuilder();
             for (int c = 0; c < 6; c++) {
                 int index = (int) (Math.random() * numbers.length());
@@ -317,7 +327,8 @@ public class SystemManagement {
                 	carLP.append(numbers.charAt(index));
                 }
             }
-            
+
+			// Create a random driver
 			Driver driver = new Driver(
 					String.format("%s %s",
 							firstNames[(int)(Math.random()*firstNames.length)],
@@ -326,19 +337,21 @@ public class SystemManagement {
 					new Car(carModels[(int)(Math.random()*carModels.length)],
 							carColors[(int)(Math.random()*carColors.length)],
 							carLP.toString()));
-			
+
 			driver.setX((int)(Math.random()*MAX_ACTIVITY_RADIUS) * (int)Math.pow(-1,(int)(Math.random()*2)));
 			driver.setY((int)(Math.random()*MAX_ACTIVITY_RADIUS) * (int)Math.pow(-1,(int)(Math.random()*2)));
-			
+
 			drivers.add(driver);
 		}
-		
+
 		return drivers;
 	}
-	
+
+	// This method for automatic finding nearest driver
 	public static Driver findingNearestDriver() {
 		Driver nearestDriver = drivers.get(0);
 		double distance = MAX_ACTIVITY_RADIUS + 1;
+
 		for (Driver driver : drivers) {
 			double temp = Math.pow(
 					Math.pow(driver.getX()-session.getX(), 2) + Math.pow(driver.getY()-session.getY(), 2), 0.5);
@@ -347,9 +360,11 @@ public class SystemManagement {
 				nearestDriver  = driver;
 			}
 		}
+
 		return nearestDriver;
 	}
-	
+
+	// This method for backup management (beta and unused)
 	public static boolean backupManagement(Traveler user, String pass, char regex) {
 		String filePath = "sessions.bak";
 		
@@ -365,7 +380,7 @@ public class SystemManagement {
 				e.printStackTrace();
 			}
 			break;
-		
+
 		case 'w':
 			try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
 				writer.write(user.getPhone() + ", " + pass);
@@ -375,7 +390,7 @@ public class SystemManagement {
 			}
 			break;
 		}
-		
+
 		return false;
 	}
 

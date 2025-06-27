@@ -1,16 +1,20 @@
 package application;
 
 public class Car {
-	private String model;
-	private String color;
-	private String licencePlate;
+
+	// Instance variable
+	private String model; // Car name
+	private String color; // Car color
+	private String licensePlate; // Car license plate
 	
-	public Car(String model, String color, String licencePlate) {
-		this.setModel(model);
-		this.setColor(color);
-		this.setLicencePlate(licencePlate);
+	// Constructor
+	public Car(String model, String color, String licensePlate) {
+		this.model = model;
+		this.color = color;
+		this.licensePlate = licensePlate;
 	}
 
+	// Getters and Setters
 	public String getModel() {
 		return model;
 	}
@@ -27,16 +31,18 @@ public class Car {
 		this.color = color;
 	}
 
-	public String getLicencePlate() {
-		return licencePlate;
+	public String getLicensePlate() {
+		return licensePlate;
 	}
 
-	public void setLicencePlate(String licencePlate) {
-		this.licencePlate = licencePlate;
+	public void setLicensePlate(String licensePlate) {
+		this.licensePlate = licensePlate;
 	}
-	
+
+	// Override toString
 	@Override
 	public String toString() {
-		return String.format("%s %s, %s IR", getModel(), getColor(), getLicencePlate());
+		return String.format("%s %s, %s IR", getModel(), getColor(), getLicensePlate());
 	}
+
 }

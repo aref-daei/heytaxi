@@ -4,15 +4,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Travel {
-	private Driver driver;
-	private Traveler traveler;
-	private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd - HH:mm"));
-	private int[] destination;
+
+	// Instance variable
+	private Driver driver; // Driver object
+	private Traveler traveler; // Traveler object
+	private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd - HH:mm")); // ex: 2025/03/25 - 11:56
+	private int[] destination; // [x, y] destination coordinates
 	private double distance; // 1Km scale
-	private int time; // Min
+	private int time; // Minutes
 	private int cost; // Toman
-	private String status;
-	
+	private String status; // start/end/cancel
+
+	// Constructor
 	public Travel(Driver driver, Traveler traveler, int[] destination) {
 		this.driver = driver;
 		this.traveler = traveler;
@@ -24,14 +27,15 @@ public class Travel {
 		
 		this.status = "start";
 	}
-	
+
+	// Getters and Setters
 	public Driver getDriver() {
 		return driver;
 	}
-	
+
 	public void setDriver(Driver driver) {
 		this.driver = driver;
-		
+
 		this.distance = calculateDistance();
 		this.time = (int) Math.round(distance * 1.5);
 		this.cost = (int) (Math.round(distance * 4) * 1000) + 10_000; // 10_000 Toman for Entrance fee
@@ -43,7 +47,7 @@ public class Travel {
 
 	public void setTraveler(Traveler traveler) {
 		this.traveler = traveler;
-		
+
 		this.distance = calculateDistance();
 		this.time = (int) Math.round(distance * 1.5);
 		this.cost = (int) (Math.round(distance * 4) * 1000) + 10_000; // 10_000 Toman for Entrance fee
@@ -80,7 +84,7 @@ public class Travel {
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
-	
+
 	public String getStatus() {
 		LocalDateTime now = LocalDateTime.now();
 		LocalDateTime destinationTime =
@@ -92,11 +96,12 @@ public class Travel {
 		
 		return status;
 	}
-	
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
+	// This method for calculate distance
 	public double calculateDistance() {
 		distance = Math.pow(Math.pow(destination[0]-traveler.getX(), 2) + Math.pow(destination[1]-traveler.getY(), 2), 0.5);
 		if (distance == 0.0) {
@@ -104,11 +109,13 @@ public class Travel {
 		}
 		return distance;
 	}
-	
+
+	// Override toString
 	@Override
 	public String toString() {
 		return String.format("%s%n%s%nDate: %s%nDist: %.2f Km%nTime: %d Min%nCost: %,d Toman%nStatus: %sed",
 				getTraveler(), getDriver(),
 				date, getDistance(), getTime(), getCost(), getStatus());
 	}
+
 }

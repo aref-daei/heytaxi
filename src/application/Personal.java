@@ -1,19 +1,23 @@
 package application;
 
 public class Personal {
-	private String name;
-	private int x = 0, y = 0; // 1km scale
-	private double score;
-	
+
+	// Instance variable
+	private String name; // First name and Last name
+	private int x = 0, y = 0; // 1Km scale
+	private double score; // 1 to 5
+
+	// Constructor
 	public Personal(String name, double score) {
 		if (score < 0.0 || score > 5.0) {
 			throw new IllegalArgumentException("Score must be >= 0.0 and <= 5.0");
 		}
 		
-		this.setName(name);
-		this.setScore(score);
+		this.name = name;
+		this.score = score;
 	}
 
+	// Getters and Setters
 	public String getName() {
 		return name;
 	}
