@@ -1,4 +1,4 @@
-# HeyTaxi
+# HeyTaxi 🚖
 
 [انگلیسی](README.md)
 
@@ -32,6 +32,12 @@ mvn clean compile
 
 ```bash
 java -cp target/classes SystemManagement
+```
+
+**هشدار:** اگر در اجرای برنامه با خطا مواجه شدید، برای اجرای آن از دستور جایگزین زیر استفاده کنید:
+
+```bash
+mvn exec:java -Dexec.mainClass="application.SystemManagement"
 ```
 
 ## وضعیت توسعه

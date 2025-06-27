@@ -98,6 +98,12 @@ Then run the program manually:
 java -cp target/classes SystemManagement
 ```
 
+**Warning:** If you encounter an error while running the program, try using the following alternative command to execute it:
+
+```bash
+mvn exec:java -Dexec.mainClass="application.SystemManagement"
+```
+
 ## Development Status
 
 This project is under active development. Planned features include:
