@@ -21,7 +21,7 @@ classDiagram
     class Car {
         - model: String
         - color: String
-        - licencePlate: String
+        - licensePlate: String
         + toString() : String
     }
 
