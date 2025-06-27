@@ -32,16 +32,17 @@ public class SystemManagement {
 			// ** Menu **
 			clearScreen();
 
-			System.out.println("Welcome to HeyTaxi!");
+			System.out.println("      *** Welcome to HeyTaxi ***      ");
 			System.out.println("Reach your destination with one click!");
-			System.out.println("©2025 Aref Daei");
+			System.out.println("         (c) 2025 - Aref Daei         ");
 			System.out.println();
 
 			if (session == null) {
 				System.out.println("S) Sign in");
 			} else {
-
-				System.out.printf("%s%n%s%n%s%n", "T) Travel Request", "H) History", "L) Log out");
+				System.out.printf("%s%n%s%n%s%n",
+						"T) Travel " + (travels.isEmpty() || !travels.getLast().getStatus().equals("start") ? "Request" : "Status"),
+						"H) History", "L) Log out");
 			}
 			System.out.println("Q) Quit");
 			System.out.println();
@@ -66,7 +67,11 @@ public class SystemManagement {
 				while (true) {
 					try {
 						System.out.println("Please enter your phone number.");
-						phone = Telephone.corrector(input.nextLine());
+						phone = input.nextLine();
+						if (phone.isEmpty()) {
+							phone = " ";
+						}
+						phone = Telephone.corrector(phone);
 					} catch (IllegalArgumentException e) {
 						System.err.println(e.getMessage());
 						continue;
@@ -80,7 +85,7 @@ public class SystemManagement {
 						continue;
 					}
 					
-					System.out.println("Code confirmed!\nPlease enter your full name.");
+					System.out.println("Code confirmed.\nPlease enter your full name.");
 					name = input.nextLine();
 					
 					System.out.println("Do you confirm that the information entered is correct? Y/n");
@@ -99,72 +104,118 @@ public class SystemManagement {
 				break;
 
 			case 't':
-				System.out.println("Do you know your location? Y/n\nDefault location: (0, 0)");
-				String hasLocation = input.nextLine().toLowerCase();
-				if (hasLocation.isEmpty() || hasLocation.charAt(0) == 'y') {
+				if (travels.isEmpty() || !travels.getLast().getStatus().equals("start")) {
+
+					System.out.println("Do you know your location? Y/n\nDefault location: (0, 0)");
+					String hasLocation = input.nextLine().toLowerCase();
+					if (hasLocation.isEmpty() || hasLocation.charAt(0) == 'y') {
+						while (true) {
+							System.out.println("Please enter your location. ex: 5 13");
+							try {
+								session.setX(input.nextInt());
+								session.setY(input.nextInt());
+								input.nextLine();
+								break;
+							} catch (Exception e) {
+								input.nextLine();
+								System.err.println("An unexpected value received.");
+							}
+						}
+					} else {
+						System.err.println("So, the default location saved.");
+					}
+					
+					int[] destination = new int[2];
+					
 					while (true) {
-						System.out.println("Please enter your location. ex: 5 13");
+						System.out.println("Please enter your location destination. ex: 6 -2");
 						try {
-							session.setX(input.nextInt());
-							session.setY(input.nextInt());
+							destination[0] = input.nextInt();
+							destination[1] = input.nextInt();
 							input.nextLine();
-							break;
+							
+							if (destination[0] == session.getX() && destination[1] == session.getY()) {
+								System.err.println("The origin is the same as the destination.\n"
+										+ "Please go through the steps and correct them.");
+							} else {
+								break;
+							}
 						} catch (Exception e) {
+							input.nextLine();
 							System.err.println("An unexpected value received.");
 						}
 					}
-				} else {
-					System.err.println("So, the default location saved.");
-				}
-				
-				int[] destination = new int[2];
-				
-				while (true) {
-					System.out.println("Please enter your location destination. ex: 6 -2");
+					
+					// Finding The Nearest Driver
+					clearScreen();
+					System.out.println("Finding the nearest driver ...");
 					try {
-						destination[0] = input.nextInt();
-						destination[1] = input.nextInt();
-						input.nextLine();
-						
-						if (destination[0] == session.getX() && destination[1] == session.getY()) {
-							System.err.println("The origin is the same as the destination.\nPlease go through the steps and correct them.");
-						} else {
-							break;
-						}
-					} catch (Exception e) {
-						System.err.println("An unexpected value received.");
+						TimeUnit.SECONDS.sleep(7);
+						System.out.println("The driver accepted your travel!");
+						TimeUnit.SECONDS.sleep(1);
+					} catch (InterruptedException e) {
+						System.out.println(e.getMessage());
 					}
-				}
-				
-				// Finding The Nearest Driver
-				clearScreen();
-				System.out.println("Finding the nearest driver ...");
-				Driver driver = findingNearestDriver();
-				try {
-					TimeUnit.SECONDS.sleep(7);
-					System.out.println("The driver accepted your travel!");
-					TimeUnit.SECONDS.sleep(1);
-				} catch (InterruptedException e) {
-					System.out.println(e.getMessage());
-				}
-				
-				Travel travel = new Travel(driver, session, destination);
-				
-				clearScreen();
-				System.out.println("..:: Your Travel Information ::..");
-				System.out.printf("%s%n%n", travel);
-				
-				System.out.println("Do you want to cancel your travel? y/N");
-				String cancel = input.nextLine().toLowerCase();
-				if (cancel.isEmpty() || cancel.charAt(0) == 'n') {
+
+					Driver driver = findingNearestDriver();
+					
+					Travel travel = new Travel(driver, session, destination);
+					
+					clearScreen();
+					System.out.println("..:: Your Travel Information ::..");
+					System.out.printf("%s%n%n", travel);
+
 					travels.add(travel);
 					System.out.printf("Your travel will end in %d minutes. Good luck!%n", travel.getTime());
+					
+					driver.setX(destination[0]);
+					driver.setY(destination[1]);
+
 				} else {
-					System.out.println("Your travel has been canceled successfully.");
+					
+					clearScreen();
+					System.out.println("..:: Your Current Travel Information ::..");
+					System.out.printf("%s%n%n", travels.getLast());
+					
+					System.out.printf("%s%n%s%n%s%n%n",
+							"Options:",
+							"Opt 1: Rating the driver",
+							"Opt 2: Cancel the travel");
+					
+					System.out.print("Choose from above options by number or skip [1/2/s] (s): ");
+					String cancel = input.nextLine().toLowerCase();
+					if (!cancel.isEmpty()) {
+						if (cancel.charAt(0) == '1') {
+							System.out.printf("Your travel driver: %s%n%s%n",
+									travels.getLast().getDriver().getName(),
+									"From 1 to 5, how much would you rate the driver and the car?");
+
+							while (true) {
+								try {
+									double score = input.nextDouble();
+									travels.getLast().getDriver().setScore(
+											(travels.getLast().getDriver().getScore() + score) / 2);
+
+									input.nextLine();
+									break;
+								} catch (Exception e) {
+									input.nextLine();
+									System.err.println(e.getMessage() + " Please try again.");
+								}
+							}
+
+						} else if (cancel.charAt(0) == '2') {
+							System.out.println("Canceling this travel will lower your score. Are you sure you want to continue? y/N");
+							String confirm = input.nextLine().toLowerCase();
+							if (!confirm.isEmpty() && confirm.charAt(0) == 'y') {
+								travels.getLast().setStatus("cancel");
+								session.setScore(session.getScore() - 0.17);
+								System.out.println("Your travel has been canceled successfully.");
+							}
+						}
+					}
+					
 				}
-				
-				driver.setX(destination[0]);
-				driver.setY(destination[1]);
 				
 				break;
 
