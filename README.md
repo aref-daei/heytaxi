@@ -1,4 +1,4 @@
-# HeyTaxi
+# HeyTaxi 🚖
 
 [Persian](README-Persian.md)
 
@@ -9,7 +9,75 @@
 - Automatic random generation of drivers
 - Register and manage passengers
 - Request travels with auto-assigned nearby drivers
-- Clear terminal-based user interaction
+- Travel tracking after request
+- Rating system for drivers and passengers
+
+## UML Structure
+
+```mermaid
+classDiagram
+    class Car {
+        - model: String
+        - color: String
+        - licencePlate: String
+        + getter and setter
+        + toString() : String
+    }
+
+    class Personal {
+        <<abstract>>
+        - name: String
+        - x, y: int, int
+        - score: double
+        + getter and setter
+    }
+
+    class Driver {
+        - car: Car
+        + getter and setter
+        + toString() : String
+    }
+
+    class Traveler {
+        - phone: String
+        + getter and setter
+        + toString() : String
+    }
+
+    class SystemManagement {
+        - drivers: List~Driver~
+        - travels: List~Travel~
+        - session: Traveler
+        - MAX_ACTIVITY_RADIUS: int
+        + main(String[] args) : void
+        + clearScreen() : void
+        + generateRandomDrivers() : List~Driver~
+        + findingNearestDriver() : Driver
+        + backupManagement() : boolean
+    }
+
+    class Travel {
+        - driver: Driver
+        - traveler: Traveler
+        - date: String
+        - destination: int[]
+        - distance: double
+        - time: Time
+        - cost: int
+        - status: String
+        + getter and setter
+        + calculateDistance() : double
+        + toString() : String
+    }
+
+    Personal <|-- Driver
+    Personal <|-- Traveler
+    Driver "1" --> "1" Car
+    SystemManagement "1" --> "*" Driver
+    SystemManagement "1" --> "*" Travel
+    Travel "1" --> "1" Driver
+    Travel "1" --> "1" Traveler
+```
 
 ## Getting Started
 
@@ -37,8 +105,6 @@ java -cp target/classes SystemManagement
 
 This project is under active development. Planned features include:
 
-- Travel tracking after request
-- Rating system for drivers and passengers
 - Persistent data storage (file or database)
 - Graphical user interface (GUI)
 
