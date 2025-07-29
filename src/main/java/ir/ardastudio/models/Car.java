@@ -3,6 +3,7 @@ package ir.ardastudio.models;
 public class Car {
 
 	// Instance variable
+	private int id;
 	private String model; // Car name
 	private String color; // Car color
 	private String licensePlate; // Car license plate
@@ -15,6 +16,14 @@ public class Car {
 	}
 
 	// Getters and Setters
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getModel() {
 		return model;
 	}

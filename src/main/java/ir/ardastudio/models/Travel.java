@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Travel {
 
 	// Instance variable
+	private int id;
 	private Driver driver; // Driver object
 	private Traveler traveler; // Traveler object
 	private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd - HH:mm")); // ex: 2025/03/25 - 11:56
@@ -29,6 +30,14 @@ public class Travel {
 	}
 
 	// Getters and Setters
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Driver getDriver() {
 		return driver;
 	}

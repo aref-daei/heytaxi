@@ -3,6 +3,7 @@ package ir.ardastudio.models;
 public class Personal {
 
 	// Instance variable
+	private int id;
 	private String name; // First name and Last name
 	private int x = 0, y = 0; // 1Km scale
 	private double score; // 1 to 5
@@ -18,6 +19,14 @@ public class Personal {
 	}
 
 	// Getters and Setters
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
