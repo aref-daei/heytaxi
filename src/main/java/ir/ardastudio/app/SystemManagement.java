@@ -4,11 +4,6 @@
 package ir.ardastudio.app;
 
 // Imports
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,8 +15,8 @@ import ir.ardastudio.shared.*;
 public class SystemManagement {
 
 	// Instance variable
-	private List<Driver> drivers = generateRandomDrivers(); // Auto generation of drivers
-	private List<Travel> travels = new ArrayList<>(); // Travel history
+	private final List<Driver> drivers = generateRandomDrivers(); // Auto generation of drivers
+	private final List<Travel> travels = new ArrayList<>(); // Travel history
 	private Traveler session; // Traveler (user) session
 
 	private final int MAX_ACTIVITY_RADIUS = 20; // Max radius of app service activity
@@ -260,17 +255,14 @@ public class SystemManagement {
 				break;
 			}
 
-			while (opt.charAt(0) != 's') {
+			if (opt.charAt(0) != 's') {
 				System.out.println("Do you want to go back to the menu? Y/n");
 				String goToMenu = input.nextLine().toLowerCase();
-				if (goToMenu.isEmpty() || goToMenu.charAt(0) == 'y') {
-					break;
-				} else {
-					System.err.println("So, you exited.");
-					menu = false;
-					break;
-				}
-			}
+                if (!goToMenu.isEmpty() && goToMenu.charAt(0) != 'y') {
+                    System.err.println("So, you exited.");
+                    menu = false;
+                }
+            }
 		}
 
 		input.close();
@@ -336,7 +328,7 @@ public class SystemManagement {
 
 	// This method for automatic finding nearest driver
 	public Driver findingNearestDriver() {
-		Driver nearestDriver = drivers.get(0);
+		Driver nearestDriver = drivers.getFirst();
 		double distance = MAX_ACTIVITY_RADIUS + 1;
 
 		for (Driver driver : drivers) {
@@ -351,39 +343,8 @@ public class SystemManagement {
 		return nearestDriver;
 	}
 
-	// This method for backup management (beta and unused)
-	public boolean backupManagement(Traveler user, String pass, char regex) {
-		String filePath = "sessions.bak";
-		
-		switch (regex) {
-		case 'r':
-			try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-				String line;
-				while ((line = reader.readLine()) != null) {
-					if (line.contains(user.getPhone()))
-						return true;
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			break;
-
-		case 'w':
-			try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-				writer.write(user.getPhone() + ", " + pass);
-				writer.newLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			break;
-		}
-
-		return false;
-	}
-
 	public static void launch() {
-		SystemManagement system = new SystemManagement();
-		system.systemManager();
+		new SystemManagement().systemManager();
 	}
 
 }
