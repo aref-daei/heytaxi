@@ -20,21 +20,21 @@ import ir.ardastudio.shared.*;
 public class SystemManagement {
 
 	// Instance variable
-	private static List<Driver> drivers = generateRandomDrivers(); // Auto generation of drivers
-	private static List<Travel> travels = new ArrayList<>(); // Travel history
-	private static Traveler session; // Traveler (user) session
+	private List<Driver> drivers = generateRandomDrivers(); // Auto generation of drivers
+	private List<Travel> travels = new ArrayList<>(); // Travel history
+	private Traveler session; // Traveler (user) session
 
-	private static final int MAX_ACTIVITY_RADIUS = 20; // Max radius of app service activity
+	private final int MAX_ACTIVITY_RADIUS = 20; // Max radius of app service activity
 
 	// Application execution method
-	public static void main(String[] args) {
+	public void systemManager() {
 		Scanner input = new Scanner(System.in);
 		SMSAuthentication auth = new SMSAuthentication("logs.csv");
 
 		boolean menu = true;
 		while (menu) {
 			// *** Menu ***
-			clearScreen(); // Clear terminal screen
+			Screen.clear(); // Clear terminal screen
 
 			System.out.println("      *** Welcome to HeyTaxi ***      ");
 			System.out.println("Reach your destination with one click!");
@@ -62,7 +62,7 @@ public class SystemManagement {
 			switch (opt.charAt(0)) {
 			case 's':
 				// *** Sign in User ***
-				clearScreen();
+				Screen.clear();
 
 				// Get traveler (user) information
 				String name, phone;
@@ -106,7 +106,7 @@ public class SystemManagement {
 
 			case 't':
 				// *** Travel Request/Status ***
-				clearScreen();
+				Screen.clear();
 
 				// If not traveling and otherwise
 				if (travels.isEmpty() || !travels.getLast().getStatus().equals("start")) {
@@ -151,7 +151,7 @@ public class SystemManagement {
 					}
 					
 					// Finding nearest driver
-					clearScreen();
+					Screen.clear();
 
 					System.out.println("Finding the nearest driver ...");
 					try {
@@ -167,7 +167,7 @@ public class SystemManagement {
 					Travel travel = new Travel(driver, session, destination);
 
 					// Show travel information and add to history
-					clearScreen();
+					Screen.clear();
 
 					System.out.println("..:: Your Travel Information ::..");
 					System.out.printf("%s%n%n", travel);
@@ -226,7 +226,7 @@ public class SystemManagement {
 
 			case 'h':
 				// *** Travel History ***
-				clearScreen();
+				Screen.clear();
 
 				if (travels.isEmpty()) {
 					System.out.println("You did not have a travel.");
@@ -242,7 +242,7 @@ public class SystemManagement {
 
 			case 'l':
 				// *** Log out ***
-				clearScreen();
+				Screen.clear();
 
 				session = null;
 
@@ -276,22 +276,8 @@ public class SystemManagement {
 		input.close();
 	}
 
-	// This method for clear terminal screen
-	public static void clearScreen() {
-        try {
-            String os = System.getProperty("os.name");
-            if (os.contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                new ProcessBuilder("clear").inheritIO().start().waitFor();
-            }
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 	// This method for automatic random generation of drivers
-	public static List<Driver> generateRandomDrivers() {
+	public List<Driver> generateRandomDrivers() {
 		String[] firstNames = {
 				"Ali", "Reza", "Amir", "Hossein", "Mehdi",
 				"Sajjad", "Mohammad", "Ramin", "Kasra", "Parsa",
@@ -349,7 +335,7 @@ public class SystemManagement {
 	}
 
 	// This method for automatic finding nearest driver
-	public static Driver findingNearestDriver() {
+	public Driver findingNearestDriver() {
 		Driver nearestDriver = drivers.get(0);
 		double distance = MAX_ACTIVITY_RADIUS + 1;
 
@@ -366,7 +352,7 @@ public class SystemManagement {
 	}
 
 	// This method for backup management (beta and unused)
-	public static boolean backupManagement(Traveler user, String pass, char regex) {
+	public boolean backupManagement(Traveler user, String pass, char regex) {
 		String filePath = "sessions.bak";
 		
 		switch (regex) {
@@ -393,6 +379,11 @@ public class SystemManagement {
 		}
 
 		return false;
+	}
+
+	public static void launch() {
+		SystemManagement system = new SystemManagement();
+		system.systemManager();
 	}
 
 }
