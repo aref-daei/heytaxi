@@ -16,7 +16,7 @@ public class DBConnection {
             // Car Table
             connection.createStatement().execute(
                     "CREATE TABLE IF NOT EXISTS car (" +
-                            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                            "id INTEGER PRIMARY KEY," +
                             "model TEXT NOT NULL," +
                             "color TEXT NOT NULL," +
                             "licensePlate TEXT NOT NULL);"
@@ -25,7 +25,7 @@ public class DBConnection {
             // Personal Table
             connection.createStatement().execute(
                     "CREATE TABLE IF NOT EXISTS personal (" +
-                            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                            "id INTEGER PRIMARY KEY," +
                             "name TEXT NOT NULL," +
                             "x INTEGER NOT NULL," +
                             "y INTEGER NOT NULL," +
@@ -52,7 +52,7 @@ public class DBConnection {
             // Travel Table
             connection.createStatement().execute(
                     "CREATE TABLE IF NOT EXISTS travel (" +
-                            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                            "id INTEGER PRIMARY KEY," +
                             "driver_id INTEGER NOT NULL," +
                             "traveler_id INTEGER NOT NULL," +
                             "date TEXT NOT NULL," +
