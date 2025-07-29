@@ -1,6 +1,6 @@
 package ir.ardastudio.models;
 
-public class Personal {
+public class Person {
 
 	// Instance variable
 	private int id;
@@ -9,7 +9,7 @@ public class Personal {
 	private double score; // 1 to 5
 
 	// Constructor
-	public Personal(String name, double score) {
+	public Person(String name, double score) {
 		if (score < 0.0 || score > 5.0) {
 			throw new IllegalArgumentException("Score must be >= 0.0 and <= 5.0");
 		}

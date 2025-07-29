@@ -1,6 +1,6 @@
 package ir.ardastudio.models;
 
-public class Traveler extends Personal {
+public class Traveler extends Person {
 
 	// Instance variable
 	private String phone; // ex: +989151234567

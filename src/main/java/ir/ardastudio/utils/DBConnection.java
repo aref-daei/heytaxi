@@ -22,9 +22,9 @@ public class DBConnection {
                             "licensePlate TEXT NOT NULL);"
             );
 
-            // Personal Table
+            // Person Table
             connection.createStatement().execute(
-                    "CREATE TABLE IF NOT EXISTS personal (" +
+                    "CREATE TABLE IF NOT EXISTS person (" +
                             "id INTEGER PRIMARY KEY," +
                             "name TEXT NOT NULL," +
                             "x INTEGER NOT NULL," +
@@ -37,7 +37,7 @@ public class DBConnection {
                     "CREATE TABLE IF NOT EXISTS traveler (" +
                             "id INTEGER PRIMARY KEY," +
                             "phone TEXT NOT NULL," +
-                            "FOREIGN KEY(id) REFERENCES personal(id));"
+                            "FOREIGN KEY(id) REFERENCES person(id));"
             );
 
             // Driver Table
@@ -45,7 +45,7 @@ public class DBConnection {
                     "CREATE TABLE IF NOT EXISTS driver (" +
                             "id INTEGER PRIMARY KEY," +
                             "car_id INTEGER NOT NULL," +
-                            "FOREIGN KEY(id) REFERENCES personal(id)" +
+                            "FOREIGN KEY(id) REFERENCES person(id)" +
                             "FOREIGN KEY(car_id) REFERENCES car(id));"
             );
 

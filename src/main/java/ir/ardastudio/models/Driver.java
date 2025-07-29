@@ -1,6 +1,6 @@
 package ir.ardastudio.models;
 
-public class Driver extends Personal {
+public class Driver extends Person {
 
 	// Instance variable
 	private Car car; // Car object
