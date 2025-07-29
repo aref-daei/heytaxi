@@ -1,7 +1,7 @@
 // Tick. Tock. Tick. Tock. A flawless execution.
 // Copyright (c) Aref Daei
 
-package application;
+package ir.ardastudio.app;
 
 // Imports
 import java.io.BufferedReader;
@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import modules.*;
+import ir.ardastudio.models.*;
+import ir.ardastudio.shared.*;
 
 public class SystemManagement {
 

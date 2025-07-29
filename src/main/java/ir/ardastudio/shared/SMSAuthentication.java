@@ -1,9 +1,10 @@
-package modules;
+package ir.ardastudio.shared;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 
 import java.io.*;
 import java.security.SecureRandom;
@@ -34,7 +35,7 @@ public class SMSAuthentication {
     }
 
     // This method for send authentication sms and backup data
-    public String sendAuthenticationSMS(String phone){
+    public String sendAuthenticationSMS(String phone) {
         Map<String, String> data = new LinkedHashMap<>();
         data.put("phone", phone);
         data.put("code", generateCode());
@@ -69,13 +70,13 @@ public class SMSAuthentication {
     }
 
     // This method for lead data from backup file
-    public List<String[]> loadData(){
+    public List<String[]> loadData() {
         List<String[]> records = new ArrayList<>();
 
         try (CSVReader csvReader = new CSVReader(new FileReader(path))) {
         	records = csvReader.readAll();
         	records.remove(0);
-        } catch (IOException e) {
+        } catch (IOException | CsvException e) {
             System.err.println("Error reading CSV file: " + e.getMessage());
             e.printStackTrace();
         }

@@ -1,4 +1,4 @@
-package application;
+package ir.ardastudio.models;
 
 public class Driver extends Personal {
 
