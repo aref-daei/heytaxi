@@ -8,7 +8,7 @@ import ir.ardastudio.utils.DBConnection;
 
 public class CarRepository {
     public void addCar(Car car) throws SQLException {
-        String sql = "INSERT INTO car(model, color, licensePlate) VALUES(?, ?, ?)";
+        String sql = "INSERT INTO car VALUES(?, ?, ?, ?)";
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preStatement = connection.prepareStatement(sql)) {
