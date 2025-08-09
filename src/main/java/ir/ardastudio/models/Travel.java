@@ -62,6 +62,15 @@ public class Travel {
 		this.cost = (int) (Math.round(distance * 4) * 1000) + 10_000; // 10_000 Toman for Entrance fee
 	}
 
+	public String getDate() {
+		return date;
+	}
+
+	// TODO: Check.
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	public int[] getDestination() {
 		return destination;
 	}
