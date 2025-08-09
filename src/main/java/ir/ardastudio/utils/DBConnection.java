@@ -11,7 +11,7 @@ public class DBConnection {
         return DriverManager.getConnection(URL);
     }
 
-    public static void initialize() {
+    public static void initialize() throws SQLException {
         try (Connection connection = getConnection()) {
             // Car Table
             connection.createStatement().execute(
@@ -65,8 +65,6 @@ public class DBConnection {
                             "FOREIGN KEY(driver_id) REFERENCES driver(id)" +
                             "FOREIGN KEY(traveler_id) REFERENCES traveler(id));"
             );
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 }
