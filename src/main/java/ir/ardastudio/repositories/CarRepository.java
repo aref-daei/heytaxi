@@ -1,10 +1,11 @@
 package ir.ardastudio.repositories;
 
-import java.sql.*;
-import java.util.List;
-import java.util.ArrayList;
 import ir.ardastudio.models.Car;
 import ir.ardastudio.utils.DBConnection;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarRepository {
     public void addCar(Car car) throws SQLException {

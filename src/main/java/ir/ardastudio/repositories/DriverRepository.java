@@ -26,6 +26,7 @@ public class DriverRepository {
             // Driver
             PreparedStatement driverStmt = connection.prepareStatement(driverSQL);
             driverStmt.setInt(1, driver.getId());
+            // FIXME: Only Id? Don't you need to save the car's information?
             driverStmt.setInt(2, driver.getCar().getId());
             driverStmt.executeUpdate();
         }
