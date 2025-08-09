@@ -11,8 +11,8 @@ public class CarRepository {
     public void addCar(Car car) throws SQLException {
         String sql = "INSERT INTO car VALUES(?, ?, ?, ?)";
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement prepStmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DBConnection.getConnection()) {
+            PreparedStatement prepStmt = connection.prepareStatement(sql);
             prepStmt.setInt(1, car.getId());
             prepStmt.setString(2, car.getModel());
             prepStmt.setString(3, car.getColor());
@@ -25,9 +25,9 @@ public class CarRepository {
         List<Car> cars = new ArrayList<>();
         String sql = "SELECT * FROM car";
 
-        try (Connection connection = DBConnection.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+        try (Connection connection = DBConnection.getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
                 Car car = new Car(
@@ -45,8 +45,8 @@ public class CarRepository {
     public Car getCarById(int id) throws SQLException {
         String sql = "SELECT * FROM car WHERE id = ?";
 
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement prepStmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DBConnection.getConnection()) {
+            PreparedStatement prepStmt = connection.prepareStatement(sql);
             prepStmt.setInt(1, id);
             ResultSet resultSet = prepStmt.executeQuery();
 
