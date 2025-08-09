@@ -11,12 +11,12 @@ public class CarRepository {
         String sql = "INSERT INTO car VALUES(?, ?, ?, ?)";
 
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preStatement = connection.prepareStatement(sql)) {
-            preStatement.setInt(1, car.getId());
-            preStatement.setString(2, car.getModel());
-            preStatement.setString(3, car.getColor());
-            preStatement.setString(4, car.getLicensePlate());
-            preStatement.executeUpdate();
+             PreparedStatement prepStmt = connection.prepareStatement(sql)) {
+            prepStmt.setInt(1, car.getId());
+            prepStmt.setString(2, car.getModel());
+            prepStmt.setString(3, car.getColor());
+            prepStmt.setString(4, car.getLicensePlate());
+            prepStmt.executeUpdate();
         }
     }
 
@@ -26,14 +26,14 @@ public class CarRepository {
 
         try (Connection connection = DBConnection.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet reSet = statement.executeQuery(sql)) {
+             ResultSet resultSet = statement.executeQuery(sql)) {
 
-            while (reSet.next()) {
+            while (resultSet.next()) {
                 Car car = new Car(
-                        reSet.getString("model"),
-                        reSet.getString("color"),
-                        reSet.getString("licensePlate"));
-                car.setId(reSet.getInt("id"));
+                        resultSet.getString("model"),
+                        resultSet.getString("color"),
+                        resultSet.getString("licensePlate"));
+                car.setId(resultSet.getInt("id"));
                 cars.add(car);
             }
         }
@@ -45,16 +45,16 @@ public class CarRepository {
         String sql = "SELECT * FROM car WHERE id = ?";
 
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preStatement = connection.prepareStatement(sql)) {
-            preStatement.setInt(1, id);
-            ResultSet reSet = preStatement.executeQuery();
+             PreparedStatement prepStmt = connection.prepareStatement(sql)) {
+            prepStmt.setInt(1, id);
+            ResultSet resultSet = prepStmt.executeQuery();
 
-            if (reSet.next()) {
+            if (resultSet.next()) {
                 Car car = new Car(
-                        reSet.getString("model"),
-                        reSet.getString("color"),
-                        reSet.getString("licensePlate"));
-                car.setId(reSet.getInt("id"));
+                        resultSet.getString("model"),
+                        resultSet.getString("color"),
+                        resultSet.getString("licensePlate"));
+                car.setId(resultSet.getInt("id"));
                 return car;
             }
         }
