@@ -45,7 +45,7 @@ public class DBConnection {
                     "CREATE TABLE IF NOT EXISTS driver (" +
                             "id INTEGER PRIMARY KEY," +
                             "car_id INTEGER NOT NULL," +
-                            "FOREIGN KEY(id) REFERENCES person(id)" +
+                            "FOREIGN KEY(id) REFERENCES person(id)," +
                             "FOREIGN KEY(car_id) REFERENCES car(id));"
             );
 
