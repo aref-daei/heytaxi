@@ -12,70 +12,6 @@
 - Travel tracking after request
 - Rating system for drivers and passengers
 
-## UML Structure
-
-The diagrams below illustrate the structural design and class relationships defined in the project:
-
-```mermaid
-classDiagram
-    class Car {
-        - model: String
-        - color: String
-        - licensePlate: String
-        + toString() : String
-    }
-
-    class Personal {
-        <<abstract>>
-        - name: String
-        - x, y: int, int
-        - score: double
-    }
-
-    class Driver {
-        - car: Car
-        + toString() : String
-    }
-
-    class Traveler {
-        - phone: String
-        + toString() : String
-    }
-
-    class SystemManagement {
-        - drivers: List~Driver~
-        - travels: List~Travel~
-        - session: Traveler
-        - MAX_ACTIVITY_RADIUS: int
-        + main(String[] args) : void
-        + clearScreen() : void
-        + generateRandomDrivers() : List~Driver~
-        + findingNearestDriver() : Driver
-        + backupManagement() : boolean
-    }
-
-    class Travel {
-        - driver: Driver
-        - traveler: Traveler
-        - date: String
-        - destination: int[]
-        - distance: double
-        - time: Time
-        - cost: int
-        - status: String
-        + calculateDistance() : double
-        + toString() : String
-    }
-
-    Personal <|-- Driver
-    Personal <|-- Traveler
-    Driver "1" --> "1" Car
-    SystemManagement "1" --> "*" Driver
-    SystemManagement "1" --> "*" Travel
-    Travel "1" --> "1" Driver
-    Travel "1" --> "1" Traveler
-```
-
 ## Getting Started
 
 ### Prerequisites
@@ -95,13 +31,7 @@ mvn clean compile
 Then run the program manually:
 
 ```bash
-java -cp target/classes application.SystemManagement
-```
-
-**Warning:** If you encounter an error while running the program, try using the following alternative command to execute it:
-
-```bash
-mvn exec:java -Dexec.mainClass="application.SystemManagement"
+mvn exec:java
 ```
 
 ## Development Status

@@ -31,13 +31,7 @@ mvn clean compile
 سپس با دستور زیر پروژه را اجرا کنید:
 
 ```bash
-java -cp target/classes application.SystemManagement
-```
-
-**هشدار:** اگر در اجرای برنامه با خطا مواجه شدید، برای اجرای آن از دستور جایگزین زیر استفاده کنید:
-
-```bash
-mvn exec:java -Dexec.mainClass="application.SystemManagement"
+mvn exec:java
 ```
 
 ## وضعیت توسعه
