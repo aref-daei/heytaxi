@@ -11,8 +11,10 @@ public class CarRepository {
     public void addCar(Car car) throws SQLException {
         String sql = "INSERT INTO car VALUES(?, ?, ?, ?)";
 
-        try (Connection connection = DBConnection.getConnection()) {
-            PreparedStatement prepStmt = connection.prepareStatement(sql);
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement prepStmt = connection.prepareStatement(sql)
+        ) {
             prepStmt.setInt(1, car.getId());
             prepStmt.setString(2, car.getModel());
             prepStmt.setString(3, car.getColor());
@@ -25,41 +27,42 @@ public class CarRepository {
         List<Car> cars = new ArrayList<>();
         String sql = "SELECT * FROM car";
 
-        try (Connection connection = DBConnection.getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
+        try (
+                Connection connection = DBConnection.getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery(sql)
+        ) {
+            while (rs.next()) {
                 Car car = new Car(
-                        resultSet.getString("model"),
-                        resultSet.getString("color"),
-                        resultSet.getString("licensePlate"));
-                car.setId(resultSet.getInt("id"));
+                        rs.getString("model"),
+                        rs.getString("color"),
+                        rs.getString("licensePlate"));
+                car.setId(rs.getInt("id"));
                 cars.add(car);
             }
         }
-
         return cars;
     }
 
     public Car getCarById(int id) throws SQLException {
         String sql = "SELECT * FROM car WHERE id = ?";
 
-        try (Connection connection = DBConnection.getConnection()) {
-            PreparedStatement prepStmt = connection.prepareStatement(sql);
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement prepStmt = connection.prepareStatement(sql)
+        ) {
             prepStmt.setInt(1, id);
-            ResultSet resultSet = prepStmt.executeQuery();
-
-            if (resultSet.next()) {
-                Car car = new Car(
-                        resultSet.getString("model"),
-                        resultSet.getString("color"),
-                        resultSet.getString("licensePlate"));
-                car.setId(resultSet.getInt("id"));
-                return car;
+            try (ResultSet rs = prepStmt.executeQuery()) {
+                if (rs.next()) {
+                    Car car = new Car(
+                            rs.getString("model"),
+                            rs.getString("color"),
+                            rs.getString("licensePlate"));
+                    car.setId(rs.getInt("id"));
+                    return car;
+                }
             }
         }
-
         return null;
     }
 }
