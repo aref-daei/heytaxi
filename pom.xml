@@ -63,7 +63,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>${exec.maven.plugin.version}</version>
                 <configuration>
-                    <mainClass>ir.ardastudio.Main</mainClass>
+                    <mainClass>ir.ardastudio.Application</mainClass>
                 </configuration>
             </plugin>
         </plugins>
