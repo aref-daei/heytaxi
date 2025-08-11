@@ -1,7 +1,7 @@
-package ir.ardastudio.repositories;
+package ir.ardastudio.repository;
 
-import ir.ardastudio.models.Car;
-import ir.ardastudio.utils.DBConnection;
+import ir.ardastudio.model.Car;
+import ir.ardastudio.util.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package ir.ardastudio.models;
+package ir.ardastudio.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

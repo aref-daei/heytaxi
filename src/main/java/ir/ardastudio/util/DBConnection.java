@@ -1,4 +1,4 @@
-package ir.ardastudio.utils;
+package ir.ardastudio.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

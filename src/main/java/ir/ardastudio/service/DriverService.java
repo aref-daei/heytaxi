@@ -1,8 +1,8 @@
-package ir.ardastudio.services;
+package ir.ardastudio.service;
 
-import ir.ardastudio.models.Car;
-import ir.ardastudio.models.Driver;
-import ir.ardastudio.models.Traveler;
+import ir.ardastudio.model.Car;
+import ir.ardastudio.model.Driver;
+import ir.ardastudio.model.Traveler;
 
 import java.util.ArrayList;
 import java.util.List;

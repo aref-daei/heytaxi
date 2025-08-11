@@ -1,7 +1,7 @@
-package ir.ardastudio.repositories;
+package ir.ardastudio.repository;
 
-import ir.ardastudio.models.Traveler;
-import ir.ardastudio.utils.DBConnection;
+import ir.ardastudio.model.Traveler;
+import ir.ardastudio.util.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;

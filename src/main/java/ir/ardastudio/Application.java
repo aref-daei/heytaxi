@@ -1,7 +1,7 @@
 package ir.ardastudio;
 
-import ir.ardastudio.services.CoreService;
-import ir.ardastudio.utils.DBConnection;
+import ir.ardastudio.service.CoreService;
+import ir.ardastudio.util.DBConnection;
 
 import java.sql.SQLException;
 
