@@ -12,9 +12,12 @@ public class TravelerRepository {
         String personSQL = "INSERT INTO person VALUES(?, ?, ?, ?, ?)";
         String travelerSQL = "INSERT INTO traveler VALUES(?, ?)";
 
-        try (Connection connection = DBConnection.getConnection()) {
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement personStmt = connection.prepareStatement(personSQL);
+                PreparedStatement travelerStmt = connection.prepareStatement(travelerSQL)
+        ) {
             // Person
-            PreparedStatement personStmt = connection.prepareStatement(personSQL);
             personStmt.setInt(1, traveler.getId());
             personStmt.setString(2, traveler.getName());
             personStmt.setInt(3, traveler.getX());
@@ -23,7 +26,6 @@ public class TravelerRepository {
             personStmt.executeUpdate();
 
             // Traveler
-            PreparedStatement travelerStmt = connection.prepareStatement(travelerSQL);
             travelerStmt.setInt(1, traveler.getId());
             travelerStmt.setString(2, traveler.getPhone());
             travelerStmt.executeUpdate();
@@ -32,48 +34,48 @@ public class TravelerRepository {
 
     public List<Traveler> getAllTravelers() throws SQLException {
         List<Traveler> travelers = new ArrayList<>();
-        String sql = "SELECT * FROM person JOIN traveler ON person.id = traveler.id";
+        String sql = "SELECT * FROM person JOIN traveler t ON person.id = t.id";
 
-        try (Connection connection = DBConnection.getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-
+        try (
+                Connection connection = DBConnection.getConnection();
+                Statement statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery(sql)
+        ) {
             while (rs.next()) {
                 Traveler traveler = new Traveler(
-                        rs.getString("name"),
-                        rs.getString("phone"),
-                        rs.getDouble("score"));
+                        rs.getString("person.name"),
+                        rs.getString("person.phone"),
+                        rs.getDouble("person.score"));
                 traveler.setId(rs.getInt("person.id"));
-                traveler.setX(rs.getInt("x"));
-                traveler.setY(rs.getInt("y"));
+                traveler.setX(rs.getInt("person.x"));
+                traveler.setY(rs.getInt("person.y"));
                 travelers.add(traveler);
             }
         }
-
         return travelers;
     }
 
     public Traveler getTravelerById(int id) throws SQLException {
-        String sql = "SELECT * FROM person JOIN traveler ON person.id = traveler.id WHERE person.id = ?";
+        String sql = "SELECT * FROM person JOIN traveler t ON person.id = t.id WHERE person.id = ?";
 
-        try (Connection connection = DBConnection.getConnection()) {
-            PreparedStatement preStatement = connection.prepareStatement(sql);
-
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement preStatement = connection.prepareStatement(sql)
+        ) {
             preStatement.setInt(1, id);
-            ResultSet rs = preStatement.executeQuery();
-
-            if (rs.next()) {
-                Traveler traveler = new Traveler(
-                        rs.getString("name"),
-                        rs.getString("phone"),
-                        rs.getDouble("score"));
-                traveler.setId(rs.getInt("person.id"));
-                traveler.setX(rs.getInt("x"));
-                traveler.setY(rs.getInt("y"));
-                return traveler;
+            try (ResultSet rs = preStatement.executeQuery()) {
+                if (rs.next()) {
+                    Traveler traveler = new Traveler(
+                            rs.getString("person.name"),
+                            rs.getString("person.phone"),
+                            rs.getDouble("person.score"));
+                    traveler.setId(rs.getInt("person.id"));
+                    traveler.setX(rs.getInt("person.x"));
+                    traveler.setY(rs.getInt("person.y"));
+                    return traveler;
+                }
             }
         }
-
         return null;
     }
 }
