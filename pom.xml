@@ -15,9 +15,6 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <opencsv.version>5.9</opencsv.version>
-        <jackson.version>2.17.1</jackson.version>
-        <sqlite.version>3.45.3.0</sqlite.version>
         <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
         <exec.maven.plugin.version>3.2.0</exec.maven.plugin.version>
     </properties>
@@ -26,17 +23,17 @@
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
-            <version>${opencsv.version}</version>
+            <version>5.9</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
+            <version>2.17.1</version>
         </dependency>
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>${sqlite.version}</version>
+            <version>3.45.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
