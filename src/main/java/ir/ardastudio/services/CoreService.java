@@ -1,12 +1,9 @@
 package ir.ardastudio.services;
 
-import ir.ardastudio.app.SystemManagement;
 import ir.ardastudio.models.Driver;
 import ir.ardastudio.models.Travel;
 import ir.ardastudio.models.Traveler;
-import ir.ardastudio.shared.SMSAuthentication;
-import ir.ardastudio.shared.Screen;
-import ir.ardastudio.shared.Telephone;
+import ir.ardastudio.shared.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -268,7 +265,7 @@ public class CoreService {
     }
 
     public static void launch() {
-        new SystemManagement().systemManager();
+        new CoreService().systemManager();
     }
 
 }
