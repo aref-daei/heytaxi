@@ -62,7 +62,7 @@ public class DBConnection {
                             "time INTEGER NOT NULL," +
                             "cost INTEGER NOT NULL," +
                             "status TEXT NOT NULL," +
-                            "FOREIGN KEY(driver_id) REFERENCES driver(id)" +
+                            "FOREIGN KEY(driver_id) REFERENCES driver(id)," +
                             "FOREIGN KEY(traveler_id) REFERENCES traveler(id));"
             );
         }
