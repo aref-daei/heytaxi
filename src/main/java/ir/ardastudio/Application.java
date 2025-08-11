@@ -5,13 +5,13 @@ import ir.ardastudio.util.DBConnection;
 
 import java.sql.SQLException;
 
-public class Application extends CoreService {
+public class Application {
     public static void main(String[] args) {
         try {
             DBConnection.initialize();
-            launch();
+            new CoreService().systemManager();
         } catch (SQLException e) {
-            System.err.println("Error connecting Database: " + e.getMessage());
+            System.err.println("Database initialization failed: " + e.getMessage());
         }
     }
 }

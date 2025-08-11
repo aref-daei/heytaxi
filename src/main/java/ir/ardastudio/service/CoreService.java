@@ -72,8 +72,4 @@ public class CoreService {
             }
         }
     }
-
-    public static void launch() {
-        new CoreService().systemManager();
-    }
 }
