@@ -13,16 +13,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class SMSAuthentication {
+	private final String path;
 
-    // Instance variable
-	private String path;
-
-    // Constructor
 	public SMSAuthentication(String path) {
 		this.path = path;
 	}
 
-    // This method for generate code
     private String generateCode() {
         SecureRandom random = new SecureRandom();
         StringBuilder code = new StringBuilder();
@@ -30,11 +26,9 @@ public class SMSAuthentication {
         for (int i = 0; i < 5; i++) {
         	code.append(random.nextInt(10));
         }
-
         return code.toString();
     }
 
-    // This method for send authentication sms and backup data
     public String sendAuthenticationSMS(String phone) {
         Map<String, String> data = new LinkedHashMap<>();
         data.put("phone", phone);
@@ -42,8 +36,13 @@ public class SMSAuthentication {
         data.put("exp", LocalDateTime.now().plusSeconds(60)
         		.format(DateTimeFormatter.ofPattern("yyyy/MM/dd-HH:mm:ss")));
 
-        try (CSVWriter writer = new CSVWriter(new FileWriter(path))) {
-        	writer.writeNext(new String[]{"Phone", "Code", "Expiration"});
+        File csvFile = new File(path);
+        boolean fileExists = csvFile.exists() && csvFile.length() > 0;
+
+        try (CSVWriter writer = new CSVWriter(new FileWriter(path, true))) {
+            if (!fileExists) {
+                writer.writeNext(new String[]{"Phone", "Code", "Expiration"});
+            }
 
         	writer.writeNext(new String[]{
             	data.get("phone"),
@@ -53,38 +52,32 @@ public class SMSAuthentication {
 
         	System.out.println("Data successfully written to CSV file: " + path);
         } catch (IOException e) {
-        	System.err.println("Error writing CSV file: " + e.getMessage());
-        	e.printStackTrace()	;
+            System.err.println("Error writing CSV file to path: " + path);
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String json = new String();
-
         try {
-        	json = objectMapper.writeValueAsString(data);
+        	return objectMapper.writeValueAsString(data);
         } catch (JsonProcessingException e) {
-        	System.err.println("Error writing JSON: " + e.getMessage());
+            System.err.println("Error converting data to JSON: " + e.getMessage());
+            return "{}";
         }
-
-        return json;
     }
 
-    // This method for lead data from backup file
     public List<String[]> loadData() {
         List<String[]> records = new ArrayList<>();
 
         try (CSVReader csvReader = new CSVReader(new FileReader(path))) {
         	records = csvReader.readAll();
-        	records.remove(0);
+            if (!records.isEmpty()) {
+                records.remove(0);
+            }
         } catch (IOException | CsvException e) {
-            System.err.println("Error reading CSV file: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Error reading CSV file from path: " + path);
         }
-
         return records;
     }
 
-    // This method for verify code
     public boolean verifyCode(String code, String phone) {
         List<String[]> allData = loadData();
 
@@ -94,20 +87,13 @@ public class SMSAuthentication {
         			LocalDateTime now = LocalDateTime.now();
     				LocalDateTime expirationTime =
     						LocalDateTime.parse(data[2], DateTimeFormatter.ofPattern("yyyy/MM/dd-HH:mm:ss"));
-
-    				if (expirationTime.isAfter(now)) {
-    					return true;
-    				} else {
-    					return false;
-    				}
+                    return expirationTime.isAfter(now);
     			} catch (Exception e) {
-    				System.err.print("Error processing record %d: %s%n");
+                    System.err.printf("Error processing record for phone=%s: %s%n", data[0], e.getMessage());
     			}
     		}
     	}
-
         return false;
     }
-
 }
 
