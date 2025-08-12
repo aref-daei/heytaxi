@@ -32,11 +32,11 @@ public class TravelRepository {
 
     public List<Travel> getAllTravels() throws SQLException {
         List<Travel> travels = new ArrayList<>();
-        String sql = "SELECT * FROM travel t" +
-                "JOIN person pd ON t.driver_id = pd.id" +
-                "JOIN driver ON pd.id = driver.id" +
-                "JOIN person pt ON t.traveler_id = pt.id" +
-                "JOIN traveler ON pt.id = traveler.id" +
+        String sql = "SELECT * FROM travel t " +
+                "JOIN person pd ON t.driver_id = pd.id " +
+                "JOIN driver ON pd.id = driver.id " +
+                "JOIN person pt ON t.traveler_id = pt.id " +
+                "JOIN traveler ON pt.id = traveler.id " +
                 "JOIN car ON car.id = driver.car_id";
 
         try (
@@ -83,12 +83,12 @@ public class TravelRepository {
     }
 
     public Travel getTravelById(int id) throws SQLException {
-        String sql = "SELECT * FROM travel t" +
-                "JOIN person pd ON t.driver_id = pd.id" +
-                "JOIN driver ON pd.id = driver.id" +
-                "JOIN person pt ON t.traveler_id = pt.id" +
-                "JOIN traveler ON pt.id = traveler.id" +
-                "JOIN car ON car.id = driver.car_id" +
+        String sql = "SELECT * FROM travel t " +
+                "JOIN person pd ON t.driver_id = pd.id " +
+                "JOIN driver ON pd.id = driver.id " +
+                "JOIN person pt ON t.traveler_id = pt.id " +
+                "JOIN traveler ON pt.id = traveler.id " +
+                "JOIN car ON car.id = driver.car_id " +
                 "WHERE t.id = ?";
 
         try (
