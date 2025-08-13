@@ -1,9 +1,9 @@
 package ir.ardastudio.util;
 
 public class IdGenerator {
-    private static long counter = 0;
+    private static int counter = 0;
 
-    public static long generate() {
+    public static int generate() {
         return ++counter;
     }
 }
