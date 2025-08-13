@@ -2,20 +2,18 @@ package ir.ardastudio.model;
 
 public class Car {
 
-	// Instance variable
 	private int id;
-	private String model; // Car name
-	private String color; // Car color
-	private String licensePlate; // Car license plate
-	
-	// Constructor
-	public Car(String model, String color, String licensePlate) {
+	private String model;
+	private String color;
+	private String licensePlate;
+
+	public Car(int id, String model, String color, String licensePlate) {
+        this.id = id;
 		this.model = model;
 		this.color = color;
 		this.licensePlate = licensePlate;
 	}
 
-	// Getters and Setters
 	public int getId() {
 		return id;
 	}
@@ -48,7 +46,6 @@ public class Car {
 		this.licensePlate = licensePlate;
 	}
 
-	// Override toString
 	@Override
 	public String toString() {
 		return String.format("%s %s, %s IR", getModel(), getColor(), getLicensePlate());

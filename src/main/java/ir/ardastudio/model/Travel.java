@@ -5,11 +5,10 @@ import java.time.format.DateTimeFormatter;
 
 public class Travel {
 
-	// Instance variable
 	private int id;
-	private Driver driver; // Driver object
-	private Traveler traveler; // Traveler object
-	private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd - HH:mm")); // ex: 2025/03/25 - 11:56
+	private Driver driver;
+	private Traveler traveler;
+	private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd - HH:mm"));
 	private int[] destination; // [x, y] destination coordinates
 	private double distance; // 1Km scale
 	private int time; // Minutes
@@ -17,7 +16,8 @@ public class Travel {
 	private String status; // start/end/cancel
 
 	// Constructor
-	public Travel(Driver driver, Traveler traveler, int[] destination) {
+	public Travel(int id, Driver driver, Traveler traveler, int[] destination) {
+        this.id = id;
 		this.driver = driver;
 		this.traveler = traveler;
 		this.destination = destination;
@@ -29,7 +29,6 @@ public class Travel {
 		this.status = "start";
 	}
 
-	// Getters and Setters
 	public int getId() {
 		return id;
 	}

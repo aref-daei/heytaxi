@@ -2,21 +2,18 @@ package ir.ardastudio.model;
 
 public class Traveler extends Person {
 
-	// Instance variable
 	private String phone; // ex: +989151234567
 
-	// Constructors
-	public Traveler(String name, String phone) {
-		super(name, 5);
+	public Traveler(int id, String name, String phone) {
+		super(id, name, 5);
 		this.phone = phone;
 	}
 
-	public Traveler(String name, String phone, double score) {
-		super(name, score);
+	public Traveler(int id, String name, String phone, double score) {
+		super(id, name, score);
 		this.phone = phone;
 	}
 
-	// Getters and Setters
 	public String getPhone() {
 		return phone;
 	}

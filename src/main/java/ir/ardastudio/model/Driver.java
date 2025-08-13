@@ -2,16 +2,13 @@ package ir.ardastudio.model;
 
 public class Driver extends Person {
 
-	// Instance variable
-	private Car car; // Car object
+	private Car car;
 
-	// Constructor
-	public Driver(String name, double score, Car car) {
-		super(name, score);
+	public Driver(int id, String name, double score, Car car) {
+		super(id, name, score);
 		this.car = car;
 	}
 
-	// Getters and Setters
 	public Car getCar() {
 		return car;
 	}
@@ -20,7 +17,6 @@ public class Driver extends Person {
 		this.car = car;
 	}
 
-	// Override toString
 	@Override
 	public String toString() {
 		return String.format("%s: %s (%s) - %.2f Score",

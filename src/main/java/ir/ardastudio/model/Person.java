@@ -2,23 +2,21 @@ package ir.ardastudio.model;
 
 public class Person {
 
-	// Instance variable
 	private int id;
 	private String name; // First name and Last name
 	private int x = 0, y = 0; // 1Km scale
 	private double score; // 1 to 5
 
-	// Constructor
-	public Person(String name, double score) {
+	public Person(int id, String name, double score) {
 		if (score < 0.0 || score > 5.0) {
 			throw new IllegalArgumentException("Score must be >= 0.0 and <= 5.0");
 		}
-		
+
+        this.id = id;
 		this.name = name;
 		this.score = score;
 	}
 
-	// Getters and Setters
 	public int getId() {
 		return id;
 	}
