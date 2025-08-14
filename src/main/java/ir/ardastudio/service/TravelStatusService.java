@@ -23,7 +23,7 @@ public class TravelStatusService {
             System.out.println("\nOptions:");
             System.out.println("1) Rate driver");
             System.out.println("2) Cancel travel");
-            System.out.print("Choose (1/2/s): ");
+            System.out.print("Choose (1/2/S): ");
             String opt = input.nextLine().toLowerCase();
 
             switch (opt) {
