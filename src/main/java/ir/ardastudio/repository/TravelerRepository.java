@@ -97,4 +97,37 @@ public class TravelerRepository {
         }
         return null;
     }
+
+    public void updateTraveler(Traveler traveler) throws SQLException {
+        String personSQL = "UPDATE person " +
+                "SET " +
+                "name = ?, " +
+                "x = ?, " +
+                "y = ?, " +
+                "score = ? " +
+                "WHERE id = ?";
+        String travelerSQL = "UPDATE traveler " +
+                "SET " +
+                "phone = ? " +
+                "WHERE id = ?";
+
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement personStmt = connection.prepareStatement(personSQL);
+                PreparedStatement travelerStmt = connection.prepareStatement(travelerSQL)
+        ) {
+            // Person
+            personStmt.setString(1, traveler.getName());
+            personStmt.setInt(2, traveler.getX());
+            personStmt.setInt(3, traveler.getY());
+            personStmt.setDouble(4, traveler.getScore());
+            personStmt.setInt(5, traveler.getId());
+            personStmt.executeUpdate();
+
+            // Traveler
+            travelerStmt.setString(1, traveler.getPhone());
+            travelerStmt.setInt(2, traveler.getId());
+            travelerStmt.executeUpdate();
+        }
+    }
 }

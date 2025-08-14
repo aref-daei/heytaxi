@@ -181,4 +181,36 @@ public class TravelRepository {
         }
         return null;
     }
+
+    public void updateTravel(Travel travel) throws SQLException {
+        String sql = "UPDATE travel " +
+                "SET " +
+                "driver_id = ?, " +
+                "traveler_id = ?, " +
+                "date = ?, " +
+                "dest_x = ?, " +
+                "dest_y = ?, " +
+                "distance = ?, " +
+                "time = ?, " +
+                "cost = ?, " +
+                "status = ? " +
+                "WHERE id = ?";
+
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement prepStmt = connection.prepareStatement(sql)
+        ) {
+            prepStmt.setInt(1, travel.getDriver().getId());
+            prepStmt.setInt(2, travel.getTraveler().getId());
+            prepStmt.setString(3, travel.getDate());
+            prepStmt.setInt(4, travel.getDestination()[0]);
+            prepStmt.setInt(5, travel.getDestination()[1]);
+            prepStmt.setDouble(6, travel.getDistance());
+            prepStmt.setInt(7, travel.getTime());
+            prepStmt.setInt(8, travel.getCost());
+            prepStmt.setString(9, travel.getStatus());
+            prepStmt.setInt(10, travel.getId());
+            prepStmt.executeUpdate();
+        }
+    }
 }

@@ -118,4 +118,37 @@ public class DriverRepository {
         }
         return null;
     }
+
+    public void updateDriver(Driver driver) throws SQLException {
+        String personSQL = "UPDATE person " +
+                "SET " +
+                "name = ?, " +
+                "x = ?, " +
+                "y = ?, " +
+                "score = ? " +
+                "WHERE id = ?";
+        String driverSQL = "UPDATE driver " +
+                "SET " +
+                "car_id = ? " +
+                "WHERE id = ?";
+
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement personStmt = connection.prepareStatement(personSQL);
+                PreparedStatement driverStmt = connection.prepareStatement(driverSQL)
+        ) {
+            // Person
+            personStmt.setString(1, driver.getName());
+            personStmt.setInt(2, driver.getX());
+            personStmt.setInt(3, driver.getY());
+            personStmt.setDouble(4, driver.getScore());
+            personStmt.setInt(5, driver.getId());
+            personStmt.executeUpdate();
+
+            // Driver
+            driverStmt.setInt(1, driver.getCar().getId());
+            driverStmt.setInt(2, driver.getId());
+            driverStmt.executeUpdate();
+        }
+    }
 }

@@ -64,4 +64,24 @@ public class CarRepository {
         }
         return null;
     }
+
+    public void updateCar(Car car) throws SQLException {
+        String sql = "UPDATE car " +
+                "SET " +
+                "model = ?, " +
+                "color = ?, " +
+                "licensePlate = ? " +
+                "WHERE id = ?";
+
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement prepStmt = connection.prepareStatement(sql)
+        ) {
+            prepStmt.setString(1, car.getModel());
+            prepStmt.setString(2, car.getColor());
+            prepStmt.setString(3, car.getLicensePlate());
+            prepStmt.setInt(4, car.getId());
+            prepStmt.executeUpdate();
+        }
+    }
 }
