@@ -8,12 +8,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class TravelHistoryService {
-    private final TravelRepository repo = new TravelRepository();
+    private final TravelRepository travelRepo = new TravelRepository();
 
     public void showHistory() {
         try {
             Screen.clear();
-            List<Travel> travels = repo.getAllTravels();
+            List<Travel> travels = travelRepo.getAllTravels();
             if (travels.isEmpty()) {
                 System.out.println("No travel history.");
                 return;
