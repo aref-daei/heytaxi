@@ -17,9 +17,10 @@ public class CoreService {
 
     public void systemManager() {
         try (Scanner input = new Scanner(System.in)) {
-            List<Travel> travels = travelRepo.getAllTravels();
             boolean running = true;
             while (running) {
+                List<Travel> travels = travelRepo.getAllTravels();
+
                 Screen.clear();
                 System.out.println("      *** Welcome to HeyTaxi ***      ");
                 System.out.println("Reach your destination with one click!");
