@@ -1,23 +1,23 @@
 package ir.ardastudio.service;
 
+import ir.ardastudio.repository.*;
 import ir.ardastudio.model.*;
 import ir.ardastudio.shared.*;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 public class CoreService {
+    private final TravelRepository travelRepo = new TravelRepository();
     private final AuthService authService = new AuthService();
     private final TravelRequestService travelRequestService = new TravelRequestService();
     private final TravelStatusService travelStatusService = new TravelStatusService();
     private final TravelHistoryService travelHistoryService = new TravelHistoryService();
-    private final List<Driver> drivers = new DriverGeneratorService().generateRandomDrivers();
-    private final List<Travel> travels = new ArrayList<>();
-    private Traveler session;
 
     public void systemManager() {
         try (Scanner input = new Scanner(System.in)) {
+            List<Travel> travels = travelRepo.getAllTravels();
             boolean running = true;
             while (running) {
                 Screen.clear();
@@ -25,7 +25,7 @@ public class CoreService {
                 System.out.println("Reach your destination with one click!");
                 System.out.println("         (c) 2025 - Aref Daei         ");
                 System.out.println();
-                if (session == null) {
+                if (authService.getTraveler() == null) {
                     System.out.println("S) Sign in");
                 } else {
                     System.out.println(
@@ -36,27 +36,25 @@ public class CoreService {
                     System.out.println("L) Log out");
                 }
                 System.out.println("Q) Quit");
-                System.out.println();
                 System.out.print("Choose an option: ");
                 String opt = input.nextLine().toLowerCase();
 
                 switch (opt) {
                     case "s":
-                        session = authService.signIn(input);
+                        authService.signIn(input);
                         break;
                     case "t":
                         if (travels.isEmpty() || !travels.getLast().getStatus().equals("start")) {
-                            travels.add(travelRequestService.requestTravel(session, drivers, input));
+                            travelRequestService.requestTravel(authService.getTraveler(), input);
                         } else {
-                            travelStatusService.handleTravelStatus(travels.getLast(), session, input);
+                            travelStatusService.handleTravelStatus(authService.getTraveler(), input);
                         }
                         break;
                     case "h":
-                        travelHistoryService.showHistory(travels);
+                        travelHistoryService.showHistory();
                         break;
                     case "l":
                         authService.logOut();
-                        session = null;
                         break;
                     case "q":
                         running = false;
@@ -70,6 +68,8 @@ public class CoreService {
                     input.nextLine();
                 }
             }
+        } catch (SQLException e) {
+            System.err.println("Error fetching travels: " + e.getMessage());
         }
     }
 }
