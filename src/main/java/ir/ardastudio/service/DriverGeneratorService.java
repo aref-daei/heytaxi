@@ -2,12 +2,17 @@ package ir.ardastudio.service;
 
 import ir.ardastudio.model.Car;
 import ir.ardastudio.model.Driver;
+import ir.ardastudio.repository.CarRepository;
+import ir.ardastudio.repository.DriverRepository;
+import ir.ardastudio.util.IdGenerator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DriverGeneratorService {
+    private final CarRepository carRepo = new CarRepository();
+    private final DriverRepository driverRepo = new DriverRepository();
+
     private static final int MAX_ACTIVITY_RADIUS = 20;
 
     private static final String[] FIRST_NAMES = {
@@ -32,23 +37,32 @@ public class DriverGeneratorService {
             "Purple", "Brown", "Black", "White", "Gray"
     };
 
-    public List<Driver> generateRandomDrivers() {
-        List<Driver> drivers = new ArrayList<>();
-        int count = ThreadLocalRandom.current().nextInt(10, 21);
+    public void generateRandomDrivers() {
+        try {
+            int count = ThreadLocalRandom.current().nextInt(10, 21);
 
-        for (int i = 0; i < count; i++) {
-            String plate = generatePlate();
-            Driver driver = new Driver(
-                    randomName(),
-                    ThreadLocalRandom.current().nextDouble(4, 5),
-                    new Car(randomCarModel(), randomCarColor(), plate)
-            );
-            driver.setX(randomCoordinate());
-            driver.setY(randomCoordinate());
+            for (int i = 0; i < count; i++) {
+                Car car = new Car(
+                        IdGenerator.generate(),
+                        randomCarModel(),
+                        randomCarColor(),
+                        generatePlate()
+                );
+                carRepo.addCar(car);
 
-            drivers.add(driver);
+                Driver driver = new Driver(
+                        IdGenerator.generate(),
+                        randomName(),
+                        ThreadLocalRandom.current().nextDouble(4, 5),
+                        car
+                );
+                driver.setX(randomCoordinate());
+                driver.setY(randomCoordinate());
+                driverRepo.addDriver(driver);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching car and driver: " + e.getMessage());
         }
-        return drivers;
     }
 
     private String randomName() {
