@@ -50,7 +50,7 @@ public class TravelRepository {
                 "pt.score AS pt_score, " +
                 "pt.x AS pt_x, " +
                 "pt.y AS pt_y, " +
-                "pt.phone AS pt_phone, " +
+                "traveler.phone AS pt_phone, " +
                 "car.id AS car_id, " +
                 "car.model AS car_model, " +
                 "car.color AS car_color, " +
