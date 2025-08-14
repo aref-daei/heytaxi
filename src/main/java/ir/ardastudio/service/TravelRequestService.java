@@ -62,17 +62,21 @@ public class TravelRequestService {
             } catch (InterruptedException ignored) {}
 
             Driver driver = driverFinderService.findNearestDriver(traveler);
-            Travel travel = new Travel(IdGenerator.generate(), driver, traveler, destination);
-            travelRepo.addTravel(travel);
+            if (driver != null) {
+                Travel travel = new Travel(IdGenerator.generate(), driver, traveler, destination);
+                travelRepo.addTravel(travel);
 
-            Screen.clear();
-            System.out.println("..:: Travel Information ::..");
-            System.out.println(travel);
-            System.out.printf("Estimated time: %d minutes.%n", travel.getTime());
+                Screen.clear();
+                System.out.println("..:: Travel Information ::..");
+                System.out.println(travel);
+                System.out.printf("Estimated time: %d minutes.%n", travel.getTime());
 
-            // FIXME: I can't update the driver!
-            driver.setX(destination[0]);
-            driver.setY(destination[1]);
+                // FIXME: I can't update the driver!
+                driver.setX(destination[0]);
+                driver.setY(destination[1]);
+            } else {
+                System.out.println("No drivers found.");
+            }
         } catch (SQLException e) {
             System.err.println("Error fetching travel: " + e.getMessage());
         }
