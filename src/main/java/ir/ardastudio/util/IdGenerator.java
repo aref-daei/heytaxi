@@ -1,9 +1,14 @@
 package ir.ardastudio.util;
 
-public class IdGenerator {
-    private static int counter = 0;
+import java.security.SecureRandom;
 
+public class IdGenerator {
     public static int generate() {
-        return ++counter;
+        SecureRandom random = new SecureRandom();
+        int id = 0;
+        for (int i = 0; i < 8; i++) {
+            id += (int) (random.nextInt(10) * Math.pow(10, i));
+        }
+        return id;
     }
 }
