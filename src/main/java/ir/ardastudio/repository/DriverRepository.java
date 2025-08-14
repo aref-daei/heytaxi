@@ -44,16 +44,16 @@ public class DriverRepository {
         ) {
             while (rs.next()) {
                 Car car = new Car(
+                        rs.getInt("car.id"),
                         rs.getString("car.model"),
                         rs.getString("car.color"),
                         rs.getString("car.licensePlate"));
-                car.setId(rs.getInt("car.id"));
 
                 Driver driver = new Driver(
+                        rs.getInt("person.id"),
                         rs.getString("person.name"),
                         rs.getDouble("person.score"),
                         car);
-                driver.setId(rs.getInt("person.id"));
                 driver.setX(rs.getInt("person.x"));
                 driver.setY(rs.getInt("person.y"));
 
@@ -74,16 +74,16 @@ public class DriverRepository {
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Car car = new Car(
+                            rs.getInt("car.id"),
                             rs.getString("car.model"),
                             rs.getString("car.color"),
                             rs.getString("car.licensePlate"));
-                    car.setId(rs.getInt("car.id"));
 
                     Driver driver = new Driver(
+                            rs.getInt("person.id"),
                             rs.getString("person.name"),
                             rs.getDouble("person.score"),
                             car);
-                    driver.setId(rs.getInt("person.id"));
                     driver.setX(rs.getInt("person.x"));
                     driver.setY(rs.getInt("person.y"));
 

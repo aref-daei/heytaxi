@@ -34,10 +34,10 @@ public class CarRepository {
         ) {
             while (rs.next()) {
                 Car car = new Car(
+                        rs.getInt("id"),
                         rs.getString("model"),
                         rs.getString("color"),
                         rs.getString("licensePlate"));
-                car.setId(rs.getInt("id"));
                 cars.add(car);
             }
         }
@@ -54,12 +54,11 @@ public class CarRepository {
             prepStmt.setInt(1, id);
             try (ResultSet rs = prepStmt.executeQuery()) {
                 if (rs.next()) {
-                    Car car = new Car(
+                    return new Car(
+                            rs.getInt("id"),
                             rs.getString("model"),
                             rs.getString("color"),
                             rs.getString("licensePlate"));
-                    car.setId(rs.getInt("id"));
-                    return car;
                 }
             }
         }

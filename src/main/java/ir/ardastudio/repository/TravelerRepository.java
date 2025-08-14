@@ -43,12 +43,13 @@ public class TravelerRepository {
         ) {
             while (rs.next()) {
                 Traveler traveler = new Traveler(
+                        rs.getInt("person.id"),
                         rs.getString("person.name"),
                         rs.getString("person.phone"),
                         rs.getDouble("person.score"));
-                traveler.setId(rs.getInt("person.id"));
                 traveler.setX(rs.getInt("person.x"));
                 traveler.setY(rs.getInt("person.y"));
+
                 travelers.add(traveler);
             }
         }
@@ -66,12 +67,13 @@ public class TravelerRepository {
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Traveler traveler = new Traveler(
+                            rs.getInt("person.id"),
                             rs.getString("person.name"),
                             rs.getString("person.phone"),
                             rs.getDouble("person.score"));
-                    traveler.setId(rs.getInt("person.id"));
                     traveler.setX(rs.getInt("person.x"));
                     traveler.setY(rs.getInt("person.y"));
+
                     return traveler;
                 }
             }

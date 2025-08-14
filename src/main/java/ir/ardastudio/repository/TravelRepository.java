@@ -46,31 +46,31 @@ public class TravelRepository {
         ) {
             while (rs.next()) {
                 Car car = new Car(
+                        rs.getInt("car.id"),
                         rs.getString("car.model"),
                         rs.getString("car.color"),
                         rs.getString("car.licensePlate"));
-                car.setId(rs.getInt("car.id"));
 
                 Driver driver = new Driver(
+                        rs.getInt("pd.id"),
                         rs.getString("pd.name"),
                         rs.getDouble("pd.score"),
                         car);
-                driver.setId(rs.getInt("pd.id"));
                 driver.setX(rs.getInt("pd.x"));
                 driver.setY(rs.getInt("pd.y"));
 
                 Traveler traveler = new Traveler(
+                        rs.getInt("pt.id"),
                         rs.getString("pt.name"),
                         rs.getString("pt.phone"),
                         rs.getDouble("pt.score"));
-                traveler.setId(rs.getInt("pt.id"));
                 traveler.setX(rs.getInt("pt.x"));
                 traveler.setY(rs.getInt("pt.y"));
 
                 Travel travel = new Travel(
+                        rs.getInt("t.id"),
                         driver, traveler,
                         new int[]{rs.getInt("t.dest_x"), rs.getInt("t.dest_y")});
-                travel.setId(rs.getInt("t.id"));
                 travel.setDate(rs.getString("t.date"));
                 travel.setDistance(rs.getDouble("t.distance"));
                 travel.setTime(rs.getInt("t.time"));
@@ -99,31 +99,31 @@ public class TravelRepository {
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Car car = new Car(
+                            rs.getInt("car.id"),
                             rs.getString("car.model"),
                             rs.getString("car.color"),
                             rs.getString("car.licensePlate"));
-                    car.setId(rs.getInt("car.id"));
 
                     Driver driver = new Driver(
+                            rs.getInt("pd.id"),
                             rs.getString("pd.name"),
                             rs.getDouble("pd.score"),
                             car);
-                    driver.setId(rs.getInt("pd.id"));
                     driver.setX(rs.getInt("pd.x"));
                     driver.setY(rs.getInt("pd.y"));
 
                     Traveler traveler = new Traveler(
+                            rs.getInt("pt.id"),
                             rs.getString("pt.name"),
                             rs.getString("pt.phone"),
                             rs.getDouble("pt.score"));
-                    traveler.setId(rs.getInt("pt.id"));
                     traveler.setX(rs.getInt("pt.x"));
                     traveler.setY(rs.getInt("pt.y"));
 
                     Travel travel = new Travel(
+                            rs.getInt("t.id"),
                             driver, traveler,
                             new int[]{rs.getInt("t.dest_x"), rs.getInt("t.dest_y")});
-                    travel.setId(rs.getInt("t.id"));
                     travel.setDate(rs.getString("t.date"));
                     travel.setDistance(rs.getDouble("t.distance"));
                     travel.setTime(rs.getInt("t.time"));
