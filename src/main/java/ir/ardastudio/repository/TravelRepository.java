@@ -32,7 +32,30 @@ public class TravelRepository {
 
     public List<Travel> getAllTravels() throws SQLException {
         List<Travel> travels = new ArrayList<>();
-        String sql = "SELECT * FROM travel t " +
+        String sql = "SELECT " +
+                "t.id AS t_id, " +
+                "t.dest_x AS t_dest_x, " +
+                "t.dest_y AS t_dest_y, " +
+                "t.date AS t_date, " +
+                "t.distance AS t_distance, " +
+                "t.time AS t_time, " +
+                "t.status AS t_status, " +
+                "pd.id AS pd_id, " +
+                "pd.name AS pd_name, " +
+                "pd.score AS pd_score, " +
+                "pd.x AS pd_x, " +
+                "pd.y AS pd_y, " +
+                "pt.id AS pt_id, " +
+                "pt.name AS pt_name, " +
+                "pt.score AS pt_score, " +
+                "pt.x AS pt_x, " +
+                "pt.y AS pt_y, " +
+                "pt.phone AS pt_phone, " +
+                "car.id AS car_id, " +
+                "car.model AS car_model, " +
+                "car.color AS car_color, " +
+                "car.licensePlate AS car_licensePlate " +
+                "FROM travel t " +
                 "JOIN person pd ON t.driver_id = pd.id " +
                 "JOIN driver ON pd.id = driver.id " +
                 "JOIN person pt ON t.traveler_id = pt.id " +
@@ -46,35 +69,35 @@ public class TravelRepository {
         ) {
             while (rs.next()) {
                 Car car = new Car(
-                        rs.getInt("car.id"),
-                        rs.getString("car.model"),
-                        rs.getString("car.color"),
-                        rs.getString("car.licensePlate"));
+                        rs.getInt("car_id"),
+                        rs.getString("car_model"),
+                        rs.getString("car_color"),
+                        rs.getString("car_licensePlate"));
 
                 Driver driver = new Driver(
-                        rs.getInt("pd.id"),
-                        rs.getString("pd.name"),
-                        rs.getDouble("pd.score"),
+                        rs.getInt("pd_id"),
+                        rs.getString("pd_name"),
+                        rs.getDouble("pd_score"),
                         car);
-                driver.setX(rs.getInt("pd.x"));
-                driver.setY(rs.getInt("pd.y"));
+                driver.setX(rs.getInt("pd_x"));
+                driver.setY(rs.getInt("pd_y"));
 
                 Traveler traveler = new Traveler(
-                        rs.getInt("pt.id"),
-                        rs.getString("pt.name"),
-                        rs.getString("pt.phone"),
-                        rs.getDouble("pt.score"));
-                traveler.setX(rs.getInt("pt.x"));
-                traveler.setY(rs.getInt("pt.y"));
+                        rs.getInt("pt_id"),
+                        rs.getString("pt_name"),
+                        rs.getString("pt_phone"),
+                        rs.getDouble("pt_score"));
+                traveler.setX(rs.getInt("pt_x"));
+                traveler.setY(rs.getInt("pt_y"));
 
                 Travel travel = new Travel(
-                        rs.getInt("t.id"),
+                        rs.getInt("t_id"),
                         driver, traveler,
-                        new int[]{rs.getInt("t.dest_x"), rs.getInt("t.dest_y")});
-                travel.setDate(rs.getString("t.date"));
-                travel.setDistance(rs.getDouble("t.distance"));
-                travel.setTime(rs.getInt("t.time"));
-                travel.setStatus(rs.getString("t.status"));
+                        new int[]{rs.getInt("t_dest_x"), rs.getInt("t_dest_y")});
+                travel.setDate(rs.getString("t_date"));
+                travel.setDistance(rs.getDouble("t_distance"));
+                travel.setTime(rs.getInt("t_time"));
+                travel.setStatus(rs.getString("t_status"));
 
                 travels.add(travel);
             }
@@ -83,7 +106,30 @@ public class TravelRepository {
     }
 
     public Travel getTravelById(int id) throws SQLException {
-        String sql = "SELECT * FROM travel t " +
+        String sql = "SELECT " +
+                "t.id AS t_id, " +
+                "t.dest_x AS t_dest_x, " +
+                "t.dest_y AS t_dest_y, " +
+                "t.date AS t_date, " +
+                "t.distance AS t_distance, " +
+                "t.time AS t_time, " +
+                "t.status AS t_status, " +
+                "pd.id AS pd_id, " +
+                "pd.name AS pd_name, " +
+                "pd.score AS pd_score, " +
+                "pd.x AS pd_x, " +
+                "pd.y AS pd_y, " +
+                "pt.id AS pt_id, " +
+                "pt.name AS pt_name, " +
+                "pt.score AS pt_score, " +
+                "pt.x AS pt_x, " +
+                "pt.y AS pt_y, " +
+                "pt.phone AS pt_phone, " +
+                "car.id AS car_id, " +
+                "car.model AS car_model, " +
+                "car.color AS car_color, " +
+                "car.licensePlate AS car_licensePlate " +
+                "FROM travel t " +
                 "JOIN person pd ON t.driver_id = pd.id " +
                 "JOIN driver ON pd.id = driver.id " +
                 "JOIN person pt ON t.traveler_id = pt.id " +
@@ -99,35 +145,35 @@ public class TravelRepository {
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Car car = new Car(
-                            rs.getInt("car.id"),
-                            rs.getString("car.model"),
-                            rs.getString("car.color"),
-                            rs.getString("car.licensePlate"));
+                            rs.getInt("car_id"),
+                            rs.getString("car_model"),
+                            rs.getString("car_color"),
+                            rs.getString("car_licensePlate"));
 
                     Driver driver = new Driver(
-                            rs.getInt("pd.id"),
-                            rs.getString("pd.name"),
-                            rs.getDouble("pd.score"),
+                            rs.getInt("pd_id"),
+                            rs.getString("pd_name"),
+                            rs.getDouble("pd_score"),
                             car);
-                    driver.setX(rs.getInt("pd.x"));
-                    driver.setY(rs.getInt("pd.y"));
+                    driver.setX(rs.getInt("pd_x"));
+                    driver.setY(rs.getInt("pd_y"));
 
                     Traveler traveler = new Traveler(
-                            rs.getInt("pt.id"),
-                            rs.getString("pt.name"),
-                            rs.getString("pt.phone"),
-                            rs.getDouble("pt.score"));
-                    traveler.setX(rs.getInt("pt.x"));
-                    traveler.setY(rs.getInt("pt.y"));
+                            rs.getInt("pt_id"),
+                            rs.getString("pt_name"),
+                            rs.getString("pt_phone"),
+                            rs.getDouble("pt_score"));
+                    traveler.setX(rs.getInt("pt_x"));
+                    traveler.setY(rs.getInt("pt_y"));
 
                     Travel travel = new Travel(
-                            rs.getInt("t.id"),
+                            rs.getInt("t_id"),
                             driver, traveler,
-                            new int[]{rs.getInt("t.dest_x"), rs.getInt("t.dest_y")});
-                    travel.setDate(rs.getString("t.date"));
-                    travel.setDistance(rs.getDouble("t.distance"));
-                    travel.setTime(rs.getInt("t.time"));
-                    travel.setStatus(rs.getString("t.status"));
+                            new int[]{rs.getInt("t_dest_x"), rs.getInt("t_dest_y")});
+                    travel.setDate(rs.getString("t_date"));
+                    travel.setDistance(rs.getDouble("t_distance"));
+                    travel.setTime(rs.getInt("t_time"));
+                    travel.setStatus(rs.getString("t_status"));
 
                     return travel;
                 }

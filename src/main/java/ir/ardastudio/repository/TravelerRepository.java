@@ -34,7 +34,15 @@ public class TravelerRepository {
 
     public List<Traveler> getAllTravelers() throws SQLException {
         List<Traveler> travelers = new ArrayList<>();
-        String sql = "SELECT * FROM person JOIN traveler t ON person.id = t.id";
+        String sql = "SELECT " +
+                "person.id AS person_id, " +
+                "person.name AS person_name, " +
+                "person.score AS person_score, " +
+                "person.x AS person_x, " +
+                "person.y AS person_y, " +
+                "t.phone AS person_phone " +
+                "FROM person " +
+                "JOIN traveler t ON person.id = t.id";
 
         try (
                 Connection connection = DBConnection.getConnection();
@@ -43,12 +51,12 @@ public class TravelerRepository {
         ) {
             while (rs.next()) {
                 Traveler traveler = new Traveler(
-                        rs.getInt("person.id"),
-                        rs.getString("person.name"),
-                        rs.getString("person.phone"),
-                        rs.getDouble("person.score"));
-                traveler.setX(rs.getInt("person.x"));
-                traveler.setY(rs.getInt("person.y"));
+                        rs.getInt("person_id"),
+                        rs.getString("person_name"),
+                        rs.getString("person_phone"),
+                        rs.getDouble("person_score"));
+                traveler.setX(rs.getInt("person_x"));
+                traveler.setY(rs.getInt("person_y"));
 
                 travelers.add(traveler);
             }
@@ -57,7 +65,16 @@ public class TravelerRepository {
     }
 
     public Traveler getTravelerById(int id) throws SQLException {
-        String sql = "SELECT * FROM person JOIN traveler t ON person.id = t.id WHERE person.id = ?";
+        String sql = "SELECT " +
+                "person.id AS person_id, " +
+                "person.name AS person_name, " +
+                "person.score AS person_score, " +
+                "person.x AS person_x, " +
+                "person.y AS person_y, " +
+                "t.phone AS person_phone " +
+                "FROM person " +
+                "JOIN traveler t ON person.id = t.id " +
+                "WHERE person.id = ?";
 
         try (
                 Connection connection = DBConnection.getConnection();
@@ -67,12 +84,12 @@ public class TravelerRepository {
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Traveler traveler = new Traveler(
-                            rs.getInt("person.id"),
-                            rs.getString("person.name"),
-                            rs.getString("person.phone"),
-                            rs.getDouble("person.score"));
-                    traveler.setX(rs.getInt("person.x"));
-                    traveler.setY(rs.getInt("person.y"));
+                            rs.getInt("person_id"),
+                            rs.getString("person_name"),
+                            rs.getString("person_phone"),
+                            rs.getDouble("person_score"));
+                    traveler.setX(rs.getInt("person_x"));
+                    traveler.setY(rs.getInt("person_y"));
 
                     return traveler;
                 }

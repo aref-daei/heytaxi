@@ -35,7 +35,19 @@ public class DriverRepository {
 
     public List<Driver> getAllDrivers() throws SQLException {
         List<Driver> drivers = new ArrayList<>();
-        String sql = "SELECT * FROM person JOIN driver d ON person.id = d.id JOIN car ON d.car_id = car.id";
+        String sql = "SELECT " +
+                "person.id AS person_id, " +
+                "person.name AS person_name, " +
+                "person.score AS person_score, " +
+                "person.x AS person_x, " +
+                "person.y AS person_y, " +
+                "car.id AS car_id, " +
+                "car.model AS car_model, " +
+                "car.color AS car_color, " +
+                "car.licensePlate AS car_licensePlate " +
+                "FROM person " +
+                "JOIN driver d ON person.id = d.id " +
+                "JOIN car ON d.car_id = car.id";
 
         try (
                 Connection connection = DBConnection.getConnection();
@@ -44,18 +56,18 @@ public class DriverRepository {
         ) {
             while (rs.next()) {
                 Car car = new Car(
-                        rs.getInt("car.id"),
-                        rs.getString("car.model"),
-                        rs.getString("car.color"),
-                        rs.getString("car.licensePlate"));
+                        rs.getInt("car_id"),
+                        rs.getString("car_model"),
+                        rs.getString("car_color"),
+                        rs.getString("car_licensePlate"));
 
                 Driver driver = new Driver(
-                        rs.getInt("person.id"),
-                        rs.getString("person.name"),
-                        rs.getDouble("person.score"),
+                        rs.getInt("person_id"),
+                        rs.getString("person_name"),
+                        rs.getDouble("person_score"),
                         car);
-                driver.setX(rs.getInt("person.x"));
-                driver.setY(rs.getInt("person.y"));
+                driver.setX(rs.getInt("person_x"));
+                driver.setY(rs.getInt("person_y"));
 
                 drivers.add(driver);
             }
@@ -64,7 +76,20 @@ public class DriverRepository {
     }
 
     public Driver getDriverById(int id) throws SQLException {
-        String sql = "SELECT * FROM person JOIN driver d ON person.id = d.id JOIN car ON d.car_id = car.id WHERE person.id = ?";
+        String sql = "SELECT " +
+                "person.id AS person_id, " +
+                "person.name AS person_name, " +
+                "person.score AS person_score, " +
+                "person.x AS person_x, " +
+                "person.y AS person_y, " +
+                "car.id AS car_id, " +
+                "car.model AS car_model, " +
+                "car.color AS car_color, " +
+                "car.licensePlate AS car_licensePlate " +
+                "FROM person " +
+                "JOIN driver d ON person.id = d.id " +
+                "JOIN car ON d.car_id = car.id " +
+                "WHERE person.id = ?";
 
         try (
                 Connection connection = DBConnection.getConnection();
@@ -74,18 +99,18 @@ public class DriverRepository {
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Car car = new Car(
-                            rs.getInt("car.id"),
-                            rs.getString("car.model"),
-                            rs.getString("car.color"),
-                            rs.getString("car.licensePlate"));
+                            rs.getInt("car_id"),
+                            rs.getString("car_model"),
+                            rs.getString("car_color"),
+                            rs.getString("car_licensePlate"));
 
                     Driver driver = new Driver(
-                            rs.getInt("person.id"),
-                            rs.getString("person.name"),
-                            rs.getDouble("person.score"),
+                            rs.getInt("person_id"),
+                            rs.getString("person_name"),
+                            rs.getDouble("person_score"),
                             car);
-                    driver.setX(rs.getInt("person.x"));
-                    driver.setY(rs.getInt("person.y"));
+                    driver.setX(rs.getInt("person_x"));
+                    driver.setY(rs.getInt("person_y"));
 
                     return driver;
                 }
