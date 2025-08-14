@@ -65,7 +65,6 @@ public class Travel {
 		return date;
 	}
 
-	// TODO: Check.
 	public void setDate(String date) {
 		this.date = date;
 	}
