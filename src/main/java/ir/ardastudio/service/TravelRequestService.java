@@ -3,6 +3,7 @@ package ir.ardastudio.service;
 import ir.ardastudio.model.Driver;
 import ir.ardastudio.model.Travel;
 import ir.ardastudio.model.Traveler;
+import ir.ardastudio.repository.DriverRepository;
 import ir.ardastudio.repository.TravelRepository;
 import ir.ardastudio.shared.Screen;
 import ir.ardastudio.util.IdGenerator;
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TravelRequestService {
     private final TravelRepository travelRepo = new TravelRepository();
+    private final DriverRepository driverRepo = new DriverRepository();
     private final DriverFinderService driverFinderService = new DriverFinderService();
 
     public void requestTravel(Traveler traveler, Scanner input) {
@@ -71,9 +73,9 @@ public class TravelRequestService {
                 System.out.println(travel);
                 System.out.printf("Estimated time: %d minutes.%n", travel.getTime());
 
-                // FIXME: I can't update the driver!
                 driver.setX(destination[0]);
                 driver.setY(destination[1]);
+                driverRepo.updateDriver(driver);
             } else {
                 System.out.println("No drivers found.");
             }
