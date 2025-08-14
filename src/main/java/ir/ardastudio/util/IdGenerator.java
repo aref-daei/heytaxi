@@ -7,7 +7,7 @@ public class IdGenerator {
         SecureRandom random = new SecureRandom();
         int id = 0;
         for (int i = 0; i < 8; i++) {
-            id += (int) (random.nextInt(10) * Math.pow(10, i));
+            id += (int) (random.nextInt(1,10) * Math.pow(10, i));
         }
         return id;
     }
