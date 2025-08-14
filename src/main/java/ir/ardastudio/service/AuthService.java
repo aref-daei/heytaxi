@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class AuthService {
     private final TravelerRepository travelerRepo = new TravelerRepository();
-    private final SMSAuthentication auth = new SMSAuthentication("logs.csv");
+    private final SMSAuthentication auth = new SMSAuthentication("auth_attempts.csv");
 
     private Traveler traveler;
 
@@ -21,7 +21,7 @@ public class AuthService {
     public void signIn(Scanner input) {
         try {
             Screen.clear();
-            String name, phone;
+            String name = "", phone;
 
             while (true) {
                 try {
@@ -40,18 +40,25 @@ public class AuthService {
                     continue;
                 }
 
-                System.out.println("Code confirmed.\nPlease enter your full name:");
-                name = input.nextLine();
-
-                System.out.println("Do you confirm the information entered is correct? Y/n");
-                String confirm = input.nextLine().toLowerCase();
-                if (confirm.isEmpty() || confirm.charAt(0) == 'y') {
-                    break;
+                for (Traveler user : travelerRepo.getAllTravelers()) {
+                    if (phone.equals(user.getPhone())) {
+                        traveler = new Traveler(user.getId(), user.getName(), user.getPhone());
+                        break;
+                    }
                 }
+
+                if (traveler == null) {
+                    System.out.println("Code confirmed.\nPlease enter your full name:");
+                    name = input.nextLine();
+                }
+
+                break;
             }
 
-            traveler = new Traveler(IdGenerator.generate(), name, phone);
-            travelerRepo.addTraveler(traveler);
+            if (traveler == null) {
+                traveler = new Traveler(IdGenerator.generate(), name, phone);
+                travelerRepo.addTraveler(traveler);
+            }
         } catch (SQLException e) {
             System.err.println("Error fetching travelers: " + e.getMessage());
         }
