@@ -38,7 +38,6 @@ mvn exec:java
 
 This project is under active development. Planned features include:
 
-- Persistent data storage (file or database)
 - Graphical user interface (GUI)
 
 ## License
