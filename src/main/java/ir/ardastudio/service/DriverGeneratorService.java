@@ -29,7 +29,7 @@ public class DriverGeneratorService {
 
     private static final String[] CAR_MODELS = {
             "Tondar 90", "Samand", "Pride", "Peugeot 206", "Pars",
-            "Dena", "Soren", "Runna", "Khyber", "Arisan"
+            "Dena", "Soren", "Runna", "Quik", "Peugeot 405"
     };
 
     private static final String[] CAR_COLORS = {
