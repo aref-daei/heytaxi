@@ -6,11 +6,15 @@ import ir.ardastudio.shared.*;
 import ir.ardastudio.util.IdGenerator;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class AuthService {
     private final TravelerRepository travelerRepo = new TravelerRepository();
-    private final SMSAuthentication auth = new SMSAuthentication("auth_attempts.csv");
+    private final SMSAuthentication auth = new SMSAuthentication(
+            String.format("data/auth_logs_%s.csv",
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))));
 
     private Traveler traveler;
 
