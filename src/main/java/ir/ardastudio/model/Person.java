@@ -9,7 +9,7 @@ public class Person {
 
 	public Person(int id, String name, double score) {
 		if (score < 0.0 || score > 5.0) {
-			throw new IllegalArgumentException("Score must be >= 0.0 and <= 5.0");
+			throw new IllegalArgumentException("Score must be between 0.0 and 5.0 inclusive");
 		}
 
         this.id = id;
@@ -55,7 +55,7 @@ public class Person {
 
 	public void setScore(double score) {
 		if (score < 0.0 || score > 5.0) {
-			throw new IllegalArgumentException("Score must be >= 0.0 and <= 5.0");
+			throw new IllegalArgumentException("Score must be between 0.0 and 5.0 inclusive");
 		}
 		
 		this.score = score;
