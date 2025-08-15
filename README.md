@@ -11,6 +11,7 @@
 - Request travels with auto-assigned nearby drivers
 - Travel tracking after request
 - Rating system for drivers and passengers
+- Persistent data storage (database)
 
 ## Getting Started
 
