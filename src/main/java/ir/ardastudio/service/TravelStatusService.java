@@ -38,6 +38,8 @@ public class TravelStatusService {
                         travel.getDriver().setScore(
                                 (travel.getDriver().getScore() + score) / 2);
                         driverRepo.updateDriver(travel.getDriver());
+                    } catch (IllegalArgumentException e) {
+                        System.err.println(e.getMessage());
                     } catch (Exception e) {
                         input.nextLine();
                         System.err.println("Invalid score.");
@@ -50,7 +52,7 @@ public class TravelStatusService {
                     if (confirm.startsWith("y")) {
                         travel.setStatus("cancel");
                         travelRepo.updateTravel(travel);
-                        traveler.setScore(traveler.getScore() - 0.17);
+                        traveler.setScore(Math.max(traveler.getScore() - 0.17, 0.0));
                         travelerRepo.updateTraveler(traveler);
                         System.out.println("Travel canceled.");
                     }
