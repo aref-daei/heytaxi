@@ -3,7 +3,6 @@ package ir.ardastudio.shared;
 import java.io.IOException;
 
 public class Screen {
-	// This method for clear terminal screen
 	public static void clear() {
         try {
             String os = System.getProperty("os.name");
@@ -13,7 +12,7 @@ public class Screen {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            System.err.println("Error clearing the console: " + e.getMessage());
         }
     }
 }
