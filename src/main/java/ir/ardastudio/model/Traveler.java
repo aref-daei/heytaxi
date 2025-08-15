@@ -5,7 +5,7 @@ public class Traveler extends Person {
 	private String phone; // ex: +989151234567
 
 	public Traveler(int id, String name, String phone) {
-		super(id, name, 5);
+		super(id, name, 5.00);
 		this.phone = phone;
 	}
 
@@ -24,8 +24,8 @@ public class Traveler extends Person {
 
 	@Override
 	public String toString() {
-		return String.format("%s: %s - %.2f Score",
-				getClass().getSimpleName(), getName(), getScore());
+		return String.format("%s: %s - %.1f Score",
+				getClass().getSimpleName(), getName(), Math.round(getScore() * 10) / 10.0);
 	}
 
 }

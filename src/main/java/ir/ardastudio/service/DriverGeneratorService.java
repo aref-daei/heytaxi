@@ -50,10 +50,11 @@ public class DriverGeneratorService {
                 );
                 carRepo.addCar(car);
 
+                double score = ThreadLocalRandom.current().nextDouble(4, 5);
                 Driver driver = new Driver(
                         IdGenerator.generate(),
                         randomName(),
-                        ThreadLocalRandom.current().nextDouble(4, 5),
+                        (int) (score * 100) / 100.0,
                         car
                 );
                 driver.setX(randomCoordinate());

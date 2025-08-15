@@ -19,8 +19,8 @@ public class Driver extends Person {
 
 	@Override
 	public String toString() {
-		return String.format("%s: %s (%s) - %.2f Score",
-				getClass().getSimpleName(), getName(), getCar(), getScore());
+		return String.format("%s: %s (%s) - %.1f Score",
+				getClass().getSimpleName(), getName(), getCar(), Math.round(getScore() * 10) / 10.0);
 	}
 
 }
