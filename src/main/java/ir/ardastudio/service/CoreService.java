@@ -19,7 +19,12 @@ public class CoreService {
         try (Scanner input = new Scanner(System.in)) {
             boolean running = true;
             while (running) {
-                List<Travel> travels = travelRepo.getAllTravels();
+                List<Travel> travels = null;
+                if (authService.getTraveler() != null) {
+                    travels = travelRepo.getAllTravels().stream()
+                            .filter(t -> t.getTraveler().getId() == authService.getTraveler().getId())
+                            .toList();
+                }
 
                 Screen.clear();
                 System.out.println("      *** Welcome to HeyTaxi ***      ");
@@ -31,7 +36,7 @@ public class CoreService {
                 } else {
                     System.out.println(
                             "T) Travel " +
-                            (travels.isEmpty() || !travels.getLast().getStatus().equals("start") ? "Request" : "Status")
+                            (travels == null || travels.isEmpty() || !travels.getLast().getStatus().equals("start") ? "Request" : "Status")
                     );
                     System.out.println("H) History");
                     System.out.println("L) Log out");
@@ -45,7 +50,7 @@ public class CoreService {
                         authService.signIn(input);
                         break;
                     case "t":
-                        if (travels.isEmpty() || !travels.getLast().getStatus().equals("start")) {
+                        if (travels == null || travels.isEmpty() || !travels.getLast().getStatus().equals("start")) {
                             travelRequestService.requestTravel(authService.getTraveler(), input);
                         } else {
                             travelStatusService.handleTravelStatus(authService.getTraveler(), input);
