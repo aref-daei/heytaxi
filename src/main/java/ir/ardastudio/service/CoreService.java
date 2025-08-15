@@ -52,7 +52,7 @@ public class CoreService {
                         }
                         break;
                     case "h":
-                        travelHistoryService.showHistory();
+                        travelHistoryService.showHistory(authService.getTraveler());
                         break;
                     case "l":
                         authService.logOut();

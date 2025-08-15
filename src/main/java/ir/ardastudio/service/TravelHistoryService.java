@@ -1,6 +1,7 @@
 package ir.ardastudio.service;
 
 import ir.ardastudio.model.Travel;
+import ir.ardastudio.model.Traveler;
 import ir.ardastudio.repository.TravelRepository;
 import ir.ardastudio.shared.Screen;
 
@@ -10,10 +11,12 @@ import java.util.List;
 public class TravelHistoryService {
     private final TravelRepository travelRepo = new TravelRepository();
 
-    public void showHistory() {
+    public void showHistory(Traveler traveler) {
         try {
             Screen.clear();
-            List<Travel> travels = travelRepo.getAllTravels();
+            List<Travel> travels = travelRepo.getAllTravels().stream()
+                    .filter(t -> t.getTraveler().getId() == traveler.getId())
+                    .toList();
             if (travels.isEmpty()) {
                 System.out.println("No travel history.");
                 return;
