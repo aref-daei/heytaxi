@@ -4,12 +4,12 @@ public class Traveler extends Person {
 
 	private String phone; // ex: +989151234567
 
-	public Traveler(int id, String name, String phone) {
+	public Traveler(String id, String name, String phone) {
 		super(id, name, 5.00);
 		this.phone = phone;
 	}
 
-	public Traveler(int id, String name, String phone, double score) {
+	public Traveler(String id, String name, String phone, double score) {
 		super(id, name, score);
 		this.phone = phone;
 	}

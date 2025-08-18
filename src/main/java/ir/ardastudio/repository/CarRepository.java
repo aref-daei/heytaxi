@@ -15,7 +15,7 @@ public class CarRepository {
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement prepStmt = connection.prepareStatement(sql)
         ) {
-            prepStmt.setInt(1, car.getId());
+            prepStmt.setString(1, car.getId());
             prepStmt.setString(2, car.getModel());
             prepStmt.setString(3, car.getColor());
             prepStmt.setString(4, car.getLicensePlate());
@@ -34,7 +34,7 @@ public class CarRepository {
         ) {
             while (rs.next()) {
                 Car car = new Car(
-                        rs.getInt("id"),
+                        rs.getString("id"),
                         rs.getString("model"),
                         rs.getString("color"),
                         rs.getString("licensePlate"));
@@ -55,7 +55,7 @@ public class CarRepository {
             try (ResultSet rs = prepStmt.executeQuery()) {
                 if (rs.next()) {
                     return new Car(
-                            rs.getInt("id"),
+                            rs.getString("id"),
                             rs.getString("model"),
                             rs.getString("color"),
                             rs.getString("licensePlate"));
@@ -80,7 +80,7 @@ public class CarRepository {
             prepStmt.setString(1, car.getModel());
             prepStmt.setString(2, car.getColor());
             prepStmt.setString(3, car.getLicensePlate());
-            prepStmt.setInt(4, car.getId());
+            prepStmt.setString(4, car.getId());
             prepStmt.executeUpdate();
         }
     }

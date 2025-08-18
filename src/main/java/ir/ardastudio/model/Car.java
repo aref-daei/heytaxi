@@ -2,23 +2,23 @@ package ir.ardastudio.model;
 
 public class Car {
 
-	private int id;
+	private String id;
 	private String model;
 	private String color;
 	private String licensePlate;
 
-	public Car(int id, String model, String color, String licensePlate) {
+	public Car(String id, String model, String color, String licensePlate) {
         this.id = id;
 		this.model = model;
 		this.color = color;
 		this.licensePlate = licensePlate;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

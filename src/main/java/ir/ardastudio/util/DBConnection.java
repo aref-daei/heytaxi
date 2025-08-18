@@ -22,14 +22,14 @@ public class DBConnection {
             String[] queries = {
                     // Car Table
                     "CREATE TABLE IF NOT EXISTS car (" +
-                            "id INTEGER PRIMARY KEY," +
+                            "id TEXT PRIMARY KEY," +
                             "model TEXT NOT NULL," +
                             "color TEXT NOT NULL," +
                             "licensePlate TEXT NOT NULL);",
 
                     // Person Table
                     "CREATE TABLE IF NOT EXISTS person (" +
-                            "id INTEGER PRIMARY KEY," +
+                            "id TEXT PRIMARY KEY," +
                             "name TEXT NOT NULL," +
                             "x INTEGER NOT NULL," +
                             "y INTEGER NOT NULL," +
@@ -37,20 +37,20 @@ public class DBConnection {
 
                     // Traveler Table
                     "CREATE TABLE IF NOT EXISTS traveler (" +
-                            "id INTEGER PRIMARY KEY," +
+                            "id TEXT PRIMARY KEY," +
                             "phone TEXT NOT NULL," +
                             "FOREIGN KEY(id) REFERENCES person(id));",
 
                     // Driver Table
                     "CREATE TABLE IF NOT EXISTS driver (" +
-                            "id INTEGER PRIMARY KEY," +
+                            "id TEXT PRIMARY KEY," +
                             "car_id INTEGER NOT NULL," +
                             "FOREIGN KEY(id) REFERENCES person(id)," +
                             "FOREIGN KEY(car_id) REFERENCES car(id));",
 
                     // Travel Table
                     "CREATE TABLE IF NOT EXISTS travel (" +
-                            "id INTEGER PRIMARY KEY," +
+                            "id TEXT PRIMARY KEY," +
                             "driver_id INTEGER NOT NULL," +
                             "traveler_id INTEGER NOT NULL," +
                             "date TEXT NOT NULL," +

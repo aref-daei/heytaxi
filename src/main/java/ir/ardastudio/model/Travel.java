@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Travel {
 
-	private int id;
+	private String id;
 	private Driver driver;
 	private Traveler traveler;
 	private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd - HH:mm"));
@@ -16,7 +16,7 @@ public class Travel {
 	private String status; // start/end/cancel
 
 	// Constructor
-	public Travel(int id, Driver driver, Traveler traveler, int[] destination) {
+	public Travel(String id, Driver driver, Traveler traveler, int[] destination) {
         this.id = id;
 		this.driver = driver;
 		this.traveler = traveler;
@@ -29,11 +29,11 @@ public class Travel {
 		this.status = "start";
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

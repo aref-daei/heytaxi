@@ -2,12 +2,12 @@ package ir.ardastudio.model;
 
 public class Person {
 
-	private int id;
+	private String id;
 	private String name; // First name and Last name
 	private int x = 0, y = 0; // 1Km scale
 	private double score; // 1 to 5
 
-	public Person(int id, String name, double score) {
+	public Person(String id, String name, double score) {
 		if (score < 0.0 || score > 5.0) {
 			throw new IllegalArgumentException("Score must be between 0.0 and 5.0 inclusive");
 		}
@@ -17,11 +17,11 @@ public class Person {
 		this.score = score;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

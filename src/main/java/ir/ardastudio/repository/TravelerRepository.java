@@ -18,7 +18,7 @@ public class TravelerRepository {
                 PreparedStatement travelerStmt = connection.prepareStatement(travelerSQL)
         ) {
             // Person
-            personStmt.setInt(1, traveler.getId());
+            personStmt.setString(1, traveler.getId());
             personStmt.setString(2, traveler.getName());
             personStmt.setInt(3, traveler.getX());
             personStmt.setInt(4, traveler.getY());
@@ -26,7 +26,7 @@ public class TravelerRepository {
             personStmt.executeUpdate();
 
             // Traveler
-            travelerStmt.setInt(1, traveler.getId());
+            travelerStmt.setString(1, traveler.getId());
             travelerStmt.setString(2, traveler.getPhone());
             travelerStmt.executeUpdate();
         }
@@ -51,7 +51,7 @@ public class TravelerRepository {
         ) {
             while (rs.next()) {
                 Traveler traveler = new Traveler(
-                        rs.getInt("person_id"),
+                        rs.getString("person_id"),
                         rs.getString("person_name"),
                         rs.getString("person_phone"),
                         rs.getDouble("person_score"));
@@ -84,7 +84,7 @@ public class TravelerRepository {
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Traveler traveler = new Traveler(
-                            rs.getInt("person_id"),
+                            rs.getString("person_id"),
                             rs.getString("person_name"),
                             rs.getString("person_phone"),
                             rs.getDouble("person_score"));
@@ -121,12 +121,12 @@ public class TravelerRepository {
             personStmt.setInt(2, traveler.getX());
             personStmt.setInt(3, traveler.getY());
             personStmt.setDouble(4, traveler.getScore());
-            personStmt.setInt(5, traveler.getId());
+            personStmt.setString(5, traveler.getId());
             personStmt.executeUpdate();
 
             // Traveler
             travelerStmt.setString(1, traveler.getPhone());
-            travelerStmt.setInt(2, traveler.getId());
+            travelerStmt.setString(2, traveler.getId());
             travelerStmt.executeUpdate();
         }
     }

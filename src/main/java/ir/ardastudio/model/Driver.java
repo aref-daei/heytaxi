@@ -4,7 +4,7 @@ public class Driver extends Person {
 
 	private Car car;
 
-	public Driver(int id, String name, double score, Car car) {
+	public Driver(String id, String name, double score, Car car) {
 		super(id, name, score);
 		this.car = car;
 	}

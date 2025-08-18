@@ -19,7 +19,7 @@ public class DriverRepository {
                 PreparedStatement driverStmt = connection.prepareStatement(driverSQL)
         ) {
             // Person
-            personStmt.setInt(1, driver.getId());
+            personStmt.setString(1, driver.getId());
             personStmt.setString(2, driver.getName());
             personStmt.setInt(3, driver.getX());
             personStmt.setInt(4, driver.getY());
@@ -27,8 +27,8 @@ public class DriverRepository {
             personStmt.executeUpdate();
 
             // Driver
-            driverStmt.setInt(1, driver.getId());
-            driverStmt.setInt(2, driver.getCar().getId());
+            driverStmt.setString(1, driver.getId());
+            driverStmt.setString(2, driver.getCar().getId());
             driverStmt.executeUpdate();
         }
     }
@@ -56,13 +56,13 @@ public class DriverRepository {
         ) {
             while (rs.next()) {
                 Car car = new Car(
-                        rs.getInt("car_id"),
+                        rs.getString("car_id"),
                         rs.getString("car_model"),
                         rs.getString("car_color"),
                         rs.getString("car_licensePlate"));
 
                 Driver driver = new Driver(
-                        rs.getInt("person_id"),
+                        rs.getString("person_id"),
                         rs.getString("person_name"),
                         rs.getDouble("person_score"),
                         car);
@@ -99,13 +99,13 @@ public class DriverRepository {
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Car car = new Car(
-                            rs.getInt("car_id"),
+                            rs.getString("car_id"),
                             rs.getString("car_model"),
                             rs.getString("car_color"),
                             rs.getString("car_licensePlate"));
 
                     Driver driver = new Driver(
-                            rs.getInt("person_id"),
+                            rs.getString("person_id"),
                             rs.getString("person_name"),
                             rs.getDouble("person_score"),
                             car);
@@ -142,12 +142,12 @@ public class DriverRepository {
             personStmt.setInt(2, driver.getX());
             personStmt.setInt(3, driver.getY());
             personStmt.setDouble(4, driver.getScore());
-            personStmt.setInt(5, driver.getId());
+            personStmt.setString(5, driver.getId());
             personStmt.executeUpdate();
 
             // Driver
-            driverStmt.setInt(1, driver.getCar().getId());
-            driverStmt.setInt(2, driver.getId());
+            driverStmt.setString(1, driver.getCar().getId());
+            driverStmt.setString(2, driver.getId());
             driverStmt.executeUpdate();
         }
     }

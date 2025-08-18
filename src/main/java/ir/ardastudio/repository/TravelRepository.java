@@ -16,9 +16,9 @@ public class TravelRepository {
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement prepStmt = connection.prepareStatement(sql)
         ) {
-            prepStmt.setInt(1, travel.getId());
-            prepStmt.setInt(2, travel.getDriver().getId());
-            prepStmt.setInt(3, travel.getTraveler().getId());
+            prepStmt.setString(1, travel.getId());
+            prepStmt.setString(2, travel.getDriver().getId());
+            prepStmt.setString(3, travel.getTraveler().getId());
             prepStmt.setString(4, travel.getDate());
             prepStmt.setInt(5, travel.getDestination()[0]);
             prepStmt.setInt(6, travel.getDestination()[1]);
@@ -69,13 +69,13 @@ public class TravelRepository {
         ) {
             while (rs.next()) {
                 Car car = new Car(
-                        rs.getInt("car_id"),
+                        rs.getString("car_id"),
                         rs.getString("car_model"),
                         rs.getString("car_color"),
                         rs.getString("car_licensePlate"));
 
                 Driver driver = new Driver(
-                        rs.getInt("pd_id"),
+                        rs.getString("pd_id"),
                         rs.getString("pd_name"),
                         rs.getDouble("pd_score"),
                         car);
@@ -83,7 +83,7 @@ public class TravelRepository {
                 driver.setY(rs.getInt("pd_y"));
 
                 Traveler traveler = new Traveler(
-                        rs.getInt("pt_id"),
+                        rs.getString("pt_id"),
                         rs.getString("pt_name"),
                         rs.getString("pt_phone"),
                         rs.getDouble("pt_score"));
@@ -91,7 +91,7 @@ public class TravelRepository {
                 traveler.setY(rs.getInt("pt_y"));
 
                 Travel travel = new Travel(
-                        rs.getInt("t_id"),
+                        rs.getString("t_id"),
                         driver, traveler,
                         new int[]{rs.getInt("t_dest_x"), rs.getInt("t_dest_y")});
                 travel.setDate(rs.getString("t_date"));
@@ -145,13 +145,13 @@ public class TravelRepository {
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Car car = new Car(
-                            rs.getInt("car_id"),
+                            rs.getString("car_id"),
                             rs.getString("car_model"),
                             rs.getString("car_color"),
                             rs.getString("car_licensePlate"));
 
                     Driver driver = new Driver(
-                            rs.getInt("pd_id"),
+                            rs.getString("pd_id"),
                             rs.getString("pd_name"),
                             rs.getDouble("pd_score"),
                             car);
@@ -159,7 +159,7 @@ public class TravelRepository {
                     driver.setY(rs.getInt("pd_y"));
 
                     Traveler traveler = new Traveler(
-                            rs.getInt("pt_id"),
+                            rs.getString("pt_id"),
                             rs.getString("pt_name"),
                             rs.getString("pt_phone"),
                             rs.getDouble("pt_score"));
@@ -167,7 +167,7 @@ public class TravelRepository {
                     traveler.setY(rs.getInt("pt_y"));
 
                     Travel travel = new Travel(
-                            rs.getInt("t_id"),
+                            rs.getString("t_id"),
                             driver, traveler,
                             new int[]{rs.getInt("t_dest_x"), rs.getInt("t_dest_y")});
                     travel.setDate(rs.getString("t_date"));
@@ -200,8 +200,8 @@ public class TravelRepository {
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement prepStmt = connection.prepareStatement(sql)
         ) {
-            prepStmt.setInt(1, travel.getDriver().getId());
-            prepStmt.setInt(2, travel.getTraveler().getId());
+            prepStmt.setString(1, travel.getDriver().getId());
+            prepStmt.setString(2, travel.getTraveler().getId());
             prepStmt.setString(3, travel.getDate());
             prepStmt.setInt(4, travel.getDestination()[0]);
             prepStmt.setInt(5, travel.getDestination()[1]);
@@ -209,7 +209,7 @@ public class TravelRepository {
             prepStmt.setInt(7, travel.getTime());
             prepStmt.setInt(8, travel.getCost());
             prepStmt.setString(9, travel.getStatus());
-            prepStmt.setInt(10, travel.getId());
+            prepStmt.setString(10, travel.getId());
             prepStmt.executeUpdate();
         }
     }
