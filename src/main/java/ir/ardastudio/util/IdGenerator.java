@@ -1,14 +1,13 @@
 package ir.ardastudio.util;
 
-import java.security.SecureRandom;
+import java.util.UUID;
 
 public class IdGenerator {
-    public static int generate() {
-        SecureRandom random = new SecureRandom();
-        int id = 0;
-        for (int i = 0; i < 8; i++) {
-            id += (int) (random.nextInt(1,10) * Math.pow(10, i));
-        }
-        return id;
+    public static String generate() {
+        String appCode = "10410112111697120105";
+        String uuid = UUID.randomUUID().toString();
+        String combined = appCode + uuid.replace("-", "");
+        UUID customUUID = UUID.nameUUIDFromBytes(combined.getBytes());
+        return customUUID.toString();
     }
 }
