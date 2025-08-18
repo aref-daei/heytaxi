@@ -22,7 +22,7 @@ public class CoreService {
                 List<Travel> travels = null;
                 if (authService.getTraveler() != null) {
                     travels = travelRepo.getAllTravels().stream()
-                            .filter(t -> t.getTraveler().getId() == authService.getTraveler().getId())
+                            .filter(t -> t.getTraveler().getId().equals(authService.getTraveler().getId()))
                             .toList();
                 }
 

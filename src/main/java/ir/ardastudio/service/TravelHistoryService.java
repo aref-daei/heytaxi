@@ -15,7 +15,7 @@ public class TravelHistoryService {
         try {
             Screen.clear();
             List<Travel> travels = travelRepo.getAllTravels().stream()
-                    .filter(t -> t.getTraveler().getId() == traveler.getId())
+                    .filter(t -> t.getTraveler().getId().equals(traveler.getId()))
                     .toList();
             if (travels.isEmpty()) {
                 System.out.println("No travel history.");
