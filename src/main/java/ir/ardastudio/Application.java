@@ -1,5 +1,6 @@
 package ir.ardastudio;
 
+import ir.ardastudio.repository.DriverRepository;
 import ir.ardastudio.service.CoreService;
 import ir.ardastudio.service.DriverGeneratorService;
 import ir.ardastudio.util.DBConnection;
@@ -20,7 +21,10 @@ public class Application {
 
             DBConnection.initialize();
 
-            new DriverGeneratorService().generateRandomDrivers();
+            if (new DriverRepository().getAllDrivers().isEmpty()) {
+                new DriverGeneratorService().generateRandomDrivers();
+            }
+
             new CoreService().systemManager();
         } catch (SQLException e) {
             System.err.println("Database initialization failed: " + e.getMessage());

@@ -63,8 +63,9 @@ public class TravelRequestService {
                 TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException ignored) {}
 
-            Driver driver = driverFinderService.findNearestDriver(traveler);
-            if (driver != null) {
+            try {
+                Driver driver = driverFinderService.findNearestDriver(traveler);
+
                 Travel travel = new Travel(IdGenerator.generate(), driver, traveler, destination);
                 travelRepo.addTravel(travel);
 
@@ -76,8 +77,8 @@ public class TravelRequestService {
                 driver.setX(destination[0]);
                 driver.setY(destination[1]);
                 driverRepo.updateDriver(driver);
-            } else {
-                System.out.println("No drivers found.");
+            } catch (IllegalArgumentException e) {
+                System.err.println(e.getMessage());
             }
         } catch (SQLException e) {
             System.err.println("Error fetching travel: " + e.getMessage());
