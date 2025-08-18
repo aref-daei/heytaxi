@@ -3,11 +3,15 @@ package ir.ardastudio.service;
 import ir.ardastudio.model.Driver;
 import ir.ardastudio.model.Traveler;
 import ir.ardastudio.repository.DriverRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class DriverFinderService {
+    private static final Logger logger = LoggerFactory.getLogger(DriverFinderService.class);
+
     private final DriverRepository driverRepo = new DriverRepository();
 
     private static final int MAX_ACTIVITY_RADIUS = 20;
@@ -33,7 +37,7 @@ public class DriverFinderService {
 
             return nearest;
         } catch (SQLException e) {
-            System.err.println("Error fetching drivers: " + e.getMessage());
+            logger.error("Error fetching drivers: ", e);
         }
 
         return null;

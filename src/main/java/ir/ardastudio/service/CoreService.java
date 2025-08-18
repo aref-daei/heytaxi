@@ -3,12 +3,16 @@ package ir.ardastudio.service;
 import ir.ardastudio.repository.*;
 import ir.ardastudio.model.*;
 import ir.ardastudio.shared.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 public class CoreService {
+    private static final Logger logger = LoggerFactory.getLogger(CoreService.class);
+
     private final TravelRepository travelRepo = new TravelRepository();
     private final AuthService authService = new AuthService();
     private final TravelRequestService travelRequestService = new TravelRequestService();
@@ -85,7 +89,7 @@ public class CoreService {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching travels: " + e.getMessage());
+            logger.error("Error fetching travels: ", e);
         }
     }
 }

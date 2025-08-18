@@ -5,11 +5,15 @@ import ir.ardastudio.model.Driver;
 import ir.ardastudio.repository.CarRepository;
 import ir.ardastudio.repository.DriverRepository;
 import ir.ardastudio.util.IdGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class DriverGeneratorService {
+    private static final Logger logger = LoggerFactory.getLogger(DriverGeneratorService.class);
+
     private final CarRepository carRepo = new CarRepository();
     private final DriverRepository driverRepo = new DriverRepository();
 
@@ -62,7 +66,7 @@ public class DriverGeneratorService {
                 driverRepo.addDriver(driver);
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching car and driver: " + e.getMessage());
+            logger.error("Error fetching car and driver: ", e);
         }
     }
 

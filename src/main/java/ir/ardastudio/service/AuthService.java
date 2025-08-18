@@ -4,6 +4,8 @@ import ir.ardastudio.model.Traveler;
 import ir.ardastudio.repository.TravelerRepository;
 import ir.ardastudio.shared.*;
 import ir.ardastudio.util.IdGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -11,6 +13,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class AuthService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
     private final TravelerRepository travelerRepo = new TravelerRepository();
     private final SMSAuthentication auth = new SMSAuthentication(
             String.format("data/auth_logs_%s.csv",
@@ -64,7 +68,7 @@ public class AuthService {
                 travelerRepo.addTraveler(traveler);
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching travelers: " + e.getMessage());
+            logger.error("Error fetching travelers: ", e);
         }
     }
 

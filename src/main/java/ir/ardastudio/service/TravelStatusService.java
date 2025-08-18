@@ -6,11 +6,15 @@ import ir.ardastudio.repository.DriverRepository;
 import ir.ardastudio.repository.TravelRepository;
 import ir.ardastudio.repository.TravelerRepository;
 import ir.ardastudio.shared.Screen;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class TravelStatusService {
+    private static final Logger logger = LoggerFactory.getLogger(TravelStatusService.class);
+
     private final TravelRepository travelRepo = new TravelRepository();
     private final DriverRepository driverRepo = new DriverRepository();
     private final TravelerRepository travelerRepo = new TravelerRepository();
@@ -59,7 +63,7 @@ public class TravelStatusService {
                     break;
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching travel status: " + e.getMessage());
+            logger.error("Error fetching travel status: ", e);
         }
     }
 }

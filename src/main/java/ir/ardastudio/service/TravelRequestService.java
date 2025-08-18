@@ -7,12 +7,16 @@ import ir.ardastudio.repository.DriverRepository;
 import ir.ardastudio.repository.TravelRepository;
 import ir.ardastudio.shared.Screen;
 import ir.ardastudio.util.IdGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class TravelRequestService {
+    private static final Logger logger = LoggerFactory.getLogger(TravelRequestService.class);
+
     private final TravelRepository travelRepo = new TravelRepository();
     private final DriverRepository driverRepo = new DriverRepository();
     private final DriverFinderService driverFinderService = new DriverFinderService();
@@ -81,7 +85,7 @@ public class TravelRequestService {
                 System.err.println(e.getMessage());
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching travel: " + e.getMessage());
+            logger.error("Error fetching travel: ", e);
         }
     }
 }
