@@ -19,7 +19,7 @@
 
     <groupId>ir.ardastudio</groupId>
     <artifactId>heytaxi</artifactId>
-    <version>2.0.1</version>
+    <version>3.0.0</version>
     <name>HeyTaxi</name>
     <description>A CLI Java app that simulates an online taxi service.</description>
 
