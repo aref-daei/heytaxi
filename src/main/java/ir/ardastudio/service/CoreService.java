@@ -50,7 +50,7 @@ public class CoreService {
                 } else {
                     System.out.println(
                             "  T) Travel " +
-                            (travels == null || travels.isEmpty() || !travels.getLast().getStatus().equals("start") ? "Request" : "Status")
+                            (travels == null || travels.isEmpty() || !travels.getFirst().getStatus().equals("start") ? "Request" : "Status")
                     );
                     System.out.println("  H) History");
                     System.out.println("  L) Log out");
@@ -64,7 +64,7 @@ public class CoreService {
                         authService.signIn(input);
                         break;
                     case "t":
-                        if (travels == null || travels.isEmpty() || !travels.getLast().getStatus().equals("start")) {
+                        if (travels == null || travels.isEmpty() || !travels.getFirst().getStatus().equals("start")) {
                             travelRequestService.requestTravel(authService.getTraveler(), input);
                         } else {
                             travelStatusService.handleTravelStatus(authService.getTraveler(), input);

@@ -21,7 +21,9 @@ public class TravelStatusService {
 
     public void handleTravelStatus(Traveler traveler, Scanner input) {
         try {
-            Travel travel = travelRepo.getAllTravels().getLast();
+            Travel travel = travelRepo.getAllTravels().stream()
+                        .filter(t -> t.getTraveler().getId().equals(traveler.getId()))
+                        .toList().getFirst();
 
             Screen.clear();
             System.out.println("..:: Current Travel Information ::..");
