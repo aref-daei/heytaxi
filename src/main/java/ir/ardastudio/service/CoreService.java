@@ -27,22 +27,32 @@ public class CoreService {
                 }
 
                 Screen.clear();
-                System.out.println("      *** Welcome to HeyTaxi ***      ");
-                System.out.println("Reach your destination with one click!");
-                System.out.println("         (c) 2025 - Aref Daei         ");
-                System.out.println();
+                System.out.printf("%s%n%s%n%s%n%s%n%s%n",
+                        "   __ __           ______            _ ",
+                        "  / // /___  __ __/_  __/___ ___ __ (_)",
+                        " / _  // -_)/ // / / /  / _ `/\\ \\ // / ",
+                        "/_//_/ \\__/ \\_, / /_/   \\_,_//_\\_\\/_/  ",
+                        "           /___/                       ");
+                if (authService.getTraveler() != null) {
+                    System.out.println("\nUser Information:");
+                    System.out.printf("  Name : %s%n  Phone: %s%n  Score: %s%n",
+                            authService.getTraveler().getName(),
+                            authService.getTraveler().getPhone(),
+                            authService.getTraveler().getScore());
+                }
+                System.out.println("\nMenu:");
                 if (authService.getTraveler() == null) {
-                    System.out.println("S) Sign in");
+                    System.out.println("  S) Sign in");
                 } else {
                     System.out.println(
-                            "T) Travel " +
+                            "  T) Travel " +
                             (travels == null || travels.isEmpty() || !travels.getLast().getStatus().equals("start") ? "Request" : "Status")
                     );
-                    System.out.println("H) History");
-                    System.out.println("L) Log out");
+                    System.out.println("  H) History");
+                    System.out.println("  L) Log out");
                 }
-                System.out.println("Q) Quit");
-                System.out.print("Choose an option: ");
+                System.out.println("  Q) Quit");
+                System.out.print("\nChoose an option: ");
                 String opt = input.nextLine().toLowerCase();
 
                 switch (opt) {
