@@ -60,7 +60,8 @@ public class TravelRepository {
                 "JOIN driver ON pd.id = driver.id " +
                 "JOIN person pt ON t.traveler_id = pt.id " +
                 "JOIN traveler ON pt.id = traveler.id " +
-                "JOIN car ON car.id = driver.car_id";
+                "JOIN car ON car.id = driver.car_id " +
+                "ORDER BY t_time";
 
         try (
                 Connection connection = DBConnection.getConnection();
