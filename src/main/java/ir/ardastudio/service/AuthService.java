@@ -77,4 +77,12 @@ public class AuthService {
         Screen.clear();
         System.out.println("You have been logged out.");
     }
+
+    public void update() {
+        try {
+            traveler = travelerRepo.getTravelerById(traveler.getId());
+        } catch (SQLException e) {
+            logger.error("Error fetching traveler: ", e);
+        }
+    }
 }
