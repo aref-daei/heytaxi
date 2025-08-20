@@ -29,6 +29,9 @@ public class CoreService {
                             .filter(t -> t.getTraveler().getId().equals(authService.getTraveler().getId()))
                             .toList();
                 }
+                if (authService.getTraveler() != null) {
+                    authService.update();
+                }
 
                 Screen.clear();
                 System.out.printf("%s%n%s%n%s%n%s%n%s%n",
