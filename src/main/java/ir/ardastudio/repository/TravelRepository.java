@@ -106,7 +106,7 @@ public class TravelRepository {
         return travels;
     }
 
-    public Travel getTravelById(int id) throws SQLException {
+    public Travel getTravelById(String id) throws SQLException {
         String sql = "SELECT " +
                 "t.id AS t_id, " +
                 "t.dest_x AS t_dest_x, " +
@@ -142,7 +142,7 @@ public class TravelRepository {
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement preStatement = connection.prepareStatement(sql)
         ) {
-            preStatement.setInt(1, id);
+            preStatement.setString(1, id);
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Car car = new Car(

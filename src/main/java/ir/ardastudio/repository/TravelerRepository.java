@@ -64,7 +64,7 @@ public class TravelerRepository {
         return travelers;
     }
 
-    public Traveler getTravelerById(int id) throws SQLException {
+    public Traveler getTravelerById(String id) throws SQLException {
         String sql = "SELECT " +
                 "person.id AS person_id, " +
                 "person.name AS person_name, " +
@@ -80,7 +80,7 @@ public class TravelerRepository {
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement preStatement = connection.prepareStatement(sql)
         ) {
-            preStatement.setInt(1, id);
+            preStatement.setString(1, id);
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Traveler traveler = new Traveler(

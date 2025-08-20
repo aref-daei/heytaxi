@@ -44,14 +44,14 @@ public class CarRepository {
         return cars;
     }
 
-    public Car getCarById(int id) throws SQLException {
+    public Car getCarById(String id) throws SQLException {
         String sql = "SELECT * FROM car WHERE id = ?";
 
         try (
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement prepStmt = connection.prepareStatement(sql)
         ) {
-            prepStmt.setInt(1, id);
+            prepStmt.setString(1, id);
             try (ResultSet rs = prepStmt.executeQuery()) {
                 if (rs.next()) {
                     return new Car(

@@ -75,7 +75,7 @@ public class DriverRepository {
         return drivers;
     }
 
-    public Driver getDriverById(int id) throws SQLException {
+    public Driver getDriverById(String id) throws SQLException {
         String sql = "SELECT " +
                 "person.id AS person_id, " +
                 "person.name AS person_name, " +
@@ -95,7 +95,7 @@ public class DriverRepository {
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement preStatement = connection.prepareStatement(sql)
         ) {
-            preStatement.setInt(1, id);
+            preStatement.setString(1, id);
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Car car = new Car(
