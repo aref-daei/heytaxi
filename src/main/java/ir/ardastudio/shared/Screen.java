@@ -1,8 +1,13 @@
 package ir.ardastudio.shared;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 public class Screen {
+    private static final Logger logger = LoggerFactory.getLogger(Screen.class);
+
 	public static void clear() {
         try {
             String os = System.getProperty("os.name");
@@ -12,7 +17,7 @@ public class Screen {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
         } catch (IOException | InterruptedException e) {
-            System.err.println("Error clearing the console: " + e.getMessage());
+            logger.error("Error clearing the console: ", e);
         }
     }
 }
