@@ -83,7 +83,7 @@ public class CoreService {
                         running = false;
                         break;
                     default:
-                        System.err.println("Invalid option.");
+                        System.out.println("Invalid option");
                 }
 
                 if (!opt.equals("q")) {

@@ -22,7 +22,7 @@ public class TravelHistoryService {
                     .filter(t -> t.getTraveler().getId().equals(traveler.getId()))
                     .toList();
             if (travels.isEmpty()) {
-                System.out.println("No travel history.");
+                System.out.println("No travel history");
                 return;
             }
             System.out.println("..:: Travel History ::..");

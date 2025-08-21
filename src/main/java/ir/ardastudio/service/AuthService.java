@@ -36,20 +36,20 @@ public class AuthService {
                     System.out.println("Please enter your phone number:");
                     phone = input.nextLine();
                     if (phone.isEmpty()) {
-                        System.out.println("Phone number is empty.");
+                        System.out.println("Phone number is empty");
                         continue;
                     }
                     phone = Telephone.corrector(phone);
                 } catch (IllegalArgumentException e) {
-                    System.err.println(e.getMessage());
+                    System.out.println(e.getMessage());
                     continue;
                 }
 
-                System.out.printf("Please enter the code sent to your mobile phone.%n%s%n",
+                System.out.printf("Please enter the code sent to your mobile phone%n%s%n",
                         auth.sendAuthenticationSMS(phone));
                 String code = input.nextLine();
                 if (!auth.verifyCode(code, phone)) {
-                    System.err.println("Invalid code! Please try again.");
+                    System.out.println("Invalid code! Please try again");
                     continue;
                 }
 
@@ -80,7 +80,7 @@ public class AuthService {
     public void logOut() {
         traveler = null;
         Screen.clear();
-        System.out.println("You have been logged out.");
+        System.out.println("You have been logged out");
     }
 
     public void update() {

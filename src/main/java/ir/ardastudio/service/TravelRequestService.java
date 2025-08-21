@@ -38,7 +38,7 @@ public class TravelRequestService {
                         break;
                     } catch (Exception e) {
                         input.nextLine();
-                        System.err.println("Invalid location format.");
+                        System.out.println("Invalid location format");
                     }
                 }
             }
@@ -51,13 +51,13 @@ public class TravelRequestService {
                     input.nextLine();
 
                     if (destination[0] == traveler.getX() && destination[1] == traveler.getY()) {
-                        System.err.println("Origin and destination cannot be the same.");
+                        System.out.println("Origin and destination cannot be the same");
                     } else {
                         break;
                     }
                 } catch (Exception e) {
                     input.nextLine();
-                    System.err.println("Invalid destination format.");
+                    System.out.println("Invalid destination format");
                 }
             }
 
@@ -76,13 +76,13 @@ public class TravelRequestService {
                 Screen.clear();
                 System.out.println("..:: Travel Information ::..");
                 System.out.println(travel);
-                System.out.printf("Estimated time: %d minutes.%n", travel.getTime());
+                System.out.printf("Estimated time: %d minutes%n", travel.getTime());
 
                 driver.setX(destination[0]);
                 driver.setY(destination[1]);
                 driverRepo.updateDriver(driver);
             } catch (IllegalArgumentException e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         } catch (SQLException e) {
             logger.error("Error fetching travel: ", e);

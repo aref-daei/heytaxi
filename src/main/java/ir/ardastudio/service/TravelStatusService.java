@@ -45,10 +45,10 @@ public class TravelStatusService {
                                 (travel.getDriver().getScore() + score) / 2);
                         driverRepo.updateDriver(travel.getDriver());
                     } catch (IllegalArgumentException e) {
-                        System.err.println(e.getMessage());
+                        System.out.println(e.getMessage());
                     } catch (Exception e) {
                         input.nextLine();
-                        System.err.println("Invalid score.");
+                        System.out.println("Invalid score");
                     }
                     break;
 
@@ -60,7 +60,7 @@ public class TravelStatusService {
                         travelRepo.updateTravel(travel);
                         traveler.setScore(Math.max(traveler.getScore() - 0.17, 0.0));
                         travelerRepo.updateTraveler(traveler);
-                        System.out.println("Travel canceled.");
+                        System.out.println("Travel canceled");
                     }
                     break;
             }
