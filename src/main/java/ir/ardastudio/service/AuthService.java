@@ -45,7 +45,7 @@ public class AuthService {
                     continue;
                 }
 
-                System.out.printf("Please enter the code sent to your mobile phone%n%s%n",
+                System.out.printf("Please enter the code sent to your phone number:%n%s%n",
                         auth.sendAuthenticationSMS(phone));
                 String code = input.nextLine();
                 if (!auth.verifyCode(code, phone)) {
@@ -61,7 +61,7 @@ public class AuthService {
                 }
 
                 if (traveler == null) {
-                    System.out.println("Code confirmed.\nPlease enter your full name:");
+                    System.out.println("Code confirmed\nPlease enter your full name:");
                     name = input.nextLine();
                 }
 
