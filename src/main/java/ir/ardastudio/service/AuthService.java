@@ -34,7 +34,12 @@ public class AuthService {
             while (true) {
                 try {
                     System.out.println("Please enter your phone number:");
-                    phone = Telephone.corrector(input.nextLine());
+                    phone = input.nextLine();
+                    if (phone.isEmpty()) {
+                        System.out.println("Phone number is empty.");
+                        continue;
+                    }
+                    phone = Telephone.corrector(phone);
                 } catch (IllegalArgumentException e) {
                     System.err.println(e.getMessage());
                     continue;
