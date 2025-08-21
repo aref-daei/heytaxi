@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.security.SecureRandom;
@@ -13,6 +15,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class SMSAuthentication {
+    private static final Logger logger = LoggerFactory.getLogger(SMSAuthentication.class);
+
 	private final String path;
 
 	public SMSAuthentication(String path) {
@@ -49,17 +53,15 @@ public class SMSAuthentication {
             	data.get("code"),
             	data.get("exp")
             });
-
-        	System.out.println("Data successfully written to CSV file: " + path);
         } catch (IOException e) {
-            System.err.println("Error writing CSV file to path: " + path);
+            logger.error("Error writing CSV file to path: ", e);
         }
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
         	return objectMapper.writeValueAsString(data);
         } catch (JsonProcessingException e) {
-            System.err.println("Error converting data to JSON: " + e.getMessage());
+            logger.error("Error converting data to JSON: ", e);
             return "{}";
         }
     }
@@ -73,7 +75,7 @@ public class SMSAuthentication {
                 records.remove(0);
             }
         } catch (IOException | CsvException e) {
-            System.err.println("Error reading CSV file from path: " + path);
+            logger.error("Error reading CSV file from path: ", e);
         }
         return records;
     }
@@ -89,7 +91,7 @@ public class SMSAuthentication {
     						LocalDateTime.parse(data[2], DateTimeFormatter.ofPattern("yyyy/MM/dd-HH:mm:ss"));
                     return expirationTime.isAfter(now);
     			} catch (Exception e) {
-                    System.err.printf("Error processing record for phone=%s: %s%n", data[0], e.getMessage());
+                    logger.error("Error processing record for phone={}: ", data[0], e);
     			}
     		}
     	}
