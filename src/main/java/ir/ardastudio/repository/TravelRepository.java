@@ -39,6 +39,7 @@ public class TravelRepository {
                 "t.date AS t_date, " +
                 "t.distance AS t_distance, " +
                 "t.time AS t_time, " +
+                "t.cost AS t_cost, " +
                 "t.status AS t_status, " +
                 "pd.id AS pd_id, " +
                 "pd.name AS pd_name, " +
@@ -61,7 +62,7 @@ public class TravelRepository {
                 "JOIN person pt ON t.traveler_id = pt.id " +
                 "JOIN traveler ON pt.id = traveler.id " +
                 "JOIN car ON car.id = driver.car_id " +
-                "ORDER BY t_time DESC";
+                "ORDER BY t_date DESC";
 
         try (
                 Connection connection = DBConnection.getConnection();
@@ -94,11 +95,12 @@ public class TravelRepository {
                 Travel travel = new Travel(
                         rs.getString("t_id"),
                         driver, traveler,
-                        new int[]{rs.getInt("t_dest_x"), rs.getInt("t_dest_y")});
-                travel.setDate(rs.getString("t_date"));
-                travel.setDistance(rs.getDouble("t_distance"));
-                travel.setTime(rs.getInt("t_time"));
-                travel.setStatus(rs.getString("t_status"));
+                        new int[]{rs.getInt("t_dest_x"), rs.getInt("t_dest_y")},
+                        rs.getString("t_date"),
+                        rs.getDouble("t_distance"),
+                        rs.getInt("t_time"),
+                        rs.getInt("t_cost"),
+                        rs.getString("t_status"));
 
                 travels.add(travel);
             }
@@ -114,6 +116,7 @@ public class TravelRepository {
                 "t.date AS t_date, " +
                 "t.distance AS t_distance, " +
                 "t.time AS t_time, " +
+                "t.cost AS t_cost, " +
                 "t.status AS t_status, " +
                 "pd.id AS pd_id, " +
                 "pd.name AS pd_name, " +
@@ -167,16 +170,15 @@ public class TravelRepository {
                     traveler.setX(rs.getInt("pt_x"));
                     traveler.setY(rs.getInt("pt_y"));
 
-                    Travel travel = new Travel(
+                    return new Travel(
                             rs.getString("t_id"),
                             driver, traveler,
-                            new int[]{rs.getInt("t_dest_x"), rs.getInt("t_dest_y")});
-                    travel.setDate(rs.getString("t_date"));
-                    travel.setDistance(rs.getDouble("t_distance"));
-                    travel.setTime(rs.getInt("t_time"));
-                    travel.setStatus(rs.getString("t_status"));
-
-                    return travel;
+                            new int[]{rs.getInt("t_dest_x"), rs.getInt("t_dest_y")},
+                            rs.getString("t_date"),
+                            rs.getDouble("t_distance"),
+                            rs.getInt("t_time"),
+                            rs.getInt("t_cost"),
+                            rs.getString("t_status"));
                 }
             }
         }
