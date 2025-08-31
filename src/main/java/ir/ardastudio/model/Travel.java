@@ -8,7 +8,7 @@ public class Travel {
 	private String id;
 	private Driver driver;
 	private Traveler traveler;
-	private String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd - HH:mm"));
+	private String date;
 	private int[] destination; // [x, y] destination coordinates
 	private double distance; // 1Km scale
 	private int time; // Minutes
@@ -21,13 +21,27 @@ public class Travel {
 		this.driver = driver;
 		this.traveler = traveler;
 		this.destination = destination;
-		
+
+        this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd - HH:mm"));
 		this.distance = calculateDistance();
 		this.time = (int) Math.round(distance * 1.5);
 		this.cost = (int) (Math.round(distance * 4) * 1000) + 10_000; // 10_000 Toman for Entrance fee
-		
 		this.status = "start";
 	}
+
+    public Travel(String id, Driver driver, Traveler traveler, int[] destination,
+                  String date, double distance, int time, int cost, String status) {
+        this.id = id;
+        this.driver = driver;
+        this.traveler = traveler;
+        this.destination = destination;
+
+        this.date = date;
+        this.distance = distance;
+        this.time = time;
+        this.cost = cost;
+        this.status = status;
+    }
 
 	public String getId() {
 		return id;
