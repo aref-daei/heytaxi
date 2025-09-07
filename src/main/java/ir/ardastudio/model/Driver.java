@@ -1,13 +1,27 @@
 package ir.ardastudio.model;
 
-public class Driver extends Person {
+public class Driver extends User {
 
 	private Car car;
 
-	public Driver(String id, String name, double score, Car car) {
-		super(id, name, score);
-		this.car = car;
-	}
+    public Driver(Car car, String name, String phone) {
+        this(car, name, phone, 0, 0, 5.00);
+    }
+
+    public Driver(Car car, String name, String phone, int x, int y) {
+        this(car, name, phone, x, y, 5.00);
+    }
+
+    public Driver(Car car, String name, String phone, int x, int y, double score) {
+        super(name, phone, x, y, score);
+        this.car = car;
+    }
+
+    public Driver(Car car, String id, String createdAt, String updatedAt,
+                String name, String phone, int x, int y, double score) {
+        super(id, createdAt, updatedAt, name, phone, x, y, score);
+        this.car = car;
+    }
 
 	public Car getCar() {
 		return car;
