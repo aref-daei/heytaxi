@@ -9,6 +9,14 @@ public abstract class Model {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    public Model() {}
+
+    public Model(String id, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     protected void onId() {
         this.id = IdGenerator.generate();
     }
