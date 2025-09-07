@@ -1,26 +1,30 @@
 package ir.ardastudio.model;
 
-public class Car {
+import java.time.LocalDateTime;
 
-	private String id;
+public class Car extends Model {
+
 	private String model;
 	private String color;
 	private String licensePlate;
 
-	public Car(String id, String model, String color, String licensePlate) {
-        this.id = id;
+	public Car(String model, String color, String licensePlate) {
+        onId();
+        onCreate();
+
 		this.model = model;
 		this.color = color;
 		this.licensePlate = licensePlate;
 	}
 
-	public String getId() {
-		return id;
-	}
+    public Car(String id, String createdAt, String updatedAt,
+               String model, String color, String licensePlate) {
+        super(id, LocalDateTime.parse(createdAt), LocalDateTime.parse(updatedAt));
 
-	public void setId(String id) {
-		this.id = id;
-	}
+        this.model = model;
+        this.color = color;
+        this.licensePlate = licensePlate;
+    }
 
 	public String getModel() {
 		return model;
