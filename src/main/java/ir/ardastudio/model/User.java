@@ -42,6 +42,8 @@ public class User extends Model {
 
         this.name = name;
         this.phone = phone;
+        this.x = x;
+        this.y = y;
         this.score = score;
     }
 
