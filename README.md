@@ -39,7 +39,8 @@ mvn exec:java
 
 This project is under active development. Planned features include:
 
-- Graphical user interface (GUI)
+- Integrate Hibernate for object-relational mapping and database management.
+- Refactor the application into a REST API using Spring Boot.
 
 ## License
 
