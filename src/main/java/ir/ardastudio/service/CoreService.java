@@ -24,12 +24,12 @@ public class CoreService {
             boolean running = true;
             while (running) {
                 List<Travel> travels = null;
-                if (authService.getTraveler() != null) {
+                if (authService.getUser() != null) {
                     travels = travelRepo.getAllTravels().stream()
-                            .filter(t -> t.getTraveler().getId().equals(authService.getTraveler().getId()))
+                            .filter(t -> t.getUser().getId().equals(authService.getUser().getId()))
                             .toList();
                 }
-                if (authService.getTraveler() != null) {
+                if (authService.getUser() != null) {
                     authService.update();
                 }
 
@@ -40,15 +40,15 @@ public class CoreService {
                         " / _  // -_)/ // / / /  / _ `/\\ \\ // / ",
                         "/_//_/ \\__/ \\_, / /_/   \\_,_//_\\_\\/_/  ",
                         "           /___/                       ");
-                if (authService.getTraveler() != null) {
+                if (authService.getUser() != null) {
                     System.out.println("\nUser Information:");
                     System.out.printf("  Name : %s%n  Phone: %s%n  Score: %s%n",
-                            authService.getTraveler().getName(),
-                            authService.getTraveler().getPhone(),
-                            authService.getTraveler().getScore());
+                            authService.getUser().getName(),
+                            authService.getUser().getPhone(),
+                            authService.getUser().getScore());
                 }
                 System.out.println("\nMenu:");
-                if (authService.getTraveler() == null) {
+                if (authService.getUser() == null) {
                     System.out.println("  S) Sign in");
                 } else {
                     System.out.println(
@@ -68,13 +68,13 @@ public class CoreService {
                         break;
                     case "t":
                         if (travels == null || travels.isEmpty() || !travels.getFirst().getStatus().equals("start")) {
-                            travelRequestService.requestTravel(authService.getTraveler(), input);
+                            travelRequestService.requestTravel(authService.getUser(), input);
                         } else {
-                            travelStatusService.handleTravelStatus(authService.getTraveler(), input);
+                            travelStatusService.handleTravelStatus(authService.getUser(), input);
                         }
                         break;
                     case "h":
-                        travelHistoryService.showHistory(authService.getTraveler());
+                        travelHistoryService.showHistory(authService.getUser());
                         break;
                     case "l":
                         authService.logOut();
