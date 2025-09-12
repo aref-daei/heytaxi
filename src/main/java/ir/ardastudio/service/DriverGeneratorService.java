@@ -4,7 +4,6 @@ import ir.ardastudio.model.Car;
 import ir.ardastudio.model.Driver;
 import ir.ardastudio.repository.CarRepository;
 import ir.ardastudio.repository.DriverRepository;
-import ir.ardastudio.util.IdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +30,7 @@ public class DriverGeneratorService {
             "Abbasi", "Mohammadi", "Alavi", "Sadr", "Mirzaei"
     };
 
-    private static final String[] CAR_MODELS = {
+    private static final String[] CAR_NAMES = {
             "Tondar 90", "Samand", "Pride", "Peugeot 206", "Pars",
             "Dena", "Soren", "Runna", "Quik", "Peugeot 405"
     };
@@ -47,8 +46,7 @@ public class DriverGeneratorService {
 
             for (int i = 0; i < count; i++) {
                 Car car = new Car(
-                        IdGenerator.generate(),
-                        randomCarModel(),
+                        randomCarName(),
                         randomCarColor(),
                         generatePlate()
                 );
@@ -56,13 +54,12 @@ public class DriverGeneratorService {
 
                 double score = ThreadLocalRandom.current().nextDouble(4, 5);
                 Driver driver = new Driver(
-                        IdGenerator.generate(),
+                        car,
                         randomName(),
-                        (int) (score * 100) / 100.0,
-                        car
-                );
-                driver.setX(randomCoordinate());
-                driver.setY(randomCoordinate());
+                        "+989001238421",
+                        randomCoordinate(),
+                        randomCoordinate(),
+                        (int) (score * 100) / 100.0);
                 driverRepo.addDriver(driver);
             }
         } catch (SQLException e) {
@@ -75,8 +72,8 @@ public class DriverGeneratorService {
                 LAST_NAMES[random(LAST_NAMES.length)];
     }
 
-    private String randomCarModel() {
-        return CAR_MODELS[random(CAR_MODELS.length)];
+    private String randomCarName() {
+        return CAR_NAMES[random(CAR_NAMES.length)];
     }
 
     private String randomCarColor() {
