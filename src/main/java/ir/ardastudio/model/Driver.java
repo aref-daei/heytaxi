@@ -28,6 +28,7 @@ public class Driver extends User {
 	}
 
 	public void setCar(Car car) {
+        onUpdate();
 		this.car = car;
 	}
 
