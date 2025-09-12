@@ -2,11 +2,10 @@ package ir.ardastudio.service;
 
 import ir.ardastudio.model.Driver;
 import ir.ardastudio.model.Travel;
-import ir.ardastudio.model.Traveler;
+import ir.ardastudio.model.User;
 import ir.ardastudio.repository.DriverRepository;
 import ir.ardastudio.repository.TravelRepository;
 import ir.ardastudio.shared.Screen;
-import ir.ardastudio.util.IdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,10 +20,10 @@ public class TravelRequestService {
     private final DriverRepository driverRepo = new DriverRepository();
     private final DriverFinderService driverFinderService = new DriverFinderService();
 
-    public void requestTravel(Traveler traveler, Scanner input) {
+    public void requestTravel(User user, Scanner input) {
         try {
             Screen.clear();
-            int[] destination = new int[2];
+            int destX, destY;
 
             System.out.println("Do you know your location? Y/n\nDefault: (0, 0)");
             String hasLocation = input.nextLine().toLowerCase();
@@ -32,8 +31,8 @@ public class TravelRequestService {
                 while (true) {
                     try {
                         System.out.println("Enter your location (e.g., 5 13):");
-                        traveler.setX(input.nextInt());
-                        traveler.setY(input.nextInt());
+                        user.setX(input.nextInt());
+                        user.setY(input.nextInt());
                         input.nextLine();
                         break;
                     } catch (Exception e) {
@@ -46,11 +45,11 @@ public class TravelRequestService {
             while (true) {
                 try {
                     System.out.println("Enter destination (e.g., 6 -2):");
-                    destination[0] = input.nextInt();
-                    destination[1] = input.nextInt();
+                    destX = input.nextInt();
+                    destY = input.nextInt();
                     input.nextLine();
 
-                    if (destination[0] == traveler.getX() && destination[1] == traveler.getY()) {
+                    if (destX == user.getX() && destY == user.getY()) {
                         System.out.println("Origin and destination cannot be the same");
                     } else {
                         break;
@@ -68,9 +67,9 @@ public class TravelRequestService {
             } catch (InterruptedException ignored) {}
 
             try {
-                Driver driver = driverFinderService.findNearestDriver(traveler);
+                Driver driver = driverFinderService.findNearestDriver(user);
 
-                Travel travel = new Travel(IdGenerator.generate(), driver, traveler, destination);
+                Travel travel = new Travel(driver, user, destX, destY);
                 travelRepo.addTravel(travel);
 
                 Screen.clear();
@@ -78,8 +77,8 @@ public class TravelRequestService {
                 System.out.println(travel);
                 System.out.printf("Estimated time: %d minutes%n", travel.getTime());
 
-                driver.setX(destination[0]);
-                driver.setY(destination[1]);
+                driver.setX(destX);
+                driver.setY(destY);
                 driverRepo.updateDriver(driver);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
