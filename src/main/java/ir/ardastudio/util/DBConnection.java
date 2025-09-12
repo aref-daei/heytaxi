@@ -23,45 +23,51 @@ public class DBConnection {
                     // Car Table
                     "CREATE TABLE IF NOT EXISTS car (" +
                             "id TEXT PRIMARY KEY," +
-                            "model TEXT NOT NULL," +
+                            "createdAt TEXT PRIMARY KEY," +
+                            "updatedAt TEXT PRIMARY KEY," +
+                            "name TEXT NOT NULL," +
                             "color TEXT NOT NULL," +
                             "licensePlate TEXT NOT NULL);",
 
-                    // Person Table
-                    "CREATE TABLE IF NOT EXISTS person (" +
+                    // User Table
+                    "CREATE TABLE IF NOT EXISTS user (" +
                             "id TEXT PRIMARY KEY," +
+                            "createdAt TEXT PRIMARY KEY," +
+                            "updatedAt TEXT PRIMARY KEY," +
                             "name TEXT NOT NULL," +
+                            "phone TEXT NOT NULL," +
                             "x INTEGER NOT NULL," +
                             "y INTEGER NOT NULL," +
                             "score REAL NOT NULL);",
 
-                    // Traveler Table
-                    "CREATE TABLE IF NOT EXISTS traveler (" +
-                            "id TEXT PRIMARY KEY," +
-                            "phone TEXT NOT NULL," +
-                            "FOREIGN KEY(id) REFERENCES person(id));",
-
                     // Driver Table
                     "CREATE TABLE IF NOT EXISTS driver (" +
                             "id TEXT PRIMARY KEY," +
-                            "car_id INTEGER NOT NULL," +
-                            "FOREIGN KEY(id) REFERENCES person(id)," +
+                            "createdAt TEXT PRIMARY KEY," +
+                            "updatedAt TEXT PRIMARY KEY," +
+                            "name TEXT NOT NULL," +
+                            "phone TEXT NOT NULL," +
+                            "x INTEGER NOT NULL," +
+                            "y INTEGER NOT NULL," +
+                            "score REAL NOT NULL," +
+                            "car_id TEXT NOT NULL," +
                             "FOREIGN KEY(car_id) REFERENCES car(id));",
 
                     // Travel Table
                     "CREATE TABLE IF NOT EXISTS travel (" +
                             "id TEXT PRIMARY KEY," +
-                            "driver_id INTEGER NOT NULL," +
-                            "traveler_id INTEGER NOT NULL," +
-                            "date TEXT NOT NULL," +
-                            "dest_x INTEGER NOT NULL," +
-                            "dest_y INTEGER NOT NULL," +
+                            "createdAt TEXT PRIMARY KEY," +
+                            "updatedAt TEXT PRIMARY KEY," +
+                            "driver_id TEXT NOT NULL," +
+                            "user_id TEXT NOT NULL," +
+                            "x INTEGER NOT NULL," +
+                            "y INTEGER NOT NULL," +
                             "distance REAL NOT NULL," +
                             "time INTEGER NOT NULL," +
                             "cost INTEGER NOT NULL," +
                             "status TEXT NOT NULL," +
                             "FOREIGN KEY(driver_id) REFERENCES driver(id)," +
-                            "FOREIGN KEY(traveler_id) REFERENCES traveler(id));"
+                            "FOREIGN KEY(user_id) REFERENCES user(id));"
             };
 
             for (String query : queries) {
