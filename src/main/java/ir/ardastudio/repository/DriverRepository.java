@@ -10,44 +10,44 @@ import java.util.List;
 
 public class DriverRepository {
     public void addDriver(Driver driver) throws SQLException {
-        String personSQL = "INSERT INTO person VALUES(?, ?, ?, ?, ?)";
-        String driverSQL = "INSERT INTO driver VALUES(?, ?)";
+        String sql = "INSERT INTO driver VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (
                 Connection connection = DBConnection.getConnection();
-                PreparedStatement personStmt = connection.prepareStatement(personSQL);
-                PreparedStatement driverStmt = connection.prepareStatement(driverSQL)
+                PreparedStatement prepStmt = connection.prepareStatement(sql)
         ) {
-            // Person
-            personStmt.setString(1, driver.getId());
-            personStmt.setString(2, driver.getName());
-            personStmt.setInt(3, driver.getX());
-            personStmt.setInt(4, driver.getY());
-            personStmt.setDouble(5, driver.getScore());
-            personStmt.executeUpdate();
-
-            // Driver
-            driverStmt.setString(1, driver.getId());
-            driverStmt.setString(2, driver.getCar().getId());
-            driverStmt.executeUpdate();
+            prepStmt.setString(1, driver.getId());
+            prepStmt.setString(2, driver.getCreatedAt().toString());
+            prepStmt.setString(3, driver.getUpdatedAt().toString());
+            prepStmt.setString(4, driver.getName());
+            prepStmt.setString(5, driver.getPhone());
+            prepStmt.setInt(6, driver.getX());
+            prepStmt.setInt(7, driver.getY());
+            prepStmt.setDouble(8, driver.getScore());
+            prepStmt.setString(9, driver.getCar().getId());
+            prepStmt.executeUpdate();
         }
     }
 
     public List<Driver> getAllDrivers() throws SQLException {
         List<Driver> drivers = new ArrayList<>();
         String sql = "SELECT " +
-                "person.id AS person_id, " +
-                "person.name AS person_name, " +
-                "person.score AS person_score, " +
-                "person.x AS person_x, " +
-                "person.y AS person_y, " +
+                "id, " +
+                "createdAt, " +
+                "updatedAt, " +
+                "name, " +
+                "phone, " +
+                "x, " +
+                "y, " +
+                "score, " +
                 "car.id AS car_id, " +
-                "car.model AS car_model, " +
+                "car.createdAt AS car_createdAt, " +
+                "car.updatedAt AS car_updatedAt, " +
+                "car.name AS car_name, " +
                 "car.color AS car_color, " +
                 "car.licensePlate AS car_licensePlate " +
-                "FROM person " +
-                "JOIN driver d ON person.id = d.id " +
-                "JOIN car ON d.car_id = car.id";
+                "FROM driver " +
+                "JOIN car ON driver.car_id = car.id";
 
         try (
                 Connection connection = DBConnection.getConnection();
@@ -57,17 +57,22 @@ public class DriverRepository {
             while (rs.next()) {
                 Car car = new Car(
                         rs.getString("car_id"),
-                        rs.getString("car_model"),
+                        rs.getString("car_createdAt"),
+                        rs.getString("car_updatedAt"),
+                        rs.getString("car_name"),
                         rs.getString("car_color"),
                         rs.getString("car_licensePlate"));
 
                 Driver driver = new Driver(
-                        rs.getString("person_id"),
-                        rs.getString("person_name"),
-                        rs.getDouble("person_score"),
-                        car);
-                driver.setX(rs.getInt("person_x"));
-                driver.setY(rs.getInt("person_y"));
+                        car,
+                        rs.getString("id"),
+                        rs.getString("createdAt"),
+                        rs.getString("updatedAt"),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getInt("x"),
+                        rs.getInt("y"),
+                        rs.getDouble("score"));
 
                 drivers.add(driver);
             }
@@ -77,19 +82,23 @@ public class DriverRepository {
 
     public Driver getDriverById(String id) throws SQLException {
         String sql = "SELECT " +
-                "person.id AS person_id, " +
-                "person.name AS person_name, " +
-                "person.score AS person_score, " +
-                "person.x AS person_x, " +
-                "person.y AS person_y, " +
+                "id, " +
+                "createdAt, " +
+                "updatedAt, " +
+                "name, " +
+                "phone, " +
+                "x, " +
+                "y, " +
+                "score, " +
                 "car.id AS car_id, " +
-                "car.model AS car_model, " +
+                "car.createdAt AS car_createdAt, " +
+                "car.updatedAt AS car_updatedAt, " +
+                "car.name AS car_name, " +
                 "car.color AS car_color, " +
                 "car.licensePlate AS car_licensePlate " +
-                "FROM person " +
-                "JOIN driver d ON person.id = d.id " +
-                "JOIN car ON d.car_id = car.id " +
-                "WHERE person.id = ?";
+                "FROM driver " +
+                "JOIN car ON driver.car_id = car.id " +
+                "WHERE id = ?";
 
         try (
                 Connection connection = DBConnection.getConnection();
@@ -100,19 +109,22 @@ public class DriverRepository {
                 if (rs.next()) {
                     Car car = new Car(
                             rs.getString("car_id"),
-                            rs.getString("car_model"),
+                            rs.getString("car_createdAt"),
+                            rs.getString("car_updatedAt"),
+                            rs.getString("car_name"),
                             rs.getString("car_color"),
                             rs.getString("car_licensePlate"));
 
-                    Driver driver = new Driver(
-                            rs.getString("person_id"),
-                            rs.getString("person_name"),
-                            rs.getDouble("person_score"),
-                            car);
-                    driver.setX(rs.getInt("person_x"));
-                    driver.setY(rs.getInt("person_y"));
-
-                    return driver;
+                    return new Driver(
+                            car,
+                            rs.getString("id"),
+                            rs.getString("createdAt"),
+                            rs.getString("updatedAt"),
+                            rs.getString("name"),
+                            rs.getString("phone"),
+                            rs.getInt("x"),
+                            rs.getInt("y"),
+                            rs.getDouble("score"));
                 }
             }
         }
@@ -120,35 +132,28 @@ public class DriverRepository {
     }
 
     public void updateDriver(Driver driver) throws SQLException {
-        String personSQL = "UPDATE person " +
+        String sql = "UPDATE driver " +
                 "SET " +
-                "name = ?, " +
-                "x = ?, " +
-                "y = ?, " +
-                "score = ? " +
-                "WHERE id = ?";
-        String driverSQL = "UPDATE driver " +
-                "SET " +
-                "car_id = ? " +
+                "updatedAt, " +
+                "name, " +
+                "phone, " +
+                "x, " +
+                "y, " +
+                "score, " +
                 "WHERE id = ?";
 
         try (
                 Connection connection = DBConnection.getConnection();
-                PreparedStatement personStmt = connection.prepareStatement(personSQL);
-                PreparedStatement driverStmt = connection.prepareStatement(driverSQL)
+                PreparedStatement prepStmt = connection.prepareStatement(sql)
         ) {
-            // Person
-            personStmt.setString(1, driver.getName());
-            personStmt.setInt(2, driver.getX());
-            personStmt.setInt(3, driver.getY());
-            personStmt.setDouble(4, driver.getScore());
-            personStmt.setString(5, driver.getId());
-            personStmt.executeUpdate();
-
-            // Driver
-            driverStmt.setString(1, driver.getCar().getId());
-            driverStmt.setString(2, driver.getId());
-            driverStmt.executeUpdate();
+            prepStmt.setString(1, driver.getUpdatedAt().toString());
+            prepStmt.setString(2, driver.getName());
+            prepStmt.setString(3, driver.getPhone());
+            prepStmt.setInt(4, driver.getX());
+            prepStmt.setInt(5, driver.getY());
+            prepStmt.setDouble(6, driver.getScore());
+            prepStmt.setString(7, driver.getId());
+            prepStmt.executeUpdate();
         }
     }
 }
