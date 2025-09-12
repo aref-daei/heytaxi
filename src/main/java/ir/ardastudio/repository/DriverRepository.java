@@ -32,22 +32,22 @@ public class DriverRepository {
     public List<Driver> getAllDrivers() throws SQLException {
         List<Driver> drivers = new ArrayList<>();
         String sql = "SELECT " +
-                "id, " +
-                "createdAt, " +
-                "updatedAt, " +
-                "name, " +
-                "phone, " +
-                "x, " +
-                "y, " +
-                "score, " +
-                "car.id AS car_id, " +
-                "car.createdAt AS car_createdAt, " +
-                "car.updatedAt AS car_updatedAt, " +
-                "car.name AS car_name, " +
-                "car.color AS car_color, " +
-                "car.licensePlate AS car_licensePlate " +
-                "FROM driver " +
-                "JOIN car ON driver.car_id = car.id";
+                "d.id AS d_id, " +
+                "d.createdAt AS d_createdAt, " +
+                "d.updatedAt AS d_updatedAt, " +
+                "d.name AS d_name, " +
+                "d.phone AS d_phone, " +
+                "d.x AS d_x, " +
+                "d.y AS d_y, " +
+                "d.score AS d_score, " +
+                "c.id AS c_id, " +
+                "c.createdAt AS c_createdAt, " +
+                "c.updatedAt AS c_updatedAt, " +
+                "c.name AS c_name, " +
+                "c.color AS c_color, " +
+                "c.licensePlate AS c_licensePlate " +
+                "FROM driver d " +
+                "JOIN car c ON d.car_id = c.id";
 
         try (
                 Connection connection = DBConnection.getConnection();
@@ -56,23 +56,23 @@ public class DriverRepository {
         ) {
             while (rs.next()) {
                 Car car = new Car(
-                        rs.getString("car_id"),
-                        rs.getString("car_createdAt"),
-                        rs.getString("car_updatedAt"),
-                        rs.getString("car_name"),
-                        rs.getString("car_color"),
-                        rs.getString("car_licensePlate"));
+                        rs.getString("c_id"),
+                        rs.getString("c_createdAt"),
+                        rs.getString("c_updatedAt"),
+                        rs.getString("c_name"),
+                        rs.getString("c_color"),
+                        rs.getString("c_licensePlate"));
 
                 Driver driver = new Driver(
                         car,
-                        rs.getString("id"),
-                        rs.getString("createdAt"),
-                        rs.getString("updatedAt"),
-                        rs.getString("name"),
-                        rs.getString("phone"),
-                        rs.getInt("x"),
-                        rs.getInt("y"),
-                        rs.getDouble("score"));
+                        rs.getString("d_id"),
+                        rs.getString("d_createdAt"),
+                        rs.getString("d_updatedAt"),
+                        rs.getString("d_name"),
+                        rs.getString("d_phone"),
+                        rs.getInt("d_x"),
+                        rs.getInt("d_y"),
+                        rs.getDouble("d_score"));
 
                 drivers.add(driver);
             }
@@ -82,22 +82,22 @@ public class DriverRepository {
 
     public Driver getDriverById(String id) throws SQLException {
         String sql = "SELECT " +
-                "id, " +
-                "createdAt, " +
-                "updatedAt, " +
-                "name, " +
-                "phone, " +
-                "x, " +
-                "y, " +
-                "score, " +
-                "car.id AS car_id, " +
-                "car.createdAt AS car_createdAt, " +
-                "car.updatedAt AS car_updatedAt, " +
-                "car.name AS car_name, " +
-                "car.color AS car_color, " +
-                "car.licensePlate AS car_licensePlate " +
-                "FROM driver " +
-                "JOIN car ON driver.car_id = car.id " +
+                "d.id AS d_id, " +
+                "d.createdAt AS d_createdAt, " +
+                "d.updatedAt AS d_updatedAt, " +
+                "d.name AS d_name, " +
+                "d.phone AS d_phone, " +
+                "d.x AS d_x, " +
+                "d.y AS d_y, " +
+                "d.score AS d_score, " +
+                "c.id AS c_id, " +
+                "c.createdAt AS c_createdAt, " +
+                "c.updatedAt AS c_updatedAt, " +
+                "c.name AS c_name, " +
+                "c.color AS c_color, " +
+                "c.licensePlate AS c_licensePlate " +
+                "FROM driver d " +
+                "JOIN car c ON driver.car_id = c.id " +
                 "WHERE id = ?";
 
         try (
@@ -108,23 +108,23 @@ public class DriverRepository {
             try (ResultSet rs = preStatement.executeQuery()) {
                 if (rs.next()) {
                     Car car = new Car(
-                            rs.getString("car_id"),
-                            rs.getString("car_createdAt"),
-                            rs.getString("car_updatedAt"),
-                            rs.getString("car_name"),
-                            rs.getString("car_color"),
-                            rs.getString("car_licensePlate"));
+                            rs.getString("c_id"),
+                            rs.getString("c_createdAt"),
+                            rs.getString("c_updatedAt"),
+                            rs.getString("c_name"),
+                            rs.getString("c_color"),
+                            rs.getString("c_licensePlate"));
 
                     return new Driver(
                             car,
-                            rs.getString("id"),
-                            rs.getString("createdAt"),
-                            rs.getString("updatedAt"),
-                            rs.getString("name"),
-                            rs.getString("phone"),
-                            rs.getInt("x"),
-                            rs.getInt("y"),
-                            rs.getDouble("score"));
+                            rs.getString("d_id AS "),
+                            rs.getString("d_createdAt AS "),
+                            rs.getString("d_updatedAt AS "),
+                            rs.getString("d_name AS "),
+                            rs.getString("d_phone AS "),
+                            rs.getInt("d_x AS "),
+                            rs.getInt("d_y AS "),
+                            rs.getDouble("d_score AS "));
                 }
             }
         }
