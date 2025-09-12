@@ -52,6 +52,7 @@ public class User extends Model {
 	}
 
 	public void setName(String name) {
+        onUpdate();
 		this.name = name;
 	}
 
@@ -60,6 +61,7 @@ public class User extends Model {
     }
 
     public void setPhone(String phone) {
+        onUpdate();
         this.phone = phone;
     }
 
@@ -68,6 +70,7 @@ public class User extends Model {
 	}
 
 	public void setX(int x) {
+        onUpdate();
 		this.x = x;
 	}
 
@@ -76,6 +79,7 @@ public class User extends Model {
 	}
 
 	public void setY(int y) {
+        onUpdate();
 		this.y = y;
 	}
 
@@ -84,10 +88,10 @@ public class User extends Model {
 	}
 
 	public void setScore(double score) {
+        onUpdate();
 		if (score < 0.0 || score > 5.0) {
 			throw new IllegalArgumentException("Score must be between 0.0 and 5.0 inclusive");
 		}
-		
 		this.score = score;
 	}
 
