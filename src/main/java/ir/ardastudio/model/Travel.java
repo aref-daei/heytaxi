@@ -48,6 +48,7 @@ public class Travel extends Model {
 	}
 
 	public void setDriver(Driver driver) {
+        onUpdate();
 		this.driver = driver;
 
         this.distance = calculateDistance(user.getX(), user.getY(), x, y);
@@ -60,6 +61,7 @@ public class Travel extends Model {
 	}
 
 	public void setUser(User user) {
+        onUpdate();
 		this.user = user;
 
 		this.distance = calculateDistance(user.getX(), user.getY(), x, y);
@@ -72,6 +74,7 @@ public class Travel extends Model {
     }
 
     public void setX(int x) {
+        onUpdate();
         this.x = x;
     }
 
@@ -80,6 +83,7 @@ public class Travel extends Model {
     }
 
     public void setY(int y) {
+        onUpdate();
         this.y = y;
     }
 
@@ -88,6 +92,7 @@ public class Travel extends Model {
 	}
 
 	public void setDistance(double distance) {
+        onUpdate();
 		this.distance = distance;
 	}
 
@@ -96,6 +101,7 @@ public class Travel extends Model {
 	}
 
 	public void setTime(int time) {
+        onUpdate();
 		this.time = time;
 	}
 
@@ -104,6 +110,7 @@ public class Travel extends Model {
 	}
 
 	public void setCost(int cost) {
+        onUpdate();
 		this.cost = cost;
 	}
 
@@ -119,6 +126,7 @@ public class Travel extends Model {
 	}
 
 	public void setStatus(String status) {
+        onUpdate();
 		this.status = status;
 	}
 
