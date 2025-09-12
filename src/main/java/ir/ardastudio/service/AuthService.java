@@ -1,9 +1,8 @@
 package ir.ardastudio.service;
 
-import ir.ardastudio.model.Traveler;
-import ir.ardastudio.repository.TravelerRepository;
+import ir.ardastudio.model.User;
+import ir.ardastudio.repository.UserRepository;
 import ir.ardastudio.shared.*;
-import ir.ardastudio.util.IdGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,15 +14,15 @@ import java.util.Scanner;
 public class AuthService {
     private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
-    private final TravelerRepository travelerRepo = new TravelerRepository();
+    private final UserRepository userRepo = new UserRepository();
     private final SMSAuthentication auth = new SMSAuthentication(
             String.format("data/auth_logs_%s.csv",
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))));
 
-    private Traveler traveler;
+    private User user;
 
-    public Traveler getTraveler() {
-        return traveler;
+    public User getUser() {
+        return user;
     }
 
     public void signIn(Scanner input) {
@@ -53,14 +52,14 @@ public class AuthService {
                     continue;
                 }
 
-                for (Traveler user : travelerRepo.getAllTravelers()) {
-                    if (phone.equals(user.getPhone())) {
-                        traveler = new Traveler(user.getId(), user.getName(), user.getPhone());
+                for (User u : userRepo.getAllUsers()) {
+                    if (phone.equals(u.getPhone())) {
+                        user = u;
                         break;
                     }
                 }
 
-                if (traveler == null) {
+                if (user == null) {
                     System.out.println("Code confirmed\nPlease enter your full name:");
                     name = input.nextLine();
                 }
@@ -68,26 +67,26 @@ public class AuthService {
                 break;
             }
 
-            if (traveler == null) {
-                traveler = new Traveler(IdGenerator.generate(), name, phone);
-                travelerRepo.addTraveler(traveler);
+            if (user == null) {
+                user = new User(name, phone);
+                userRepo.addUser(user);
             }
         } catch (SQLException e) {
-            logger.error("Error fetching travelers: ", e);
+            logger.error("Error fetching users: ", e);
         }
     }
 
     public void logOut() {
-        traveler = null;
+        user = null;
         Screen.clear();
         System.out.println("You have been logged out");
     }
 
     public void update() {
         try {
-            traveler = travelerRepo.getTravelerById(traveler.getId());
+            user = userRepo.getUserById(user.getId());
         } catch (SQLException e) {
-            logger.error("Error fetching traveler: ", e);
+            logger.error("Error fetching user: ", e);
         }
     }
 }

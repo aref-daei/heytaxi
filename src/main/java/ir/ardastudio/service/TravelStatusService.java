@@ -1,10 +1,10 @@
 package ir.ardastudio.service;
 
 import ir.ardastudio.model.Travel;
-import ir.ardastudio.model.Traveler;
+import ir.ardastudio.model.User;
 import ir.ardastudio.repository.DriverRepository;
 import ir.ardastudio.repository.TravelRepository;
-import ir.ardastudio.repository.TravelerRepository;
+import ir.ardastudio.repository.UserRepository;
 import ir.ardastudio.shared.Screen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +17,12 @@ public class TravelStatusService {
 
     private final TravelRepository travelRepo = new TravelRepository();
     private final DriverRepository driverRepo = new DriverRepository();
-    private final TravelerRepository travelerRepo = new TravelerRepository();
+    private final UserRepository userRepo = new UserRepository();
 
-    public void handleTravelStatus(Traveler traveler, Scanner input) {
+    public void handleTravelStatus(User user, Scanner input) {
         try {
             Travel travel = travelRepo.getAllTravels().stream()
-                        .filter(t -> t.getTraveler().getId().equals(traveler.getId()))
+                        .filter(t -> t.getUser().getId().equals(user.getId()))
                         .toList().getFirst();
 
             Screen.clear();
@@ -58,8 +58,8 @@ public class TravelStatusService {
                     if (confirm.startsWith("y")) {
                         travel.setStatus("cancel");
                         travelRepo.updateTravel(travel);
-                        traveler.setScore(Math.max(traveler.getScore() - 0.17, 0.0));
-                        travelerRepo.updateTraveler(traveler);
+                        user.setScore(Math.max(user.getScore() - 0.17, 0.0));
+                        userRepo.updateUser(user);
                         System.out.println("Travel canceled");
                     }
                     break;
