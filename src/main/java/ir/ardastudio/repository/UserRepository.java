@@ -100,12 +100,12 @@ public class UserRepository {
     public void updateUser(User user) throws SQLException {
         String sql = "UPDATE user " +
                 "SET " +
-                "updatedAt, " +
-                "name, " +
-                "phone, " +
-                "x, " +
-                "y, " +
-                "score, " +
+                "updatedAt = ?, " +
+                "name = ?, " +
+                "phone = ?, " +
+                "x = ?, " +
+                "y = ?, " +
+                "score = ? " +
                 "WHERE id = ?";
 
         try (
