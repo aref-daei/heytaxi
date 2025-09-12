@@ -56,7 +56,7 @@ public class TravelRepository {
                 "c.updatedAt AS c_updatedAt, " +
                 "c.name AS c_name, " +
                 "c.color AS c_color, " +
-                "c.licensePlate AS c_licensePlate " +
+                "c.licensePlate AS c_licensePlate, " +
                 "u.id AS u_id, " +
                 "u.createdAt AS u_createdAt, " +
                 "u.updatedAt AS u_updatedAt, " +
@@ -64,7 +64,7 @@ public class TravelRepository {
                 "u.phone AS u_phone, " +
                 "u.x AS u_x, " +
                 "u.y AS u_y, " +
-                "u.score AS u_score, " +
+                "u.score AS u_score " +
                 "FROM travel t " +
                 "JOIN driver d ON t.driver_id = d.id " +
                 "JOIN car c ON c.id = d.car_id " +
@@ -148,7 +148,7 @@ public class TravelRepository {
                 "c.updatedAt AS c_updatedAt, " +
                 "c.name AS c_name, " +
                 "c.color AS c_color, " +
-                "c.licensePlate AS c_licensePlate " +
+                "c.licensePlate AS c_licensePlate, " +
                 "u.id AS u_id, " +
                 "u.createdAt AS u_createdAt, " +
                 "u.updatedAt AS u_updatedAt, " +
@@ -156,7 +156,7 @@ public class TravelRepository {
                 "u.phone AS u_phone, " +
                 "u.x AS u_x, " +
                 "u.y AS u_y, " +
-                "u.score AS u_score, " +
+                "u.score AS u_score " +
                 "FROM travel t " +
                 "JOIN driver d ON t.driver_id = d.id " +
                 "JOIN car c ON c.id = d.car_id " +

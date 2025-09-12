@@ -37,7 +37,7 @@ public class UserRepository {
                 "phone, " +
                 "x, " +
                 "y, " +
-                "score, " +
+                "score " +
                 "FROM user";
 
         try (
@@ -71,7 +71,7 @@ public class UserRepository {
                 "phone, " +
                 "x, " +
                 "y, " +
-                "score, " +
+                "score " +
                 "FROM user " +
                 "WHERE id = ?";
 
