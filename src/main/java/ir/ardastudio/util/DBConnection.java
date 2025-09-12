@@ -23,8 +23,8 @@ public class DBConnection {
                     // Car Table
                     "CREATE TABLE IF NOT EXISTS car (" +
                             "id TEXT PRIMARY KEY," +
-                            "createdAt TEXT PRIMARY KEY," +
-                            "updatedAt TEXT PRIMARY KEY," +
+                            "createdAt TEXT NOT NULL," +
+                            "updatedAt TEXT NOT NULL," +
                             "name TEXT NOT NULL," +
                             "color TEXT NOT NULL," +
                             "licensePlate TEXT NOT NULL);",
@@ -32,8 +32,8 @@ public class DBConnection {
                     // User Table
                     "CREATE TABLE IF NOT EXISTS user (" +
                             "id TEXT PRIMARY KEY," +
-                            "createdAt TEXT PRIMARY KEY," +
-                            "updatedAt TEXT PRIMARY KEY," +
+                            "createdAt TEXT NOT NULL," +
+                            "updatedAt TEXT NOT NULL," +
                             "name TEXT NOT NULL," +
                             "phone TEXT NOT NULL," +
                             "x INTEGER NOT NULL," +
@@ -43,8 +43,8 @@ public class DBConnection {
                     // Driver Table
                     "CREATE TABLE IF NOT EXISTS driver (" +
                             "id TEXT PRIMARY KEY," +
-                            "createdAt TEXT PRIMARY KEY," +
-                            "updatedAt TEXT PRIMARY KEY," +
+                            "createdAt TEXT NOT NULL," +
+                            "updatedAt TEXT NOT NULL," +
                             "name TEXT NOT NULL," +
                             "phone TEXT NOT NULL," +
                             "x INTEGER NOT NULL," +
@@ -56,8 +56,8 @@ public class DBConnection {
                     // Travel Table
                     "CREATE TABLE IF NOT EXISTS travel (" +
                             "id TEXT PRIMARY KEY," +
-                            "createdAt TEXT PRIMARY KEY," +
-                            "updatedAt TEXT PRIMARY KEY," +
+                            "createdAt TEXT NOT NULL," +
+                            "updatedAt TEXT NOT NULL," +
                             "driver_id TEXT NOT NULL," +
                             "user_id TEXT NOT NULL," +
                             "x INTEGER NOT NULL," +
