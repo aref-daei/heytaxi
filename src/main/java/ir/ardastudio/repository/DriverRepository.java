@@ -134,12 +134,13 @@ public class DriverRepository {
     public void updateDriver(Driver driver) throws SQLException {
         String sql = "UPDATE driver " +
                 "SET " +
-                "updatedAt, " +
-                "name, " +
-                "phone, " +
-                "x, " +
-                "y, " +
-                "score, " +
+                "updatedAt = ?, " +
+                "name = ?, " +
+                "phone = ?, " +
+                "x = ?, " +
+                "y = ?, " +
+                "score = ?, " +
+                "car_id = ? " +
                 "WHERE id = ?";
 
         try (
@@ -152,7 +153,8 @@ public class DriverRepository {
             prepStmt.setInt(4, driver.getX());
             prepStmt.setInt(5, driver.getY());
             prepStmt.setDouble(6, driver.getScore());
-            prepStmt.setString(7, driver.getId());
+            prepStmt.setString(7, driver.getCar().getId());
+            prepStmt.setString(8, driver.getId());
             prepStmt.executeUpdate();
         }
     }
