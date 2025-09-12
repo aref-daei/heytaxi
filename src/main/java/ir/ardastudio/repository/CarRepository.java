@@ -9,16 +9,18 @@ import java.util.List;
 
 public class CarRepository {
     public void addCar(Car car) throws SQLException {
-        String sql = "INSERT INTO car VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO car VALUES(?, ?, ?, ?, ?, ?)";
 
         try (
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement prepStmt = connection.prepareStatement(sql)
         ) {
             prepStmt.setString(1, car.getId());
-            prepStmt.setString(2, car.getModel());
-            prepStmt.setString(3, car.getColor());
-            prepStmt.setString(4, car.getLicensePlate());
+            prepStmt.setString(2, car.getCreatedAt().toString());
+            prepStmt.setString(3, car.getUpdatedAt().toString());
+            prepStmt.setString(4, car.getName());
+            prepStmt.setString(5, car.getColor());
+            prepStmt.setString(6, car.getLicensePlate());
             prepStmt.executeUpdate();
         }
     }
@@ -35,7 +37,9 @@ public class CarRepository {
             while (rs.next()) {
                 Car car = new Car(
                         rs.getString("id"),
-                        rs.getString("model"),
+                        rs.getString("createdAt"),
+                        rs.getString("updatedAt"),
+                        rs.getString("name"),
                         rs.getString("color"),
                         rs.getString("licensePlate"));
                 cars.add(car);
@@ -56,7 +60,9 @@ public class CarRepository {
                 if (rs.next()) {
                     return new Car(
                             rs.getString("id"),
-                            rs.getString("model"),
+                            rs.getString("createdAt"),
+                            rs.getString("updatedAt"),
+                            rs.getString("name"),
                             rs.getString("color"),
                             rs.getString("licensePlate"));
                 }
@@ -68,7 +74,8 @@ public class CarRepository {
     public void updateCar(Car car) throws SQLException {
         String sql = "UPDATE car " +
                 "SET " +
-                "model = ?, " +
+                "updatedAt = ?, " +
+                "name = ?, " +
                 "color = ?, " +
                 "licensePlate = ? " +
                 "WHERE id = ?";
@@ -77,10 +84,11 @@ public class CarRepository {
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement prepStmt = connection.prepareStatement(sql)
         ) {
-            prepStmt.setString(1, car.getModel());
-            prepStmt.setString(2, car.getColor());
-            prepStmt.setString(3, car.getLicensePlate());
-            prepStmt.setString(4, car.getId());
+            prepStmt.setString(1, car.getUpdatedAt().toString());
+            prepStmt.setString(2, car.getName());
+            prepStmt.setString(3, car.getColor());
+            prepStmt.setString(4, car.getLicensePlate());
+            prepStmt.setString(5, car.getId());
             prepStmt.executeUpdate();
         }
     }
