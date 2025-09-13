@@ -7,7 +7,7 @@ public class Travel extends Model {
 
 	private Driver driver;
 	private User user;
-    private int x = 0, y = 0; // 1Km scale
+    private int x, y; // 1Km scale
 	private double distance; // 1Km scale
 	private int time; // Minutes
 	private int cost; // Toman & 10_000 Toman for Entrance fee
@@ -115,13 +115,15 @@ public class Travel extends Model {
 	}
 
 	public String getStatus() {
-		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime destinationTime = getCreatedAt().plusMinutes(time);
+		if (status.equals("start")) {
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime destinationTime = getCreatedAt().plusMinutes(time);
 
-		if (destinationTime.isBefore(now)) {
-			status = "end";
-		}
-		
+            if (destinationTime.isBefore(now)) {
+                status = "end";
+            }
+        }
+
 		return status;
 	}
 
