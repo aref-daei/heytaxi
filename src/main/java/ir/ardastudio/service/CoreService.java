@@ -18,6 +18,7 @@ public class CoreService {
     private final TravelRequestService travelRequestService = new TravelRequestService();
     private final TravelStatusService travelStatusService = new TravelStatusService();
     private final TravelHistoryService travelHistoryService = new TravelHistoryService();
+    private final UserProfileService userProfileService = new UserProfileService();
 
     public void systemManager() {
         try (Scanner input = new Scanner(System.in)) {
@@ -56,6 +57,7 @@ public class CoreService {
                             (travels == null || travels.isEmpty() || !travels.getFirst().getStatus().equals("start") ? "Request" : "Status")
                     );
                     System.out.println("  H) History");
+                    System.out.println("  P) Profile");
                     System.out.println("  L) Log out");
                 }
                 System.out.println("  Q) Quit");
@@ -75,6 +77,9 @@ public class CoreService {
                         break;
                     case "h":
                         travelHistoryService.showHistory(authService.getUser());
+                        break;
+                    case "p":
+                        userProfileService.updateProfile(authService.getUser(), input);
                         break;
                     case "l":
                         authService.logOut();
