@@ -6,7 +6,7 @@ public class User extends Model {
 
 	private String name; // First name and Last name
     private String phone; // ex: +989151234567
-	private int x = 0, y = 0; // 1Km scale
+	private int x, y; // 1Km scale
 	private double score; // 1 to 5
 
 	public User(String name, String phone) {
