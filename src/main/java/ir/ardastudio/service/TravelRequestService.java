@@ -75,7 +75,14 @@ public class TravelRequestService {
                 Screen.clear();
                 System.out.println("..:: Travel Information ::..");
                 System.out.println(travel);
-                System.out.printf("Estimated time: %d minutes%n", travel.getTime());
+                System.out.printf(
+                        "Your driver is on the way and will arrive in about %d minutes%n",
+                        (int) Math.round(Travel.calculateDistance(
+                                driver.getX(),
+                                driver.getY(),
+                                user.getX(),
+                                user.getY()) * 1.5)
+                        );
 
                 driver.setX(destX);
                 driver.setY(destY);
