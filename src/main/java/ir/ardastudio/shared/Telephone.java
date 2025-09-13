@@ -4,45 +4,17 @@ public class Telephone {
 
 	// This method for correct phone number
 	public static String corrector(String phone) {
-		if (phone.charAt(0) == '0' && phone.charAt(1) == '9') {
+        if (!phone.matches("^(9\\d{9}|09\\d{9}|989\\d{9}|\\+989\\d{9})$")) {
+            throw new IllegalArgumentException("Phone number is invalid");
+        }
 
-			if (phone.length() != 11) {
-				throw new IllegalArgumentException("Phone number is invalid");
-			}
-
-			try {
-				phone = String.format("+98%d", Long.parseLong(phone));
-			} catch (Exception e) {
-				throw new IllegalArgumentException("Phone number is invalid");
-			}
-
-		} else if (phone.charAt(0) == '9' && phone.charAt(1) == '8') {
-
-			if (phone.length() != 12) {
-				throw new IllegalArgumentException("Phone number is invalid");
-			}
-
-			try {
-				phone = String.format("+%d", Long.parseLong(phone));
-			} catch (Exception e) {
-				throw new IllegalArgumentException("Phone number is invalid");
-			}
-
-		} else if (phone.charAt(0) == '+' && phone.charAt(1) == '9' && phone.charAt(2) == '8') {
-
-			if (phone.length() != 13) {
-				throw new IllegalArgumentException("Phone number is invalid");
-			}
-
-			try {
-				phone = String.format("+%d", Long.parseLong(phone.substring(0, 13)));
-			} catch (Exception e) {
-				throw new IllegalArgumentException("Phone number is invalid");
-			}
-
-		} else {
-			throw new IllegalArgumentException("Phone number is invalid");
-		}
+        if (phone.startsWith("9")) {
+            phone = "+98" + phone;
+        } else if (phone.startsWith("09")) {
+            phone = "+98" + phone.substring(1);
+        } else if (phone.startsWith("989")) {
+            phone = "+98" + phone.substring(2);
+        }
 
 		return phone;
 	}
