@@ -23,33 +23,26 @@
     <name>HeyTaxi</name>
     <description>A CLI Java app that simulates an online taxi service.</description>
 
-    <properties>
-        <maven.compiler.release>21</maven.compiler.release>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.plugin.version>3.14.0</maven.compiler.plugin.version>
-        <exec.maven.plugin.version>3.2.0</exec.maven.plugin.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
-            <version>5.9</version>
+            <version>5.12.0</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.17.1</version>
+            <version>2.21.0</version>
         </dependency>
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.45.3.0</version>
+            <version>3.51.1.0</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.5.18</version>
+            <version>1.5.27</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -63,15 +56,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.14.0</version>
+                <version>3.15.0</version>
                 <configuration>
-                    <release>${maven.compiler.release}</release>
+                    <release>21</release>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>${exec.maven.plugin.version}</version>
+                <version>3.6.3</version>
                 <configuration>
                     <mainClass>ir.ardastudio.Application</mainClass>
                 </configuration>
